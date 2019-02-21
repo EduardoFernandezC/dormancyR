@@ -8,7 +8,7 @@ tempResponse_daily(data, Start_JDay = 1, End_JDay = 366,
   models = list(Rate_of_Chill = rate_of_chill_Chmielewski, Chill_Days =
   chill_days, Exponential_Chill = exponential_chill_Tmax,
   Triangula_Chill_Hann = triangular_chill_daily_Hann, Triangular_Chill_Lega
-  = triangular_chill_daily_Tmean))
+  = triangular_chill_daily_Tmean), QControl = TRUE)
 }
 \arguments{
 \item{data}{Could be a list of two or more elements. This list should contain a dataframe that could be
@@ -22,6 +22,8 @@ In any case, dataframe should contains colums "Year", "Month", "Day", "JDay", "T
 
 \item{models}{A list of chill functions to compute the metric for the period of interest. Each model
 should be named. Default provides five models (See datails).}
+
+\item{QControl}{Boolean parameter to specified if the quality control dataframe is shown.}
 }
 \description{
 This function produces a summarized dataframe of chill responses computed by several chill models which

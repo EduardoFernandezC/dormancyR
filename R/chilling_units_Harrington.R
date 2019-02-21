@@ -13,15 +13,13 @@
 
 chilling_units_Harrington <- function(HourTemp, summ = TRUE){
 
-  vector_of_values<-NULL
-  for (i in 1:length(HourTemp)){
-    if (HourTemp[i] < -4.7) chilling_unit <- 0 else
-      if (HourTemp[i] > 16) chilling_unit <- 0 else
-        if (HourTemp[i] >= -4.7 & HourTemp[i] <= 16)
-          chilling_unit <- 3.13*(((HourTemp[i]+4.66)/10.93)^2.10)*exp(1)^-((HourTemp[i]+4.66)/10.93)^3.10
-        if (chilling_unit > 1.0) chilling_unit <- 1.0 else chilling_unit <- chilling_unit
-  vector_of_values<-c(vector_of_values, chilling_unit)}
+  df <- data.frame(Temps = HourTemp, CU = 0)
+  df[which(df$Temps > -4.7 & df$Temps < 16),"CU"] <- 3.13 * (((df[which(df$Temps > -4.7 & df$Temps < 16),"Temps"] + 4.66) / 10.93) ^ 2.10) * 
+    exp(1)^ - ((df[which(df$Temps > -4.7 & df$Temps < 16),"Temps"] + 4.66) / 10.93) ^ 3.10
+  
+  df[which(is.nan(df$CU)),"CU"] <- 0
+  df[which(df$CU > 1),"CU"] <- 1
 
   if (summ == TRUE)
-    return(cumsum(vector_of_values)) else return(vector_of_values)
+    return(cumsum(df$CU)) else return(df$CU)
 }

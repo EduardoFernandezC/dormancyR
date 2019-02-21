@@ -12,12 +12,11 @@
 #' temperature observations. HortScience 25(1): 14-16
 
 modified_utah_model <- function(HourTemp, summ = TRUE){
-   vector_of_values<-NULL
-   for (i in 1:length(HourTemp))
-    if (HourTemp[i] <= 0) modified_unit <- 0 else
-      if (HourTemp[i] > 0 & HourTemp[i] <= 21) modified_unit <- sin((2*pi*HourTemp[i])/28) else
-        modified_unit <- -1
-   vector_of_values<-c(vector_of_values, modified_unit)
-   if (summ == TRUE)
-     return(cumsum(vector_of_values)) else return(vector_of_values)
-}
+  
+  df <- data.frame(Temps = HourTemp, CU = 0)
+  df[which(df$Temps > 0 & df$Temps <= 21),"CU"] <- sin((2 *pi * 
+                                                          df[which(df$Temps > 0 & df$Temps <= 21),"Temps"]) / 28)
+  df[which(df$Temps > 21),"CU"] <- -1
+  
+  if (summ == TRUE)
+    return(cumsum(df$CU)) else return(df$CU)}

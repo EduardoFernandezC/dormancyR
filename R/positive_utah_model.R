@@ -12,16 +12,12 @@
 #' competion in peaches. Sci. Hortic. 59(2): 107-113
 
 positive_utah_model <- function(HourTemp, summ = TRUE){
-  lower <- c(-1000,1.4, 2.4, 9.1, 12.4)
-  upper <- c(1.4, 2.4, 9.1, 12.4, 1000)
-  values <- c(0,0.5,1,0.5,0)
-  df <- data.frame(Lower = lower, Upper = upper, Value = values)
+  return(chillR::step_model(HourTemp,
+                            df = data.frame(lower = c(-1000, 1.4, 2.4, 9.1, 12.4),
+                                            upper = c(1.4, 2.4, 9.1, 12.4, 1000),
+                                            weight = c(0,0.5,1,0.5,0)), summ = summ))}
 
-  vector_of_values<-NULL
-  for (i in 1: length(HourTemp)){
-    value_in_x_temp<-values[which(HourTemp[i] > lower & HourTemp[i]<= upper)]
-    vector_of_values<-c(vector_of_values,value_in_x_temp)}
 
-  if (summ == TRUE)
-    return(cumsum(vector_of_values)) else return(vector_of_values)
-}
+
+
+

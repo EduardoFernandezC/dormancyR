@@ -13,6 +13,7 @@
 #' @param End_JDay The end date for computing the outputs. This is the number of the day within the year.
 #' @param models A list of chill functions to compute the metric for the period of interest. Each model
 #' should be named. Default provides five models (See datails).
+#' @param QControl Boolean parameter to specified if the quality control dataframe is shown.
 #'
 #' @details This function produces a list with two dataframes, "Chill" and "Missing_Days". "Chill" correspond
 #' to a summary of winter chill for each complete season in the input dataframe according to the models
@@ -27,7 +28,8 @@ tempResponse_daily <- function (data, Start_JDay = 1, End_JDay = 366,
                                               Chill_Days = chill_days,
                                               Exponential_Chill = exponential_chill_Tmax,
                                               Triangula_Chill_Hann = triangular_chill_daily_Hann,
-                                              Triangular_Chill_Lega = triangular_chill_daily_Tmean)){
+                                              Triangular_Chill_Lega = triangular_chill_daily_Tmean),
+                                QControl = TRUE){
 
   if (is.data.frame(data)) {
     QC <- NULL
@@ -89,5 +91,6 @@ tempResponse_daily <- function (data, Start_JDay = 1, End_JDay = 366,
   output <- output[which((output$Season_days - output$Data_days) <= 1),]
   QC <- QC[which((QC$Season_days - QC$Data_days) <= 1),]
 
-  return(list (Chill = output, Missing_Days = QC))
+  if (QControl == TRUE) return(list (Chill = output, Missing_Days = QC)) else
+    return(output)
 }
