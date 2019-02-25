@@ -14,34 +14,34 @@
 #' doi:10.1016/j.agrformet.2004.03.002
 
 chill_days <- function (ExtrDailyTemp, summ = TRUE){
-
+  
   Tmean <- (ExtrDailyTemp["Tmax"] + ExtrDailyTemp["Tmin"]) / 2
   colnames(Tmean) <- "Tmean"
-
+  
   threshold <- mean(c(7.0, 6.8, 6.9, 7.0, 7.9, 7.5, 7.0, 7.0, 7.3, 7.1, 7.1, 7.2))
-
+  
   vector_of_values<-NULL
   for (i in 1:length(Tmean$Tmean)){
-    if (is.na(ExtrDailyTemp$Tmin[i]) | is.na(ExtrDailyTemp$Tmax[i])) chill_day <- NA else
+    if (is.na(ExtrDailyTemp$Tmin[i]) | is.na(ExtrDailyTemp$Tmax[i]) | ExtrDailyTemp$Tmax[i] < 0 ) chill_day <- NA else
       if (threshold >= 0 & threshold <= ExtrDailyTemp$Tmin[i]) chill_day <- 0 else
-
+        
         if (0 <=  ExtrDailyTemp$Tmin[i] & threshold >= ExtrDailyTemp$Tmin[i] & threshold < ExtrDailyTemp$Tmax[i]) {
           chill_day <- (Tmean$Tmean[i] - ExtrDailyTemp$Tmin[i]) - ((ExtrDailyTemp$Tmax[i] - threshold)^2) /
-                                                (2 * (ExtrDailyTemp$Tmax[i] - ExtrDailyTemp$Tmin[i]))} else
-
-          if (0 <= ExtrDailyTemp$Tmin[i] & threshold >= ExtrDailyTemp$Tmax[i]) {chill_day <- Tmean$Tmean[i] -
-              ExtrDailyTemp$Tmin[i]} else
-
-              if (ExtrDailyTemp$Tmin[i] < 0 & ExtrDailyTemp$Tmax[i] >= 0 & threshold >= ExtrDailyTemp$Tmax[i]) {
-                chill_day <- (ExtrDailyTemp$Tmax[i]^2) / (2 * (ExtrDailyTemp$Tmax[i] - ExtrDailyTemp$Tmin[i]))} else
-
-                  if (ExtrDailyTemp$Tmin[i] < 0 & threshold > 0 & threshold < ExtrDailyTemp$Tmax[i]) {
-                    chill_day <- (ExtrDailyTemp$Tmax[i]^2) / (2 * (ExtrDailyTemp$Tmax[i] - ExtrDailyTemp$Tmin[i])) -
-                      (((ExtrDailyTemp$Tmax[i] - threshold)^2) /
-                         (2 * (ExtrDailyTemp$Tmax[i] - ExtrDailyTemp$Tmin[i])))}
-
-          vector_of_values<-c(vector_of_values, chill_day)}
-
+            (2 * (ExtrDailyTemp$Tmax[i] - ExtrDailyTemp$Tmin[i]))} else
+              
+              if (0 <= ExtrDailyTemp$Tmin[i] & threshold >= ExtrDailyTemp$Tmax[i]) {chill_day <- Tmean$Tmean[i] -
+                ExtrDailyTemp$Tmin[i]} else
+                  
+                  if (ExtrDailyTemp$Tmin[i] < 0 & ExtrDailyTemp$Tmax[i] >= 0 & threshold >= ExtrDailyTemp$Tmax[i]) {
+                    chill_day <- (ExtrDailyTemp$Tmax[i]^2) / (2 * (ExtrDailyTemp$Tmax[i] - ExtrDailyTemp$Tmin[i]))} else
+                      
+                      if (ExtrDailyTemp$Tmin[i] < 0 & threshold > 0 & threshold < ExtrDailyTemp$Tmax[i]) {
+                        chill_day <- (ExtrDailyTemp$Tmax[i]^2) / (2 * (ExtrDailyTemp$Tmax[i] - ExtrDailyTemp$Tmin[i])) -
+                          (((ExtrDailyTemp$Tmax[i] - threshold)^2) /
+                             (2 * (ExtrDailyTemp$Tmax[i] - ExtrDailyTemp$Tmin[i])))}
+      
+      vector_of_values<-c(vector_of_values, chill_day)}
+  
   if (summ == TRUE)
     return(cumsum(vector_of_values)) else return(vector_of_values)
 }
