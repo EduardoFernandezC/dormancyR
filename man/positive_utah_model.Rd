@@ -17,6 +17,15 @@ Function to calculate winter chill for deciduos trees according to the Positive 
 Linsley-Noakes and Allan (1994). This function is compatible with some 'chillR' functions (i.e tempResponse)
 to estimate metrics from hourly temperature records.
 }
+\examples{
+#Example 1
+data <- stack_hourly_temps(KA_weather, latitude = 50.62)
+positive_utah_model(data$hourtemps$Temp, summ = T)
+
+#Example 2
+tempResponse(data, Start_JDay = 345, End_JDay = 58,
+             models = list(Positive_Units = positive_utah_model))
+}
 \references{
 Linsley-Noakes G. and Allan P. 1994. Comparison of two models for the prediction of rest
 competion in peaches. Sci. Hortic. 59(2): 107-113

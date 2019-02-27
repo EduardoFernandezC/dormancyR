@@ -17,6 +17,16 @@ over the period or as the actual accumulation for each hour.}
 Function to calculate winter chill for deciduos fruit trees according to the model (sequential model) proposed by
 Chmielewski et al. (2001) in Germany.
 }
+\examples{
+library(chillR)
+
+#Example 1
+rate_of_chill_Chmielewski(KA_weather, summ = T)
+
+#Example 2
+tempResponse_daily(data, Start_JDay = 345, End_JDay = 58, models = list(Rate_of_Chill =
+                                                                        rate_of_chill_Chmielewski))
+}
 \references{
 Chmielewski F., Blumel K., Henniges Y., Blanke M., Weber R. and Zoth M. (2011).
 Phenological models for the beginning of apple blossom in Germany. Meteorol. Z. 20(5): 487-496.

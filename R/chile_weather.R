@@ -32,7 +32,7 @@
 #' @param path_zip_tmax Character string input. Location of the zip file containing maximum
 #' temperatures. This input must include the name and extension of the file.
 #'
-#' @examples
+#' @example
 #' #Getting the location of zip files
 #' path_zip_tmin<-"[Your folder]\\cr2_tasminDaily_2018_ghcn.zip"
 #' path_zip_tmax<-"[Your folder]\\cr2_tasmaxDaily_2018_ghcn.zip"

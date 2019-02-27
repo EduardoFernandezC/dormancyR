@@ -15,25 +15,29 @@
 #' Legave J., Blanke M., Christen D., Giovannini D, Mathieu V. and Oger R. 2013. A comprehensive overview of the
 #' spatial and temporal variability of apple bud dormancy release and blooming phenology in Western Europe.
 #' Int. J. Biometeorol. 57(2): 317 - 331. doi:10.1007/s00484-012-0551-9
+#' 
+#' @example
+#' library(chillR)
+#' 
+#' tempResponse_daily(data, Start_JDay = 345, End_JDay = 58, models = list(Triangular_Chill_Legave =
+#'                                                                         triangular_chill_Legave))
 
-triangular_chill_daily_Tmean <- function (ExtrDailyTemp, summ = TRUE) {
-
-  Tmean <- (ExtrDailyTemp["Tmax"] + ExtrDailyTemp["Tmin"]) / 2
-  colnames(Tmean) <- "Tmean"
-
-  threshold <- 1
-  temp_interval <- 24
-
-  vector_of_values<-NULL
-  for (i in 1:length(Tmean$Tmean)){
-    if (is.na(Tmean$Tmean[i])) triangular_chill <- NA else
-
-      if (threshold - temp_interval < Tmean$Tmean[i] &  threshold + temp_interval > Tmean$Tmean[i]) {
-        triangular_chill <- 1 - (abs(Tmean$Tmean[i] - threshold) / temp_interval)} else
-          triangular_chill <- 0
-
-    vector_of_values<-c(vector_of_values, triangular_chill)}
-
+triangular_chill_Legave <- function (ExtrDailyTemp, summ = TRUE) {
+  
+  if (!("Tmean" %in% names(ExtrDailyTemp)))
+    ExtrDailyTemp[,"Tmean"] <- (ExtrDailyTemp["Tmax"] + ExtrDailyTemp["Tmin"]) / 2
+  
+  threshold <- 1 #abbreviation TC
+  temp_interval <- 24 #abbreviation Ic
+  
+  ExtrDailyTemp[,"Triang_Chill_Legave"] <- 0
+  
+  rel_days_cond2 <- which(threshold - temp_interval < ExtrDailyTemp$Tmean & 
+                            threshold + temp_interval > ExtrDailyTemp$Tmean) # condition 2: TC-Ic < Tmean < TC+Ic
+  
+  ExtrDailyTemp[rel_days_cond2, "Triang_Chill_Legave"] <- 1 - (abs(ExtrDailyTemp[rel_days_cond2, "Tmean"] - 
+                                                                     threshold) / temp_interval)
+  
   if (summ == TRUE)
-    return(cumsum(vector_of_values)) else return(vector_of_values)
+    return(cumsum(ExtrDailyTemp$Triang_Chill_Legave)) else return(ExtrDailyTemp$Triang_Chill_Legave)
 }

@@ -17,6 +17,17 @@ Function to compute winter chill for deciduous trees according to the Low-chill 
 Gilreath and Buchanan (1981). This function is compatible with some 'chillR' functions (i.e tempResponse) to
 estimate metrics from hourly temperature records.
 }
+\examples{
+library(chillR) 
+
+#Example 1
+data <- stack_hourly_temps(KA_weather, latitude = 50.62)
+low_chill_model(data$hourtemps$Temp, summ = T)
+
+#Example 2
+tempResponse(data, Start_JDay = 345, End_JDay = 58,
+models = list(Low_Chill = low_chill_model))
+}
 \references{
 Gilreath P. and Buchanan D. 1981. Rest prediction model for low-chilling sungold nectarine. J. Am.
 Soc. Hort. Sci. 106(4): 426 - 429

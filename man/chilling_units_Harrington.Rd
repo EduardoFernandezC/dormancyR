@@ -17,6 +17,17 @@ Function to calculate winter chill for deciduos trees according to the Chilling 
 Harrington (2010). This function is compatible with some 'chillR' functions (i.e tempResponse) to
 estimate metrics from hourly temperature records.
 }
+\examples{
+library(chillR) 
+
+#Example 1
+data <- stack_hourly_temps(KA_weather, latitude = 50.62)
+chilling_units_Harrington(data$hourtemps$Temp, summ = T)
+
+#Example 2
+tempResponse(data, Start_JDay = 345, End_JDay = 58,
+models = list(Chill_Harrington = chilling_units_Harrington))
+}
 \references{
 Harrington C., Gould P. and St.Clair J. (2010). Modeling the effects of winter environment on
 dormancy release of Douglas-fir. For. Ecol. Manage. 259(4): 798-808

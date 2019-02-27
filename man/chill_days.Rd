@@ -18,6 +18,20 @@ This function computes the Chill Days according to the model proposed by Cesarac
 for several tree species including pears, kiwifruit and sweet cherries. In this function chill days are
 computed without the negative (-) tranformation made in the original paper.
 }
+\examples{
+library(chillR)
+
+#Example 1
+chill_days(KA_weather, summ = TRUE)
+
+#Example 2
+data <- KA_weather
+data[,"Chill_Days"] <- chill_days(data, summ = FALSE)
+
+#Example 3
+tempResponse_daily(KA_weather, Start_JDay = 345, End_JDay = 58, models = list(Chill_Days = chill_days),
+QControl = T)
+}
 \references{
 Cesaraccio C., Spano D., Snyder R. and Duce P. 2004. Chilling and forcing model to predict
 bud - burst of crop and forest species. Agric. For. Meteorol. 126(1-2): 1-13.

@@ -10,16 +10,28 @@
 #'
 #' @references Harrington C., Gould P. and St.Clair J. (2010). Modeling the effects of winter environment on
 #' dormancy release of Douglas-fir. For. Ecol. Manage. 259(4): 798-808
+#' 
+#' @examples
+#' library(chillR) 
+#' 
+#' #Example 1
+#' data <- stack_hourly_temps(KA_weather, latitude = 50.62)
+#' chilling_units_Harrington(data$hourtemps$Temp, summ = T)
+#' 
+#' #Example 2
+#' tempResponse(data, Start_JDay = 345, End_JDay = 58,
+#' models = list(Chill_Harrington = chilling_units_Harrington))
 
 chilling_units_Harrington <- function(HourTemp, summ = TRUE){
 
-  df <- data.frame(Temps = HourTemp, CU = 0)
-  df[which(df$Temps > -4.7 & df$Temps < 16),"CU"] <- 3.13 * (((df[which(df$Temps > -4.7 & df$Temps < 16),"Temps"] + 4.66) / 10.93) ^ 2.10) * 
-    exp(1)^ - ((df[which(df$Temps > -4.7 & df$Temps < 16),"Temps"] + 4.66) / 10.93) ^ 3.10
+  chilling_weights <- rep(0, length(HourTemp))
+  relevant_hours <- which(HourTemp >= -4.66 & HourTemp < 16)
   
-  df[which(is.nan(df$CU)),"CU"] <- 0
-  df[which(df$CU > 1),"CU"] <- 1
-
+  chilling_weights[relevant_hours] <- 3.13 * (((HourTemp[relevant_hours] + 4.66) / 10.93) ^ 2.10) * 
+    exp(1)^ - ((HourTemp[relevant_hours] + 4.66) / 10.93) ^ 3.10
+  
+  chilling_weights[chilling_weights > 1] <- 1
+  
   if (summ == TRUE)
-    return(cumsum(df$CU)) else return(df$CU)
+    return(cumsum(chilling_weights)) else return(chilling_weights)
 }

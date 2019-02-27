@@ -9,7 +9,7 @@ tempResponse_list_daily(temperature_list, Start_JDay = 1,
   rate_of_chill_Chmielewski, Chill_Days = chill_days, Exponential_Chill =
   exponential_chill_Tmax, Triangula_Chill_Hann =
   triangular_chill_daily_Hann, Triangular_Chill_Lega =
-  triangular_chill_daily_Tmean), QControl = TRUE)
+  triangular_chill_daily_Tmean))
 }
 \arguments{
 \item{temperature_list}{List of temperatures as those produced by temperature_generation from chillR.}
@@ -22,8 +22,6 @@ This is the number of the day within the year.}
 
 \item{models}{List of functions to compute the metrics. Default is settled to those models used in
 tempResponse_daily function. This parameter also allows the use of a model specified by the user.}
-
-\item{QControl}{Boolean parameter to specified if the quality control dataframe is shown.}
 }
 \description{
 This function allows to compute metrics from models which use as input daily temperature istead hourly data.

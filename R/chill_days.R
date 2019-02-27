@@ -12,36 +12,58 @@
 #' @references Cesaraccio C., Spano D., Snyder R. and Duce P. 2004. Chilling and forcing model to predict
 #' bud - burst of crop and forest species. Agric. For. Meteorol. 126(1-2): 1-13.
 #' doi:10.1016/j.agrformet.2004.03.002
+#' 
+#' @examples
+#' library(chillR)
+#' 
+#' #Example 1
+#' chill_days(KA_weather, summ = TRUE)
+#' 
+#' #Example 2
+#' data <- KA_weather
+#' data[,"Chill_Days"] <- chill_days(data, summ = FALSE)
+#' 
+#' #Example 3
+#' tempResponse_daily(KA_weather, Start_JDay = 345, End_JDay = 58, models = list(Chill_Days = chill_days),
+#' QControl = T)
 
 chill_days <- function (ExtrDailyTemp, summ = TRUE){
-  
-  Tmean <- (ExtrDailyTemp["Tmax"] + ExtrDailyTemp["Tmin"]) / 2
-  colnames(Tmean) <- "Tmean"
-  
-  threshold <- mean(c(7.0, 6.8, 6.9, 7.0, 7.9, 7.5, 7.0, 7.0, 7.3, 7.1, 7.1, 7.2))
-  
-  vector_of_values<-NULL
-  for (i in 1:length(Tmean$Tmean)){
-    if (is.na(ExtrDailyTemp$Tmin[i]) | is.na(ExtrDailyTemp$Tmax[i]) | ExtrDailyTemp$Tmax[i] < 0 ) chill_day <- NA else
-      if (threshold >= 0 & threshold <= ExtrDailyTemp$Tmin[i]) chill_day <- 0 else
-        
-        if (0 <=  ExtrDailyTemp$Tmin[i] & threshold >= ExtrDailyTemp$Tmin[i] & threshold < ExtrDailyTemp$Tmax[i]) {
-          chill_day <- (Tmean$Tmean[i] - ExtrDailyTemp$Tmin[i]) - ((ExtrDailyTemp$Tmax[i] - threshold)^2) /
-            (2 * (ExtrDailyTemp$Tmax[i] - ExtrDailyTemp$Tmin[i]))} else
-              
-              if (0 <= ExtrDailyTemp$Tmin[i] & threshold >= ExtrDailyTemp$Tmax[i]) {chill_day <- Tmean$Tmean[i] -
-                ExtrDailyTemp$Tmin[i]} else
-                  
-                  if (ExtrDailyTemp$Tmin[i] < 0 & ExtrDailyTemp$Tmax[i] >= 0 & threshold >= ExtrDailyTemp$Tmax[i]) {
-                    chill_day <- (ExtrDailyTemp$Tmax[i]^2) / (2 * (ExtrDailyTemp$Tmax[i] - ExtrDailyTemp$Tmin[i]))} else
-                      
-                      if (ExtrDailyTemp$Tmin[i] < 0 & threshold > 0 & threshold < ExtrDailyTemp$Tmax[i]) {
-                        chill_day <- (ExtrDailyTemp$Tmax[i]^2) / (2 * (ExtrDailyTemp$Tmax[i] - ExtrDailyTemp$Tmin[i])) -
-                          (((ExtrDailyTemp$Tmax[i] - threshold)^2) /
-                             (2 * (ExtrDailyTemp$Tmax[i] - ExtrDailyTemp$Tmin[i])))}
-      
-      vector_of_values<-c(vector_of_values, chill_day)}
-  
-  if (summ == TRUE)
-    return(cumsum(vector_of_values)) else return(vector_of_values)
+    
+    threshold <- mean(c(7.0, 6.8, 6.9, 7.0, 7.9, 7.5, 7.0, 7.0, 7.3, 7.1, 7.1, 7.2)) # abbreviation: TC
+    
+    if (!("Tmean" %in% names(ExtrDailyTemp))) 
+      ExtrDailyTemp[,"Tmean"] <- (ExtrDailyTemp["Tmax"] + ExtrDailyTemp["Tmin"]) / 2
+    
+    ExtrDailyTemp[,"Chill_Days"] <- 0 #condition 1: 0 <= TC <= Tmin <= Tmax
+    
+    rel_days_cond2 <- which(ExtrDailyTemp$Tmin >= 0 & ExtrDailyTemp$Tmin <= threshold &
+                              threshold < ExtrDailyTemp$Tmax) # condition 2: 0 <= Tmin <= TC < Tmax
+    
+      ExtrDailyTemp[rel_days_cond2,"Chill_Days"] <- (ExtrDailyTemp[rel_days_cond2,"Tmean"] - 
+                                                       ExtrDailyTemp[rel_days_cond2,"Tmin"]) - 
+        ((ExtrDailyTemp[rel_days_cond2,"Tmax"] - threshold)^2) / (2 * (ExtrDailyTemp[rel_days_cond2,"Tmax"] -
+                                                                       ExtrDailyTemp[rel_days_cond2,"Tmin"]))
+    
+    rel_days_cond3 <- which(0 <= ExtrDailyTemp$Tmin & 
+                              threshold >= ExtrDailyTemp$Tmax) # condition 3: 0 <= Tmin <= Tmax <= TC
+    
+      ExtrDailyTemp[rel_days_cond3,"Chill_Days"] <- ExtrDailyTemp[rel_days_cond3,"Tmean"] - 
+        ExtrDailyTemp[rel_days_cond3,"Tmin"]
+    
+    rel_days_cond4 <- which(ExtrDailyTemp$Tmin < 0 & ExtrDailyTemp$Tmax >= 0 & 
+                              threshold >= ExtrDailyTemp$Tmax) # condition 4: Tmin <= 0 <= Tmax <= TC
+    
+      ExtrDailyTemp[rel_days_cond4,"Chill_Days"] <- (ExtrDailyTemp[rel_days_cond4,"Tmax"]^2) /
+        (2 * (ExtrDailyTemp[rel_days_cond4,"Tmax"] - ExtrDailyTemp[rel_days_cond4,"Tmin"]))
+    
+    
+    rel_days_cond5 <- which(ExtrDailyTemp$Tmin < 0 & threshold > 0 &
+                              threshold < ExtrDailyTemp$Tmax) # condition 5: Tmin < 0 < TC < Tmax
+    
+      ExtrDailyTemp[rel_days_cond5,"Chill_Days"] <- (ExtrDailyTemp[rel_days_cond5,"Tmax"]^2) /
+        (2 * (ExtrDailyTemp[rel_days_cond5,"Tmax"] - ExtrDailyTemp[rel_days_cond5,"Tmin"])) -
+        (((ExtrDailyTemp[rel_days_cond5,"Tmax"] - threshold)^2) / (2 * (ExtrDailyTemp[rel_days_cond5,"Tmax"] - 
+                                                                        ExtrDailyTemp[rel_days_cond5,"Tmin"])))
+    if (summ == TRUE)
+      return(cumsum(ExtrDailyTemp$Chill_Days)) else return(ExtrDailyTemp$Chill_Days)
 }

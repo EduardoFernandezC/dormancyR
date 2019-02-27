@@ -10,14 +10,18 @@
 #'
 #' @references Linsley-Noakes G. and Allan P. 1994. Comparison of two models for the prediction of rest
 #' competion in peaches. Sci. Hortic. 59(2): 107-113
+#' 
+#' @examples 
+#' #Example 1
+#' data <- stack_hourly_temps(KA_weather, latitude = 50.62)
+#' positive_utah_model(data$hourtemps$Temp, summ = T)
+#'
+#' #Example 2
+#' tempResponse(data, Start_JDay = 345, End_JDay = 58,
+#'              models = list(Positive_Units = positive_utah_model))
 
 positive_utah_model <- function(HourTemp, summ = TRUE){
   return(chillR::step_model(HourTemp,
                             df = data.frame(lower = c(-1000, 1.4, 2.4, 9.1, 12.4),
                                             upper = c(1.4, 2.4, 9.1, 12.4, 1000),
                                             weight = c(0,0.5,1,0.5,0)), summ = summ))}
-
-
-
-
-

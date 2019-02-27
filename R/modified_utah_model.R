@@ -10,13 +10,25 @@
 #'
 #' @references Linvill D. 1990. Calculating chilling hours and chill units from daily maximum and minimum
 #' temperature observations. HortScience 25(1): 14-16
+#' 
+#' @examples 
+#' library(chillR) 
+#' #Example 1
+#' data <- stack_hourly_temps(KA_weather, latitude = 50.62)
+#' modified_utah_model(data$hourtemps$Temp, summ = T)
+#'
+#' #Example 2
+#' tempResponse(data, Start_JDay = 345, End_JDay = 58,
+#'              models = list(Modified_Units = modified_utah_model))
 
 modified_utah_model <- function(HourTemp, summ = TRUE){
   
-  df <- data.frame(Temps = HourTemp, CU = 0)
-  df[which(df$Temps > 0 & df$Temps <= 21),"CU"] <- sin((2 *pi * 
-                                                          df[which(df$Temps > 0 & df$Temps <= 21),"Temps"]) / 28)
-  df[which(df$Temps > 21),"CU"] <- -1
+  chilling_weights <- rep(0,length(HourTemp))
+  relevant_hours <- which(HourTemp > 0 & HourTemp <= 21)
+  
+  chilling_weights[relevant_hours] <- sin((2 *pi * HourTemp[relevant_hours]) / 28)
+  
+  chilling_weights[which(HourTemp > 21)] <- -1
   
   if (summ == TRUE)
-    return(cumsum(df$CU)) else return(df$CU)}
+    return(cumsum(chilling_weights)) else return(chilling_weights)}

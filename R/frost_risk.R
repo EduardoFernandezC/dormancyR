@@ -10,6 +10,12 @@
 #' @param threshold Numeric vector below which it is considered a potential frost event. Default to 0 celsius degree.
 #' @note By using this function as model input for chillR::tempResponse, the threshold parameter is settled to
 #' default.
+#' 
+#' @example 
+#' library(chillR) 
+#' 
+#' data <- stack_hourly_temps(KA_weather, latitude = 50.62)
+#' frost_risk(data$hourtemps$Temp, summ = T, threshold = -1)
 
 frost_risk <- function(HourTemp, summ = TRUE, threshold = 0){
 

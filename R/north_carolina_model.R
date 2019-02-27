@@ -10,6 +10,15 @@
 #'
 #' @references Shaltout A. and Unrath C. 1983. Rest completion prediction model for starkrimsom delicious apples.
 #' J. Am. Soc. Hort. Sci. 108(6): 957-961
+#' 
+#' @examples 
+#' #Example 1
+#' data <- stack_hourly_temps(KA_weather, latitude = 50.62)
+#' north_carolina_model(data$hourtemps$Temp, summ = T)
+#'
+#' #Example 2
+#' tempResponse(data, Start_JDay = 345, End_JDay = 58,
+#'              models = list(North_Carolina_Units = north_carolina_model))
 
 north_carolina_model <- function(HourTemp, summ = TRUE){
   return(chillR::step_model(HourTemp,

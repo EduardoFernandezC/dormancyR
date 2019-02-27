@@ -8,7 +8,7 @@ tempResponse_daily(data, Start_JDay = 1, End_JDay = 366,
   models = list(Rate_of_Chill = rate_of_chill_Chmielewski, Chill_Days =
   chill_days, Exponential_Chill = exponential_chill_Tmax,
   Triangula_Chill_Hann = triangular_chill_daily_Hann, Triangular_Chill_Lega
-  = triangular_chill_daily_Tmean), QControl = TRUE)
+  = triangular_chill_daily_Tmean))
 }
 \arguments{
 \item{data}{Could be a list of two or more elements. This list should contain a dataframe that could be
@@ -22,19 +22,10 @@ In any case, dataframe should contains colums "Year", "Month", "Day", "JDay", "T
 
 \item{models}{A list of chill functions to compute the metric for the period of interest. Each model
 should be named. Default provides five models (See datails).}
-
-\item{QControl}{Boolean parameter to specified if the quality control dataframe is shown.}
 }
 \description{
 This function produces a summarized dataframe of chill responses computed by several chill models which
 estimate daily chill instead of the metric for each hour. Five models are predetermined, but this function
 also allows to include models predifined by the user. The only request is that such model function must
 uses daily mean, max or min temperatures as input.
-}
-\details{
-This function produces a list with two dataframes, "Chill" and "Missing_Days". "Chill" correspond
-to a summary of winter chill for each complete season in the input dataframe according to the models
-provided by the user in "models" parameter. The second dataframe ("Missing_Days") is a quality control in
-which it is specified the number of days in the season in which a model fails in computing chill due to the
-presence of gaps in the input dataframe.
 }

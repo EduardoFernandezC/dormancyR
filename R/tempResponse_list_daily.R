@@ -10,15 +10,18 @@
 #' This is the number of the day within the year.
 #' @param models List of functions to compute the metrics. Default is settled to those models used in
 #' tempResponse_daily function. This parameter also allows the use of a model specified by the user.
-#' @param QControl Boolean parameter to specified if the quality control dataframe is shown.
+#' 
+#' @example 
+#' library(chillR)
+#' 
+#' tempResponse_list_daily(KA_weather, Start_JDay = 345, End_JDay = 58)
 
 tempResponse_list_daily <- function (temperature_list, Start_JDay = 1, End_JDay = 366, 
                                      models = list(Rate_of_Chill = rate_of_chill_Chmielewski,
                                                    Chill_Days = chill_days,
                                                    Exponential_Chill = exponential_chill_Tmax,
                                                    Triangula_Chill_Hann = triangular_chill_daily_Hann,
-                                                   Triangular_Chill_Lega = triangular_chill_daily_Tmean),
-                                     QControl = TRUE) {
+                                                   Triangular_Chill_Lega = triangular_chill_daily_Tmean)) {
   
   if (is.data.frame(temperature_list)) 
     temperature_list <- list(temperature_list)
@@ -30,7 +33,7 @@ tempResponse_list_daily <- function (temperature_list, Start_JDay = 1, End_JDay 
       data <- temperature_list[[i]]
     
     output[[i]] <- tempResponse_daily(data, Start_JDay = Start_JDay, 
-                                      End_JDay = End_JDay, models = models, QControl = QControl)
+                                      End_JDay = End_JDay, models = models)
   }
   names(output) <- names(temperature_list)
   return(output)

@@ -17,6 +17,16 @@ Function to calculate winter chill for deciduos trees according to the Modified 
 Linvill (1990). This function is compatible with some 'chillR' functions (i.e tempResponse) to
 estimate metrics from hourly temperature records.
 }
+\examples{
+library(chillR) 
+#Example 1
+data <- stack_hourly_temps(KA_weather, latitude = 50.62)
+modified_utah_model(data$hourtemps$Temp, summ = T)
+
+#Example 2
+tempResponse(data, Start_JDay = 345, End_JDay = 58,
+             models = list(Modified_Units = modified_utah_model))
+}
 \references{
 Linvill D. 1990. Calculating chilling hours and chill units from daily maximum and minimum
 temperature observations. HortScience 25(1): 14-16

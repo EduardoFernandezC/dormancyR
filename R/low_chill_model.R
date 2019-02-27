@@ -10,6 +10,17 @@
 #'
 #' @references Gilreath P. and Buchanan D. 1981. Rest prediction model for low-chilling sungold nectarine. J. Am.
 #' Soc. Hort. Sci. 106(4): 426 - 429
+#' 
+#' @examples 
+#' library(chillR) 
+#' 
+#' #Example 1
+#' data <- stack_hourly_temps(KA_weather, latitude = 50.62)
+#' low_chill_model(data$hourtemps$Temp, summ = T)
+#' 
+#' #Example 2
+#' tempResponse(data, Start_JDay = 345, End_JDay = 58,
+#' models = list(Low_Chill = low_chill_model))
 
 low_chill_model <- function (HourTemp, summ = TRUE) 
   return(chillR::step_model(HourTemp,

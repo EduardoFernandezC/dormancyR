@@ -18,6 +18,16 @@ This function computes the chill in an exponential way proposed by Legave et. al
 (2013). This model, which uses Tmax as input an a threshold of 15 celsius degree, was selected as one of the
 "bests" over several models proposed by the same authors.
 }
+\examples{
+library(chillR)
+
+#Example 1
+exponential_chill_Tmax(KA_weather, summ = F)
+
+#Example 2
+tempResponse_daily(KA_weather, Start_JDay = 345, End_JDay = 58, 
+models = list(Exp_Chill = exponential_chill_Tmax))
+}
 \references{
 Legave J., Farrera I., Almeras T. and Calleja M. 2008. Selecting models of apple flowering time
 and understanding how global warming has had and impact on this trait. J. Horticult. Sci. Biotechnol. 83(1):

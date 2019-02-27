@@ -15,16 +15,25 @@
 #' Legave J., Blanke M., Christen D., Giovannini D, Mathieu V. and Oger R. 2013. A comprehensive overview of the
 #' spatial and temporal variability of apple bud dormancy release and blooming phenology in Western Europe.
 #' Int. J. Biometeorol. 57(2): 317 - 331. doi:10.1007/s00484-012-0551-9
+#' 
+#' @examples 
+#' library(chillR)
+#' 
+#' #Example 1
+#' exponential_chill_Tmax(KA_weather, summ = F)
+#' 
+#' #Example 2
+#' tempResponse_daily(KA_weather, Start_JDay = 345, End_JDay = 58, 
+#' models = list(Exp_Chill = exponential_chill_Tmax))
 
 exponential_chill_Tmax <- function (ExtrDailyTemp, summ = TRUE) {
-
-  vector_of_values<-NULL
-  for (i in 1:length(ExtrDailyTemp$Tmax)){
-    if (is.na(ExtrDailyTemp$Tmax[i])) exponential_chill <- NA else {
-      exponential_chill <- exp(-ExtrDailyTemp$Tmax[i] / 15)}
-
-    vector_of_values<-c(vector_of_values, exponential_chill)}
-
+  
+  threshold <- 15
+  
+  exp_chill <- rep(0, length(ExtrDailyTemp$Year))
+  relevant_days <- which(!is.na(ExtrDailyTemp$Tmax))
+  exp_chill[relevant_days] <- exp(-ExtrDailyTemp[relevant_days, "Tmax"] / threshold)
+  
   if (summ == TRUE)
-    return(cumsum(vector_of_values)) else return(vector_of_values)
+    return(cumsum(exp_chill)) else return(exp_chill)
 }
