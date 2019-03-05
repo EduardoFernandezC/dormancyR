@@ -32,7 +32,7 @@
 #' @param path_zip_tmax Character string input. Location of the zip file containing maximum
 #' temperatures. This input must include the name and extension of the file.
 #'
-#' @example
+#' @examples
 #' #Getting the location of zip files
 #' path_zip_tmin<-"[Your folder]\\cr2_tasminDaily_2018_ghcn.zip"
 #' path_zip_tmax<-"[Your folder]\\cr2_tasmaxDaily_2018_ghcn.zip"
@@ -120,7 +120,7 @@ chile_weather <- function(data, Initial_Date = "1950-01-01", End_Date = "2017-12
   for (i in 1:length(Sumarized_stations$Cod_Station)) {
     daily_data[,"Tmin"]<-Tmin[,Sumarized_stations[i,1]]
     daily_data[,"Tmax"]<-Tmax[,Sumarized_stations[i,1]]
-    df<-list(list(data = daily_data, Weather_Station = Sumarized_stations[i, 4]))
+    df<-list(list(data = daily_data, Weather_Station = as.character(Sumarized_stations[i, 4])))
     dfs<-c(dfs, df)
   }
 
@@ -130,7 +130,7 @@ chile_weather <- function(data, Initial_Date = "1950-01-01", End_Date = "2017-12
   N_obs<-NULL
   for (i in 1:length(dfs)) {
     if (table(is.na(dfs[[i]][["data"]][,c("Tmin","Tmax")]))[[1]] != length(dfs[[i]][["data"]][,1])*2) {
-      NobsTemp <- table(is.na(dfs[[i]][["data"]][,c("Tmin","Tmax")]))[[1]]/2
+      NobsTemp <- table(is.na(dfs[[i]][["data"]][,c("Tmin","Tmax")]))[[1]]
     } else {
       NobsTemp <- length(dfs[[i]][["data"]][,1])*2
     }
@@ -139,7 +139,7 @@ chile_weather <- function(data, Initial_Date = "1950-01-01", End_Date = "2017-12
   }
 
   Sumarized_stations[,"N_Obs"] <- N_obs
-  Sumarized_stations[,"Porc_Completo"] <- round((N_obs / length(dfs[[1]][["data"]][,1])) * 100, 2)
+  Sumarized_stations[,"Perc_days_complete"] <- round((N_obs / length(dfs[[1]][["data"]][,1])) * 100/2, 2)
 
   if(data == "info_stations")
     return(Sumarized_stations)

@@ -14,7 +14,7 @@
 #' @param models A list of chill functions to compute the metric for the period of interest. Each model
 #' should be named. Default provides five models (See datails).
 #' 
-#' @example 
+#' @examples 
 #' library(ChillR)
 #' 
 #' tempResponse_daily(KA_weather, Start_JDay = 335, End_JDay = 58)
@@ -23,8 +23,8 @@ tempResponse_daily <- function (data, Start_JDay = 1, End_JDay = 366,
                                 models = list(Rate_of_Chill = rate_of_chill_Chmielewski,
                                               Chill_Days = chill_days,
                                               Exponential_Chill = exponential_chill_Tmax,
-                                              Triangula_Chill_Hann = triangular_chill_daily_Hann,
-                                              Triangular_Chill_Lega = triangular_chill_daily_Tmean)){
+                                              Triangula_Chill_Haninnen = triangular_chill_Hanninen,
+                                              Triangular_Chill_Legave= triangular_chill_Legave)){
   
   if (is.data.frame(data)) {
     QC <- NULL

@@ -20,8 +20,8 @@ tempResponse_list_daily <- function (temperature_list, Start_JDay = 1, End_JDay 
                                      models = list(Rate_of_Chill = rate_of_chill_Chmielewski,
                                                    Chill_Days = chill_days,
                                                    Exponential_Chill = exponential_chill_Tmax,
-                                                   Triangula_Chill_Hann = triangular_chill_daily_Hann,
-                                                   Triangular_Chill_Lega = triangular_chill_daily_Tmean)) {
+                                                   Triangula_Chill_Haninnen = triangular_chill_Hanninen,
+                                                   Triangular_Chill_Legave= triangular_chill_Legave)) {
   
   if (is.data.frame(temperature_list)) 
     temperature_list <- list(temperature_list)

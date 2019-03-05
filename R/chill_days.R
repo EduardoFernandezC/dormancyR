@@ -25,40 +25,48 @@
 #' 
 #' #Example 3
 #' tempResponse_daily(KA_weather, Start_JDay = 345, End_JDay = 58, models = list(Chill_Days = chill_days),
-#' QControl = T)
+#' QControl = T) ##what is this QControl? not in the temperature_daily function that's currently in chillR
 
 chill_days <- function (ExtrDailyTemp, summ = TRUE){
     
-    threshold <- mean(c(7.0, 6.8, 6.9, 7.0, 7.9, 7.5, 7.0, 7.0, 7.3, 7.1, 7.1, 7.2)) # abbreviation: TC
+    threshold <- mean(c(7.0, 6.8, 6.9, 7.0, 7.9, 7.5, 7.0, 7.0, 7.3, 7.1, 7.1, 7.2)) # abbreviation: TC #what is this for?
     
     if (!("Tmean" %in% names(ExtrDailyTemp))) 
       ExtrDailyTemp[,"Tmean"] <- (ExtrDailyTemp["Tmax"] + ExtrDailyTemp["Tmin"]) / 2
     
-    ExtrDailyTemp[,"Chill_Days"] <- 0 #condition 1: 0 <= TC <= Tmin <= Tmax
+    #condition 1: 0 <= TC <= Tmin <= Tmax
     
-    rel_days_cond2 <- which(ExtrDailyTemp$Tmin >= 0 & ExtrDailyTemp$Tmin <= threshold &
-                              threshold < ExtrDailyTemp$Tmax) # condition 2: 0 <= Tmin <= TC < Tmax
+    ExtrDailyTemp[,"Chill_Days"] <- 0 
+    
+    # condition 2: 0 <= Tmin <= TC < Tmax
+    rel_days_cond2 <- which(ExtrDailyTemp$Tmin >= 0 &
+                            ExtrDailyTemp$Tmin <= threshold &
+                            threshold < ExtrDailyTemp$Tmax) 
     
       ExtrDailyTemp[rel_days_cond2,"Chill_Days"] <- (ExtrDailyTemp[rel_days_cond2,"Tmean"] - 
                                                        ExtrDailyTemp[rel_days_cond2,"Tmin"]) - 
         ((ExtrDailyTemp[rel_days_cond2,"Tmax"] - threshold)^2) / (2 * (ExtrDailyTemp[rel_days_cond2,"Tmax"] -
                                                                        ExtrDailyTemp[rel_days_cond2,"Tmin"]))
+    # condition 3: 0 <= Tmin <= Tmax <= TC
     
-    rel_days_cond3 <- which(0 <= ExtrDailyTemp$Tmin & 
-                              threshold >= ExtrDailyTemp$Tmax) # condition 3: 0 <= Tmin <= Tmax <= TC
+      rel_days_cond3 <- which(0 <= ExtrDailyTemp$Tmin & 
+                              threshold >= ExtrDailyTemp$Tmax) 
     
       ExtrDailyTemp[rel_days_cond3,"Chill_Days"] <- ExtrDailyTemp[rel_days_cond3,"Tmean"] - 
         ExtrDailyTemp[rel_days_cond3,"Tmin"]
     
+    # condition 4: Tmin <= 0 <= Tmax <= TC
+    
     rel_days_cond4 <- which(ExtrDailyTemp$Tmin < 0 & ExtrDailyTemp$Tmax >= 0 & 
-                              threshold >= ExtrDailyTemp$Tmax) # condition 4: Tmin <= 0 <= Tmax <= TC
+                              threshold >= ExtrDailyTemp$Tmax) 
     
       ExtrDailyTemp[rel_days_cond4,"Chill_Days"] <- (ExtrDailyTemp[rel_days_cond4,"Tmax"]^2) /
         (2 * (ExtrDailyTemp[rel_days_cond4,"Tmax"] - ExtrDailyTemp[rel_days_cond4,"Tmin"]))
     
+    # condition 5: Tmin < 0 < TC < Tmax
     
     rel_days_cond5 <- which(ExtrDailyTemp$Tmin < 0 & threshold > 0 &
-                              threshold < ExtrDailyTemp$Tmax) # condition 5: Tmin < 0 < TC < Tmax
+                              threshold < ExtrDailyTemp$Tmax) 
     
       ExtrDailyTemp[rel_days_cond5,"Chill_Days"] <- (ExtrDailyTemp[rel_days_cond5,"Tmax"]^2) /
         (2 * (ExtrDailyTemp[rel_days_cond5,"Tmax"] - ExtrDailyTemp[rel_days_cond5,"Tmin"])) -

@@ -11,7 +11,7 @@
 #' @note By using this function as model input for chillR::tempResponse, the threshold parameter is settled to
 #' default.
 #' 
-#' @example 
+#' @examples
 #' library(chillR) 
 #' 
 #' data <- stack_hourly_temps(KA_weather, latitude = 50.62)

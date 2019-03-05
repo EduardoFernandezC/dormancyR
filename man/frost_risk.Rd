@@ -23,3 +23,9 @@ functions (i.e tempResponse) to estimate metrics from hourly temperature records
 By using this function as model input for chillR::tempResponse, the threshold parameter is settled to
 default.
 }
+\examples{
+library(chillR) 
+
+data <- stack_hourly_temps(KA_weather, latitude = 50.62)
+frost_risk(data$hourtemps$Temp, summ = T, threshold = -1)
+}

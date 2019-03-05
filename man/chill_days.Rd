@@ -30,7 +30,7 @@ data[,"Chill_Days"] <- chill_days(data, summ = FALSE)
 
 #Example 3
 tempResponse_daily(KA_weather, Start_JDay = 345, End_JDay = 58, models = list(Chill_Days = chill_days),
-QControl = T)
+QControl = T) ##what is this QControl? not in the temperature_daily function that's currently in chillR
 }
 \references{
 Cesaraccio C., Spano D., Snyder R. and Duce P. 2004. Chilling and forcing model to predict
