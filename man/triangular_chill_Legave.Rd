@@ -18,6 +18,12 @@ This function computes the chill according to the triangular function proposed b
 Legave et. al. (2013). This model, which uses Tmean as input, was selected as one of the "bests" over several
 models proposed by the same authors.
 }
+\examples{
+library(chillR)
+
+tempResponse_daily(data, Start_JDay = 345, End_JDay = 58, models = list(Triangular_Chill_Legave =
+                                                                        triangular_chill_Legave))
+}
 \references{
 Legave J., Farrera I., Almeras T. and Calleja M. 2008. Selecting models of apple flowering time
 and understanding how global warming has had and impact on this trait. J. Horticult. Sci. Biotechnol. 83(1):

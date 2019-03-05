@@ -4,19 +4,19 @@
 \alias{chile_weather}
 \title{Get historical records of extreme temperatures for Chile}
 \usage{
-chile_weather(data, Initial_Date = "1950-01-01",
+chile_weather(output, Initial_Date = "1950-01-01",
   End_Date = "2017-12-31", latitude = latitude,
   longitude = longitude, Number_of_stations = 25,
   path_zip_tmin = path_zip_tmin, path_zip_tmax = path_zip_tmax)
 }
 \arguments{
-\item{data}{Character string input which define the kind of data wanted. There are three options
+\item{output}{Character string input which define the kind of data wanted. There are three options
 for this parameter. "info_stations" provides a dataframe with information about a given number
 of weather stations (set in "Number_of_stations" parameter) located close to the ubication
 established with "latitude" and "longitude" parameters. "station_list" provides a list of
 dataframes containing minimum and maximum temperature records from each weather station
 obtained with the "info_stations" option within the period established in the call of the function.
-Finally, "my_weather" provides the first dataframe of the previous list and represent the
+Finally, "my_data" provides the first dataframe of the previous list and represent the
 data of the closest weather station to the ubication established.}
 
 \item{Initial_Date}{Character string input in the form "YYYY-MM-DD". This parameter represents the
@@ -56,7 +56,7 @@ path_zip_tmin<-"[Your folder]\\\\cr2_tasminDaily_2018_ghcn.zip"
 path_zip_tmax<-"[Your folder]\\\\cr2_tasmaxDaily_2018_ghcn.zip"
 
 #Call of the function
-chile_weather(data = "my_weather", Initial_Date = "2000-01-01", End_Date = "2017-12-31",
+chile_weather(output = "my_data", Initial_Date = "2000-01-01", End_Date = "2017-12-31",
               latitude = -32.8958, longitude = -71.2092, Number_of_stations = 25,
               path_zip_tmin = path_zip_tmin, path_zip_tmax = path_zip_tmax)
 }

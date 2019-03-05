@@ -16,7 +16,7 @@
 #' spatial and temporal variability of apple bud dormancy release and blooming phenology in Western Europe.
 #' Int. J. Biometeorol. 57(2): 317 - 331. doi:10.1007/s00484-012-0551-9
 #' 
-#' @example
+#' @examples 
 #' library(chillR)
 #' 
 #' tempResponse_daily(data, Start_JDay = 345, End_JDay = 58, models = list(Triangular_Chill_Legave =

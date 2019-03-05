@@ -7,8 +7,8 @@
 tempResponse_daily(data, Start_JDay = 1, End_JDay = 366,
   models = list(Rate_of_Chill = rate_of_chill_Chmielewski, Chill_Days =
   chill_days, Exponential_Chill = exponential_chill_Tmax,
-  Triangula_Chill_Hann = triangular_chill_daily_Hann, Triangular_Chill_Lega
-  = triangular_chill_daily_Tmean))
+  Triangula_Chill_Haninnen = triangular_chill_Hanninen,
+  Triangular_Chill_Legave = triangular_chill_Legave))
 }
 \arguments{
 \item{data}{Could be a list of two or more elements. This list should contain a dataframe that could be
@@ -28,4 +28,9 @@ This function produces a summarized dataframe of chill responses computed by sev
 estimate daily chill instead of the metric for each hour. Five models are predetermined, but this function
 also allows to include models predifined by the user. The only request is that such model function must
 uses daily mean, max or min temperatures as input.
+}
+\examples{
+library(ChillR)
+
+tempResponse_daily(KA_weather, Start_JDay = 335, End_JDay = 58)
 }

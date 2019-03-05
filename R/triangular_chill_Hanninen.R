@@ -13,7 +13,7 @@
 #' Kramer K. 1994. Selecting a model to predict the onset of growth of \emph{Fagus sylvatica}.
 #' J. Appl. Ecol. 31(1): 172-181
 #' 
-#' @example 
+#' @examples 
 #' library(chillR)
 #' 
 #' tempResponse_daily(KA_weather, Start_JDay = 345, End_JDay = 58, models = list(Triangular_Chill =

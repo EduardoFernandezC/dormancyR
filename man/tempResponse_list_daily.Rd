@@ -7,9 +7,9 @@
 tempResponse_list_daily(temperature_list, Start_JDay = 1,
   End_JDay = 366, models = list(Rate_of_Chill =
   rate_of_chill_Chmielewski, Chill_Days = chill_days, Exponential_Chill =
-  exponential_chill_Tmax, Triangula_Chill_Hann =
-  triangular_chill_daily_Hann, Triangular_Chill_Lega =
-  triangular_chill_daily_Tmean))
+  exponential_chill_Tmax, Triangula_Chill_Haninnen =
+  triangular_chill_Hanninen, Triangular_Chill_Legave =
+  triangular_chill_Legave))
 }
 \arguments{
 \item{temperature_list}{List of temperatures as those produced by temperature_generation from chillR.}
@@ -26,4 +26,9 @@ tempResponse_daily function. This parameter also allows the use of a model speci
 \description{
 This function allows to compute metrics from models which use as input daily temperature istead hourly data.
 It is an extension of the tempResponse_daily function.
+}
+\examples{
+library(chillR)
+
+tempResponse_list_daily(KA_weather, Start_JDay = 345, End_JDay = 58)
 }

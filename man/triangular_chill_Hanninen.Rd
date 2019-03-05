@@ -17,6 +17,12 @@ over the period or as the actual accumulation for each hour.}
 Function to calculate winter chill for deciduos trees according to the Triangular chill function proposed by
 Hanninen (1990) and Krammer (1994).
 }
+\examples{
+library(chillR)
+
+tempResponse_daily(KA_weather, Start_JDay = 345, End_JDay = 58, models = list(Triangular_Chill =
+                                                                            triangular_chill_Hanninen))
+}
 \references{
 Hanninen H. 1990. Modelling bud dormancy release in trees from cool and temperate regions.
 Acta For. Fenn. 213: 1-47 doi:10.14214/aff.7660

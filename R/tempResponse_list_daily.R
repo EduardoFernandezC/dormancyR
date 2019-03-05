@@ -11,7 +11,7 @@
 #' @param models List of functions to compute the metrics. Default is settled to those models used in
 #' tempResponse_daily function. This parameter also allows the use of a model specified by the user.
 #' 
-#' @example 
+#' @examples 
 #' library(chillR)
 #' 
 #' tempResponse_list_daily(KA_weather, Start_JDay = 345, End_JDay = 58)
