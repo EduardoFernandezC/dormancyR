@@ -102,7 +102,8 @@ chile_weather <- function(output, Initial_Date = "1950-01-01", End_Date = "2017-
   colnames(Sumarized_stations) <- c("Cod_Station","Institution","Source","Name","Altitude","Latitude",
                                     "Longitude","Distance")
   
-  primer_data <- data.frame(Year = c(as.numeric(substr(Initial_Date, 1, 4)),
+  primer_data <- data.frame(Weather_Station = NA,
+                            Year = c(as.numeric(substr(Initial_Date, 1, 4)),
                                      as.numeric(substr(End_Date,1,4))),
                             Month = c(as.numeric(substr(Initial_Date, 6, 7)),
                                       as.numeric(substr(End_Date, 6, 7))),
@@ -118,10 +119,10 @@ chile_weather <- function(output, Initial_Date = "1950-01-01", End_Date = "2017-
   
   dfs <- NULL
   for (i in 1:length(Sumarized_stations$Cod_Station)) {
+    daily_data[,"Weather_Station"] <- as.character(Sumarized_stations[i,4])
     daily_data[,"Tmin"]<-Tmin[,Sumarized_stations[i,1]]
     daily_data[,"Tmax"]<-Tmax[,Sumarized_stations[i,1]]
-    df<-list(list(data = daily_data, Weather_Station = as.character(Sumarized_stations[i, 4])))
-    dfs<-c(dfs, df)
+    dfs<-c(dfs, list(daily_data))
   }
   
   if(output == "station_list")
@@ -129,17 +130,17 @@ chile_weather <- function(output, Initial_Date = "1950-01-01", End_Date = "2017-
   
   N_obs<-NULL
   for (i in 1:length(dfs)) {
-    if (table(is.na(dfs[[i]][["data"]][,c("Tmin","Tmax")]))[[1]] != length(dfs[[i]][["data"]][,1])*2) {
-      NobsTemp <- table(is.na(dfs[[i]][["data"]][,c("Tmin","Tmax")]))[[1]]
+    if (table(is.na(dfs[[i]][,c("Tmin","Tmax")]))[[1]] != length(dfs[[i]][,1])*2) {
+      NobsTemp <- table(is.na(dfs[[i]][,c("Tmin","Tmax")]))[[1]]
     } else {
-      NobsTemp <- length(dfs[[i]][["data"]][,1])*2
+      NobsTemp <- length(dfs[[i]][,1])*2
     }
     
     N_obs<-c(N_obs, NobsTemp)
   }
   
   Sumarized_stations[,"N_Obs"] <- N_obs
-  Sumarized_stations[,"Perc_days_complete"] <- round((N_obs / length(dfs[[1]][["data"]][,1])) * 100/2, 2)
+  Sumarized_stations[,"Perc_days_complete"] <- round((N_obs / length(dfs[[1]][,1])) * 100/2, 2)
   
   if(output == "info_stations")
     return(Sumarized_stations)
@@ -148,4 +149,3 @@ chile_weather <- function(output, Initial_Date = "1950-01-01", End_Date = "2017-
   if(output == "my_data")
     return(my_weather)
 }
-

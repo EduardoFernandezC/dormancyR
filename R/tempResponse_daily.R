@@ -76,9 +76,11 @@ tempResponse_daily <- function (data, Start_JDay = 1, End_JDay = 366,
   
   data_days <- NULL
   for (i in 1: length(seasons)){
-    days <- length(which(temps$sea == seasons[i])) -
-      length(which(is.na(temps[which(temps$sea == seasons[i]),c("Tmax","Tmin")]) == T ))
+    days <- length(which(temps$sea == seasons[i])) - 
+            length(which(is.na(temps[which(temps$sea == seasons[i]),"Tmin"] + 
+                                   temps[which(temps$sea == seasons[i]),"Tmin"])))
     data_days <- c(data_days, days)}
+  
   
   output[,"Data_days"] <- data_days
   output[,"Perc_complete"] <- (output$Data_days / output$Season_days ) * 100

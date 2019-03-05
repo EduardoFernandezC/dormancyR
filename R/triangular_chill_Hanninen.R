@@ -21,19 +21,34 @@
 
 triangular_chill_Hanninen <- function (ExtrDailyTemp, summ = TRUE){
   
-  if (!("Tmean" %in% names(ExtrDailyTemp)))
-    ExtrDailyTemp[,"Tmean"] <- (ExtrDailyTemp["Tmax"] + ExtrDailyTemp["Tmin"]) / 2
+  #Calculating Tmean from Tmax and Tmin
   
-  ExtrDailyTemp[,"Triang_Chill_Hann"] <- 0 # condition 1: Tmean <= -3.4 or Tmean > 10.4
+    if (!("Tmean" %in% names(ExtrDailyTemp)))
+      ExtrDailyTemp[,"Tmean"] <- (ExtrDailyTemp["Tmax"] + ExtrDailyTemp["Tmin"]) / 2
   
-  rel_days_cond2 <- which(ExtrDailyTemp$Tmean > -3.4 & 
-                            ExtrDailyTemp$Tmean <= 3.5) # condition 2: -3.4 < Tmean <= 3.5
-  ExtrDailyTemp[rel_days_cond2, "Triang_Chill_Hann"] <- 0.159 * ExtrDailyTemp[rel_days_cond2, "Tmean"] + 0.506
+  #As for condition 1 (Tmean <= -3.4 or Tmean > 10.4) chill unit is equal to 0 I have setted all the values
+  #a 0. From this I will extract those events in which chill unit has a value above 0
   
-  rel_days_cond3 <- which(ExtrDailyTemp$Tmean > 3.5 & 
-                            ExtrDailyTemp$Tmean <= 10.4) # condition 3: 3.5 < Tmean <= 10.4
-  ExtrDailyTemp[rel_days_cond2, "Triang_Chill_Hann"] <- -0.159 * ExtrDailyTemp[rel_days_cond2, "Tmean"] + 
-    1.621
+    ExtrDailyTemp[,"Triang_Chill_Hann"] <- 0 
+  
+  #Relevant days which fit the condition 2: -3.4 < Tmean <= 3.5
+  
+    rel_days_cond2 <- which(ExtrDailyTemp$Tmean > -3.4 & 
+                            ExtrDailyTemp$Tmean <= 3.5)
+  
+    #Value of chill unit for days which fit the condition 2
+      
+      ExtrDailyTemp[rel_days_cond2, "Triang_Chill_Hann"] <- 0.159 * ExtrDailyTemp[rel_days_cond2, "Tmean"] + 0.506
+  
+  #Relevant days which fit the condition 3: 3.5 < Tmean <= 10.4
+    
+    rel_days_cond3 <- which(ExtrDailyTemp$Tmean > 3.5 & 
+                            ExtrDailyTemp$Tmean <= 10.4) 
+  
+    #Value of chill unit for days which fit the condition 2
+    
+      ExtrDailyTemp[rel_days_cond3, "Triang_Chill_Hann"] <- -0.159 * ExtrDailyTemp[rel_days_cond3, "Tmean"] + 
+                                                           1.621
   
   if (summ == TRUE)
     return(cumsum(ExtrDailyTemp$Triang_Chill_Hann)) else return(ExtrDailyTemp$Triang_Chill_Hann)
