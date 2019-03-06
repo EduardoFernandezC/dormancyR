@@ -15,7 +15,7 @@
 #' should be named. Default provides five models (See datails).
 #' 
 #' @examples 
-#' library(ChillR)
+#' library(chillR)
 #' 
 #' tempResponse_daily(KA_weather, Start_JDay = 335, End_JDay = 58)
 
@@ -26,68 +26,86 @@ tempResponse_daily <- function (data, Start_JDay = 1, End_JDay = 366,
                                               Triangula_Chill_Haninnen = triangular_chill_Hanninen,
                                               Triangular_Chill_Legave= triangular_chill_Legave)){
   
-  if (is.data.frame(data)) {
-    QC <- NULL
-    weather <-  data} else {
-      if("weather" %in% names(data)) {
-        QC <- data$QC
-        weather <- data$weather} else {
-          if ("data" %in% names(data))
-            weather_station <- data$Weather_Station
-          weather <- data$data }}
+  #Evaluating if the data is a dataframe or a list obtained from the fix_weather or patch_daily_temperatures
+  #functions of chillR
   
-  if ("JDay" %in% names(weather)) weather <- weather else
-    weather <- chillR::make_JDay(weather)
+    if (is.data.frame(data)) {
+      QC <- NULL
+      weather <-  data} else {
+        if("weather" %in% names(data)) {
+          QC <- data$QC
+          weather <- data$weather}}
   
-  if (Start_JDay < End_JDay) {
-    weather[which(weather$JDay >= Start_JDay & weather$JDay <=
+  #Evaluating if the dataframe contains a column called JDay, which is necessary for the following steps
+  
+    if ("JDay" %in% names(weather)) weather <- weather else
+      weather <- chillR::make_JDay(weather)
+  
+  #Identifiying the season within the dataframe for each year
+  
+    if (Start_JDay < End_JDay) {
+      weather[which(weather$JDay >= Start_JDay & weather$JDay <=
                     End_JDay), "sea"] <- weather[which(weather$JDay >=
                                                          Start_JDay & weather$JDay <= End_JDay), "Year"]
-  } else {
-    weather[which(weather$JDay >= Start_JDay), "sea"] <- weather[which(weather$JDay >=
+    } else {
+      weather[which(weather$JDay >= Start_JDay), "sea"] <- weather[which(weather$JDay >=
                                                                          Start_JDay), "Year"] + 1
-    weather[which(weather$JDay <= End_JDay), "sea"] <- weather[which(weather$JDay <=
+      weather[which(weather$JDay <= End_JDay), "sea"] <- weather[which(weather$JDay <=
                                                                        End_JDay), "Year"]}
   
-  if (Start_JDay < End_JDay) {
-    relevant_days <- Start_JDay:End_JDay} else {
-      relevant_days <- c(Start_JDay:366, 1:End_JDay)}
   
-  temps <- weather[which(!is.na(weather[,"sea"])),]
+  #Selecting the relevant days for which the chill metrics must be computed
   
-  for (m in 1:length(models)) {
-    temps[,names(models)[m]] <- do.call(models[[m]],list(temps, summ = F))}
+    temps <- weather[which(!is.na(weather[,"sea"])),]
   
-  seasons <- as.numeric(unique(weather$sea))
-  seasons <- seasons[!is.na(seasons)]
+  #Computing the chill responses according to the models defined in the call of the fucntion  
   
-  output <- data.frame(Season = paste(seasons - 1, "/", seasons, sep = ""), End_Year = seasons)
+    for (m in 1:length(models)) {
+      temps[,names(models)[m]] <- do.call(models[[m]],list(temps, summ = F))}
   
-  if (Start_JDay > End_JDay) {
-    season_days <- NULL
-    for (season in seasons){
-      season_day <- chillR::JDay_count(Start_JDay,End_JDay,leap_year = chillR::leap_year(season-1)) + 1
+  #Identifying the seasons
+    
+    seasons <- as.numeric(unique(weather$sea))
+    seasons <- seasons[!is.na(seasons)]
+  
+  #Making a dataframe to save the summary of the chill responses
+    
+    output <- data.frame(Season = paste(seasons - 1, "/", seasons, sep = ""), End_Year = seasons)
+  
+  #Computing the number of days for the season of interest
+    
+    if (Start_JDay > End_JDay) {
+      season_days <- NULL
+        for (season in seasons){
+          season_day <- chillR::JDay_count(Start_JDay,End_JDay,leap_year = chillR::leap_year(season-1)) + 1
       
-      season_days <- c(season_days, season_day)}} else {
-        season_days <- (End_JDay - Start_JDay) + 1}
+          season_days <- c(season_days, season_day)}} else {
+            season_days <- (End_JDay - Start_JDay) + 1}
   
-  output[,"Season_days"] <- season_days
+  #Adding the season days to the output
+    
+    output[,"Season_days"] <- season_days
   
+  #Computing the number of days with data
+    
+    data_days <- NULL
+    for (i in 1: length(seasons)){
+      days <- length(which(temps$sea == seasons[i])) - 
+              length(which(is.na(temps[which(temps$sea == seasons[i]),"Tmin"] + 
+                                     temps[which(temps$sea == seasons[i]),"Tmin"])))
+      data_days <- c(data_days, days)}
   
-  data_days <- NULL
-  for (i in 1: length(seasons)){
-    days <- length(which(temps$sea == seasons[i])) - 
-            length(which(is.na(temps[which(temps$sea == seasons[i]),"Tmin"] + 
-                                   temps[which(temps$sea == seasons[i]),"Tmin"])))
-    data_days <- c(data_days, days)}
+  #Adding information to the output
+    
+    output[,"Data_days"] <- data_days
+    output[,"Perc_complete"] <- (output$Data_days / output$Season_days ) * 100
   
-  
-  output[,"Data_days"] <- data_days
-  output[,"Perc_complete"] <- (output$Data_days / output$Season_days ) * 100
-  
-  for (i in 1: length(seasons))
-    for (m in 1: length(models)){
-      output[i, names(models)[m]] <- sum(temps[which(temps$sea == seasons[i]),names(models)[m]],na.rm = T)}
+  #Adding the results of the chill responses to the output. This is the sum of chill according to each model
+  #used to compute the responses
+    
+    for (i in 1: length(seasons))
+      for (m in 1: length(models)){
+        output[i, names(models)[m]] <- sum(temps[which(temps$sea == seasons[i]),names(models)[m]],na.rm = T)}
   
   return(output)
 }

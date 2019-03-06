@@ -24,14 +24,26 @@
 
 chilling_units_Harrington <- function(HourTemp, summ = TRUE){
 
-  chilling_weights <- rep(0, length(HourTemp))
-  relevant_hours <- which(HourTemp >= -4.66 & HourTemp < 16)
+  #Giving a value of zero to all days for then change according to each situation.
+  #This is 0 for hours in which Temp < -4.66 or Temp > 16 C
   
-  chilling_weights[relevant_hours] <- 3.13 * (((HourTemp[relevant_hours] + 4.66) / 10.93) ^ 2.10) * 
-    exp(1)^ - ((HourTemp[relevant_hours] + 4.66) / 10.93) ^ 3.10
+    chilling_weights <- rep(0, length(HourTemp))
   
-  chilling_weights[chilling_weights > 1] <- 1
+  #Selecting the hours which fit the condition: -4.66 < Temp < 16
+    
+    relevant_hours <- which(HourTemp >= -4.66 & HourTemp < 16)
   
-  if (summ == TRUE)
+    #Computing chill for such condition
+    
+      chilling_weights[relevant_hours] <- 3.13 * (((HourTemp[relevant_hours] + 4.66) / 10.93) ^ 2.10) * 
+        exp(1)^ - ((HourTemp[relevant_hours] + 4.66) / 10.93) ^ 3.10
+  
+  #Correction factor for those chill values above 1
+      
+    chilling_weights[chilling_weights > 1] <- 1
+  
+  #End of the function
+    
+    if (summ == TRUE)
     return(cumsum(chilling_weights)) else return(chilling_weights)
 }

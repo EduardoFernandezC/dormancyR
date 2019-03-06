@@ -24,20 +24,35 @@
 
 triangular_chill_Legave <- function (ExtrDailyTemp, summ = TRUE) {
   
-  if (!("Tmean" %in% names(ExtrDailyTemp)))
-    ExtrDailyTemp[,"Tmean"] <- (ExtrDailyTemp["Tmax"] + ExtrDailyTemp["Tmin"]) / 2
+  #Computing Tmean from Tmin and Tmax
   
-  threshold <- 1 #abbreviation TC
-  temp_interval <- 24 #abbreviation Ic
+    if (!("Tmean" %in% names(ExtrDailyTemp)))
+      ExtrDailyTemp[,"Tmean"] <- (ExtrDailyTemp["Tmax"] + ExtrDailyTemp["Tmin"]) / 2
   
-  ExtrDailyTemp[,"Triang_Chill_Legave"] <- 0
+  #Threshold (Tc)reported in the paper
+    
+    threshold <- 1
   
-  rel_days_cond2 <- which(threshold - temp_interval < ExtrDailyTemp$Tmean & 
-                            threshold + temp_interval > ExtrDailyTemp$Tmean) # condition 2: TC-Ic < Tmean < TC+Ic
+  #Temperature interval (Ic)defininf the range of efficient temperatures around Threshold
   
-  ExtrDailyTemp[rel_days_cond2, "Triang_Chill_Legave"] <- 1 - (abs(ExtrDailyTemp[rel_days_cond2, "Tmean"] - 
+    temp_interval <- 24 
+  
+  #Giving a value of 0 to the whole record 
+  
+    ExtrDailyTemp[,"Triang_Chill_Legave"] <- 0
+  
+  #Selecting those days which fit the condition 2: TC-Ic < Tmean < TC+Ic
+  
+    rel_days_cond2 <- which(threshold - temp_interval < ExtrDailyTemp$Tmean & 
+                            threshold + temp_interval > ExtrDailyTemp$Tmean)
+  
+    #Computing the chill value for such condition
+  
+      ExtrDailyTemp[rel_days_cond2, "Triang_Chill_Legave"] <- 1 - (abs(ExtrDailyTemp[rel_days_cond2, "Tmean"] - 
                                                                      threshold) / temp_interval)
   
-  if (summ == TRUE)
-    return(cumsum(ExtrDailyTemp$Triang_Chill_Legave)) else return(ExtrDailyTemp$Triang_Chill_Legave)
+  #End of the function    
+      
+    if (summ == TRUE)
+      return(cumsum(ExtrDailyTemp$Triang_Chill_Legave)) else return(ExtrDailyTemp$Triang_Chill_Legave)
 }

@@ -13,7 +13,7 @@ chile_weather(output, Initial_Date = "1950-01-01",
 \item{output}{Character string input which define the kind of data wanted. There are three options
 for this parameter. "info_stations" provides a dataframe with information about a given number
 of weather stations (set in "Number_of_stations" parameter) located close to the ubication
-established with "latitude" and "longitude" parameters. "station_list" provides a list of
+established with "latitude" and "longitude" parameters. "station_list_data" provides a list of
 dataframes containing minimum and maximum temperature records from each weather station
 obtained with the "info_stations" option within the period established in the call of the function.
 Finally, "my_data" provides the first dataframe of the previous list and represent the

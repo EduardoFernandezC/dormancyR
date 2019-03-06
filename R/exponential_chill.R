@@ -28,12 +28,23 @@
 
 exponential_chill_Tmax <- function (ExtrDailyTemp, summ = TRUE) {
   
-  threshold <- 15
+  #Threshold reported in the paper for which the model works relatively well
   
-  exp_chill <- rep(0, length(ExtrDailyTemp$Year))
-  relevant_days <- which(!is.na(ExtrDailyTemp$Tmax))
-  exp_chill[relevant_days] <- exp(-ExtrDailyTemp[relevant_days, "Tmax"] / threshold)
+    threshold <- 15
   
-  if (summ == TRUE)
-    return(cumsum(exp_chill)) else return(exp_chill)
+  #Giving a value of 0 to the whole record
+    
+    exp_chill <- rep(0, length(ExtrDailyTemp$Year))
+  
+  #Selecting days with data
+    
+    relevant_days <- which(!is.na(ExtrDailyTemp$Tmax))
+    
+  #Appliying the function to those days which have data
+    
+    exp_chill[relevant_days] <- exp(-ExtrDailyTemp[relevant_days, "Tmax"] / threshold)
+  
+  #End of the function
+    if (summ == TRUE)
+      return(cumsum(exp_chill)) else return(exp_chill)
 }

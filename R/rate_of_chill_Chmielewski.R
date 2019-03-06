@@ -24,22 +24,40 @@
 
 rate_of_chill_Chmielewski <- function (ExtrDailyTemp, summ = TRUE){
   
-  threshold <- 4.2 #abbreviation: TC
+  #Threshold reported in the paper 
   
-  if (!("Tmean" %in% names(ExtrDailyTemp)))
+    threshold <- 4.2 #abbreviation: TC
+  
+  #Computing Tmean from Tmin and Tmax
+    
+    if (!("Tmean" %in% names(ExtrDailyTemp)))
     ExtrDailyTemp[,"Tmean"] <- (ExtrDailyTemp["Tmax"] + ExtrDailyTemp["Tmin"]) / 2
   
-  ExtrDailyTemp[,"Rate_of_Chill"] <- 0 # condition 1: Tmean <= 0 or Tmean >= 10.0
+  #Selecting those days which fit the condition 1: Tmean <= 0 or Tmean >= 10.0 and giving a value of 0
+    
+    ExtrDailyTemp[,"Rate_of_Chill"] <- 0  
   
-  rel_days_cond2 <- which(ExtrDailyTemp$Tmean > 0 & 
-                            ExtrDailyTemp$Tmean <= threshold) # condition 2: 0 < Tmean < TC
-  ExtrDailyTemp[rel_days_cond2, "Rate_of_Chill"] <- ExtrDailyTemp[rel_days_cond2, "Tmean"] / threshold 
+  #Selecting days which fit the condition 2: 0 < Tmean < Threshold
+    
+    rel_days_cond2 <- which(ExtrDailyTemp$Tmean > 0 & 
+                            ExtrDailyTemp$Tmean <= threshold)
+      
+    #Computing chill for those days
+    
+      ExtrDailyTemp[rel_days_cond2, "Rate_of_Chill"] <- ExtrDailyTemp[rel_days_cond2, "Tmean"] / threshold 
   
-  rel_days_cond3 <- which(ExtrDailyTemp$Tmean > threshold & 
-                            ExtrDailyTemp$Tmean < 10.0) # condition 3: TC < Tmean < 10.0
-  ExtrDailyTemp[rel_days_cond3, "Rate_of_Chill"] <- (ExtrDailyTemp[rel_days_cond3, "Tmean"] - 10.0) /
-    (threshold - 10.0)
+  #Selecting days which fit the condition 3: Threshold < Tmean < 10.0
+     
+    rel_days_cond3 <- which(ExtrDailyTemp$Tmean > threshold & 
+                            ExtrDailyTemp$Tmean < 10.0)
+    
+    #Computing chill for those days
+    
+      ExtrDailyTemp[rel_days_cond3, "Rate_of_Chill"] <- (ExtrDailyTemp[rel_days_cond3, "Tmean"] - 10.0) /
+                                                          (threshold - 10.0)
   
-  if (summ == TRUE)
-    return(cumsum(ExtrDailyTemp$Rate_of_Chill)) else return(ExtrDailyTemp$Rate_of_Chill)  
+  #End of the function
+      
+    if (summ == TRUE)
+      return(cumsum(ExtrDailyTemp$Rate_of_Chill)) else return(ExtrDailyTemp$Rate_of_Chill)  
 }

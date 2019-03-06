@@ -29,49 +29,68 @@
 
 chill_days <- function (ExtrDailyTemp, summ = TRUE){
     
-    threshold <- mean(c(7.0, 6.8, 6.9, 7.0, 7.9, 7.5, 7.0, 7.0, 7.3, 7.1, 7.1, 7.2)) # abbreviation: TC #what is this for?
+  #Threshold used in the model. Several values were reported in the paper according to the trees for which
+  #the model was developed. In this case I used values reported for fruit trees (Kiwi, Sweet Cherry and
+  #Pears).
+  
+    threshold <- mean(c(7.0, 6.8, 6.9, 7.0, 7.9, 7.5, 7.0, 7.0, 7.3, 7.1, 7.1, 7.2))
+    
+  #Computing Tmean from Tmin and Tmax
     
     if (!("Tmean" %in% names(ExtrDailyTemp))) 
       ExtrDailyTemp[,"Tmean"] <- (ExtrDailyTemp["Tmax"] + ExtrDailyTemp["Tmin"]) / 2
     
-    #condition 1: 0 <= TC <= Tmin <= Tmax
+  #As for Condition 1 (0 <= Threshold <= Tmin <= Tmax) I setted the Chill Days as  for the whole record and
+  #then the relevant days were changed
     
     ExtrDailyTemp[,"Chill_Days"] <- 0 
     
-    # condition 2: 0 <= Tmin <= TC < Tmax
+  #Relevant days which fit the condition 2: 0 <= Tmin <= Threshold < Tmax
+    
     rel_days_cond2 <- which(ExtrDailyTemp$Tmin >= 0 &
                             ExtrDailyTemp$Tmin <= threshold &
                             threshold < ExtrDailyTemp$Tmax) 
+    
+    #Value of Chill Days according to the condition 2
     
       ExtrDailyTemp[rel_days_cond2,"Chill_Days"] <- (ExtrDailyTemp[rel_days_cond2,"Tmean"] - 
                                                        ExtrDailyTemp[rel_days_cond2,"Tmin"]) - 
         ((ExtrDailyTemp[rel_days_cond2,"Tmax"] - threshold)^2) / (2 * (ExtrDailyTemp[rel_days_cond2,"Tmax"] -
                                                                        ExtrDailyTemp[rel_days_cond2,"Tmin"]))
-    # condition 3: 0 <= Tmin <= Tmax <= TC
+  
+  #Relevant days which fit the condition 3: 0 <= Tmin <= Tmax <= Threshold
     
-      rel_days_cond3 <- which(0 <= ExtrDailyTemp$Tmin & 
+    rel_days_cond3 <- which(0 <= ExtrDailyTemp$Tmin & 
                               threshold >= ExtrDailyTemp$Tmax) 
+    
+    #Value of Chill Days according to the condition 3
     
       ExtrDailyTemp[rel_days_cond3,"Chill_Days"] <- ExtrDailyTemp[rel_days_cond3,"Tmean"] - 
         ExtrDailyTemp[rel_days_cond3,"Tmin"]
     
-    # condition 4: Tmin <= 0 <= Tmax <= TC
+  #Relevant days which fit the condition 4: Tmin <= 0 <= Tmax <= Threshold
     
     rel_days_cond4 <- which(ExtrDailyTemp$Tmin < 0 & ExtrDailyTemp$Tmax >= 0 & 
                               threshold >= ExtrDailyTemp$Tmax) 
     
+    #Value of Chill Days according to the condition 4
+    
       ExtrDailyTemp[rel_days_cond4,"Chill_Days"] <- (ExtrDailyTemp[rel_days_cond4,"Tmax"]^2) /
         (2 * (ExtrDailyTemp[rel_days_cond4,"Tmax"] - ExtrDailyTemp[rel_days_cond4,"Tmin"]))
     
-    # condition 5: Tmin < 0 < TC < Tmax
+  #Relevant days which fit the condition 5: Tmin < 0 < Threshold < Tmax
     
     rel_days_cond5 <- which(ExtrDailyTemp$Tmin < 0 & threshold > 0 &
                               threshold < ExtrDailyTemp$Tmax) 
+    
+    #Value of Chill Days according to the condition 5
     
       ExtrDailyTemp[rel_days_cond5,"Chill_Days"] <- (ExtrDailyTemp[rel_days_cond5,"Tmax"]^2) /
         (2 * (ExtrDailyTemp[rel_days_cond5,"Tmax"] - ExtrDailyTemp[rel_days_cond5,"Tmin"])) -
         (((ExtrDailyTemp[rel_days_cond5,"Tmax"] - threshold)^2) / (2 * (ExtrDailyTemp[rel_days_cond5,"Tmax"] - 
                                                                         ExtrDailyTemp[rel_days_cond5,"Tmin"])))
+  
+  #End of the function
     if (summ == TRUE)
       return(cumsum(ExtrDailyTemp$Chill_Days)) else return(ExtrDailyTemp$Chill_Days)
 }

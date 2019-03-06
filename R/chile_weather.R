@@ -12,7 +12,7 @@
 #' @param output Character string input which define the kind of data wanted. There are three options
 #' for this parameter. "info_stations" provides a dataframe with information about a given number
 #' of weather stations (set in "Number_of_stations" parameter) located close to the ubication
-#' established with "latitude" and "longitude" parameters. "station_list" provides a list of
+#' established with "latitude" and "longitude" parameters. "station_list_data" provides a list of
 #' dataframes containing minimum and maximum temperature records from each weather station
 #' obtained with the "info_stations" option within the period established in the call of the function.
 #' Finally, "my_data" provides the first dataframe of the previous list and represent the
@@ -47,62 +47,117 @@ chile_weather <- function(output, Initial_Date = "1950-01-01", End_Date = "2017-
                           latitude = latitude, longitude = longitude, Number_of_stations = 25,
                           path_zip_tmin = path_zip_tmin, path_zip_tmax = path_zip_tmax){
 
-  actual_WD <- getwd()
-  setwd(paste(substr(path_zip_tmin, 1, nchar(path_zip_tmin)-30)))
+  #Saving the actual work directory
   
-  path_tmin <- unzip(path_zip_tmin, list = T)
-  path_tmax <- unzip(path_zip_tmax, list = T)
+    actual_WD <- getwd()
   
-  unzip(path_zip_tmin, exdir = paste(substr(path_zip_tmin, 1, nchar(path_zip_tmin)-30)))
-  unzip(path_zip_tmax, exdir = paste(substr(path_zip_tmax, 1, nchar(path_zip_tmax)-30)))
+  #Setting the work directory to the location of the zip files
+    
+    setwd(paste(substr(path_zip_tmin, 1, nchar(path_zip_tmin)-30)))
   
-  Stations <- read.table(as.character(path_tmin[3,1]), sep = ",", header = T, quote = "\"")
-  Stations <- subset(Stations, select = c(1,2,3,4,5,6,7))
-  Cod_stations <-as.character(Cod_stations <- Stations$codigo_estacion)
+  #Getting the names of the files inside the zip document using a dataframe
+    
+    path_tmin <- unzip(path_zip_tmin, list = T)
+    path_tmax <- unzip(path_zip_tmax, list = T)
   
+  #"unziping" both Tmin and Tmax files
+    
+    unzip(path_zip_tmin, exdir = paste(substr(path_zip_tmin, 1, nchar(path_zip_tmin)-30)))
+    unzip(path_zip_tmax, exdir = paste(substr(path_zip_tmax, 1, nchar(path_zip_tmax)-30)))
   
-  Cod_Stations = NULL
-  for (i in 1:length(Cod_stations)) {
-    tempcod <- paste("Cod", "_", Cod_stations[[i]], sep="")
-    Cod_Stations <- c(Cod_Stations, tempcod)
-  }
+  #Loading the dataframe that contains the information about the weather stations available for 
+  #Tmin records
+    
+    Stations_Tmin <- read.table(as.character(path_tmin[3,1]), sep = ",", header = T, quote = "\"")
   
-  Stations$codigo_estacion <- Cod_Stations
-  Cod_Stations <- c("Fecha", Cod_Stations)
+  #Selecting the columns of interest 
+    
+    Stations_Tmin <- subset(Stations_Tmin, select = c("codigo_estacion","institucion","fuente","nombre",
+                                            "altura","latitud","longitud"))
   
-  Tmin <- read.table(as.character(path_tmin[2,1]), sep = ",", quote = "", skip=15, blank.lines.skip = F,
-                     col.names = Cod_Stations, na.strings = c("-9999","-9999.000"))
-  Tmin$Fecha <-as.Date(Tmin$Fecha)
-  Tmin <- subset(Tmin, Fecha >= Initial_Date & Fecha <= End_Date)
+  #Extracting the cod labels for each weather station to use as column names for loading the Tmin
+  #dataframe
+    
+    Cod_stations_Tmin <- as.character(Cod_stations_Tmin <- Stations_Tmin$codigo_estacion)
+    Cod_stations_Tmin <- paste("Cod_", Cod_stations_Tmin, sep = "")
+    
+    #Replacing the original Cod label in the dataframe
+      
+      Stations_Tmin$codigo_estacion <- Cod_stations_Tmin
+    
+    #Making the column names for loading the Tmin dataframe
+      
+      Cod_stations_Tmin <- c("Fecha", Cod_stations_Tmin)
+    
+  #Loading the Tmin dataframe. This step uses as column names the cod labels mentioned above.
   
-  Stations_Max <- read.table(as.character(path_tmax[3,1]), sep = ",", header = T, quote = "\"")
-  Stations_Max <- subset(Stations_Max, select = c(1,2,3,4,5,6,7))
-  Cod_Stations_Max <- as.character(Cod_Stations_Max <- Stations_Max$codigo_estacion)
+    Tmin <- read.table(as.character(path_tmin[2,1]), sep = ",", quote = "", skip=15, blank.lines.skip = F,
+                     col.names = Cod_stations_Tmin, na.strings = c("-9999","-9999.000"))
+    Tmin$Fecha <-as.Date(Tmin$Fecha)
   
-  Cod_stations_Max = NULL
-  for (i in 1:length(Cod_Stations_Max)) {
-    tempcod <- paste("Cod", "_", Cod_Stations_Max[[i]], sep="")
-    Cod_stations_Max <- c(Cod_stations_Max, tempcod)
-  }
+  #Selecting only the period of interest
+    
+    Tmin <- subset(Tmin, Fecha >= Initial_Date & Fecha <= End_Date)
+    
+  #Loading the dataframe that contains the information about the weather stations available for 
+  #Tmax records 
   
-  Cod_stations_Max <- c("Fecha", Cod_stations_Max)
+    Stations_Tmax <- read.table(as.character(path_tmax[3,1]), sep = ",", header = T, quote = "\"")
+    
+  #Selecting the columns of interest
+    
+    Stations_Tmax <- subset(Stations_Tmax, select = c("codigo_estacion","institucion","fuente","nombre",
+                                                    "altura","latitud","longitud"))
+    
+  #Extracting the cod labels for each weather station to use as column names for loading the Tmax
+  #dataframe
+    
+    Cod_stations_Tmax <- as.character(Cod_stations_Tmax <- Stations_Tmax$codigo_estacion)
+    Cod_stations_Tmax <- paste("Cod_", Cod_stations_Tmax, sep = "")
+    
+  #Replacing the original Cod label in the dataframe
+    
+    Stations_Tmax$codigo_estacion <- Cod_stations_Tmax
+    
+  #Making the column names for loading the Tmin dataframe
+    
+    Cod_stations_Tmax <- c("Fecha", Cod_stations_Tmax)
+    
+  #Loading the Tmin dataframe. This step uses as column names the cod labels mentioned above.
+    
+    Tmax <- read.table(as.character(path_tmax[2,1]), sep = ",", quote = "", skip=15, blank.lines.skip = F,
+                     col.names = Cod_stations_Tmax, na.strings = c("-9999","-9999.000"))
+    Tmax$Fecha <- as.Date(Tmax$Fecha)
   
-  Tmax <- read.table(as.character(path_tmax[2,1]), sep = ",", quote = "", skip=15, blank.lines.skip = F,
-                     col.names = Cod_stations_Max, na.strings = c("-9999","-9999.000"))
-  Tmax$Fecha <- as.Date(Tmax$Fecha)
-  Tmax <- subset(Tmax, Fecha >= Initial_Date & Fecha <= End_Date)
+  #Selecting the period of interest
   
-  setwd(actual_WD)
+    Tmax <- subset(Tmax, Fecha >= Initial_Date & Fecha <= End_Date)
   
-  mypoint <- c(longitude, latitude)
-  Stations[,"distance"] <- round(sp::spDistsN1(as.matrix(Stations[,c("longitud","latitud")]), mypoint,
-                                               longlat = T), 2)
-  Sorted_Stations <- Stations[order(Stations$distance),]
-  Sumarized_stations <- Sorted_Stations[c(1:Number_of_stations),]
-  colnames(Sumarized_stations) <- c("Cod_Station","Institution","Source","Name","Altitude","Latitude",
+  #Changing to the actual working directory
+    setwd(actual_WD)
+  
+  #Setting the location to compute the distance of the weather stations
+ 
+     mypoint <- c(longitude, latitude)
+  
+  #Adding the distance of each station to the location specified above
+     
+    Stations_Tmin[,"distance"] <- round(sp::spDistsN1(as.matrix(Stations_Tmin[,c("longitud","latitud")]),
+                                                    mypoint, longlat = T), 2)
+    
+  #Ordering the dataframe according to the distance
+    
+    Sorted_Stations <- Stations_Tmin[order(Stations_Tmin$distance),]
+  
+  #Selecting the relevant weather stations according to the number of stations
+    
+    Sumarized_stations <- Sorted_Stations[c(1:Number_of_stations),]
+    colnames(Sumarized_stations) <- c("Cod_Station","Institution","Source","Name","Altitude","Latitude",
                                     "Longitude","Distance")
   
-  primer_data <- data.frame(Weather_Station = NA,
+  #Creating a primer data for the period of interest
+    
+    primer_data <- data.frame(Weather_Station = NA,
                             Year = c(as.numeric(substr(Initial_Date, 1, 4)),
                                      as.numeric(substr(End_Date,1,4))),
                             Month = c(as.numeric(substr(Initial_Date, 6, 7)),
@@ -114,38 +169,48 @@ chile_weather <- function(output, Initial_Date = "1950-01-01", End_Date = "2017-
                             Tmax = as.numeric(NA))
   
   
-  daily_data <- chillR::make_all_day_table(primer_data, add.DATE = FALSE)
-  daily_data <- chillR::make_JDay(daily_data)
+    daily_data <- chillR::make_all_day_table(primer_data, add.DATE = FALSE)
+    daily_data <- chillR::make_JDay(daily_data)
   
-  dfs <- NULL
-  for (i in 1:length(Sumarized_stations$Cod_Station)) {
-    daily_data[,"Weather_Station"] <- as.character(Sumarized_stations[i,4])
-    daily_data[,"Tmin"]<-Tmin[,Sumarized_stations[i,1]]
-    daily_data[,"Tmax"]<-Tmax[,Sumarized_stations[i,1]]
-    dfs<-c(dfs, list(daily_data))
-  }
-  
-  if(output == "station_list")
-    return(dfs[2:Number_of_stations])
-  
-  N_obs<-NULL
-  for (i in 1:length(dfs)) {
-    if (table(is.na(dfs[[i]][,c("Tmin","Tmax")]))[[1]] != length(dfs[[i]][,1])*2) {
-      NobsTemp <- table(is.na(dfs[[i]][,c("Tmin","Tmax")]))[[1]]
-    } else {
-      NobsTemp <- length(dfs[[i]][,1])*2
-    }
+  #Merging Tmin y Tmax according to the code of the station for the total number of stations setted
     
-    N_obs<-c(N_obs, NobsTemp)
-  }
+    dfs <- NULL
+    for (i in 1:length(Sumarized_stations$Cod_Station)) {
+      daily_data[,"Weather_Station"] <- as.character(Sumarized_stations[i,4])
+      daily_data[,"Tmin"]<-Tmin[,Sumarized_stations[i,1]]
+      daily_data[,"Tmax"]<-Tmax[,Sumarized_stations[i,1]]
+      dfs<-c(dfs, list(daily_data))
+    }
+    rm(daily_data)
   
-  Sumarized_stations[,"N_Obs"] <- N_obs
-  Sumarized_stations[,"Perc_days_complete"] <- round((N_obs / length(dfs[[1]][,1])) * 100/2, 2)
+    if(output == "station_list_data")
+      return(dfs[2:Number_of_stations])
+  
+    if(output == "my_data")
+      return(dfs[[1]])
+  
+  #Computing the number of observations for the whole period. This value includes Tmin + Tmax observations
+  
+    N_obs<-NULL
+    for (i in 1:length(dfs)) {
+      if (table(is.na(dfs[[i]][,c("Tmin","Tmax")]))[[1]] != length(dfs[[i]][,1])*2) {
+        NobsTemp <- table(is.na(dfs[[i]][,c("Tmin","Tmax")]))[[1]]
+      } else {
+        NobsTemp <- length(dfs[[i]][,1])*2
+      }
+    
+      N_obs<-c(N_obs, NobsTemp)
+    }
+  
+  #Adding the number of observations vector to the dataframe of stations  
+    
+    Sumarized_stations[,"N_Obs"] <- N_obs
+  
+  #Calculating the percentage of days with complete data  
+    
+    Sumarized_stations[,"Perc_days_complete"] <- round((N_obs / length(dfs[[1]][,1])) * 100/2, 2)
   
   if(output == "info_stations")
     return(Sumarized_stations)
   
-  my_weather <- dfs[[1]]
-  if(output == "my_data")
-    return(my_weather)
 }

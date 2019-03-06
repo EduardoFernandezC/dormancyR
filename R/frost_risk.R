@@ -18,11 +18,21 @@
 #' frost_risk(data$hourtemps$Temp, summ = T, threshold = -1)
 
 frost_risk <- function(HourTemp, summ = TRUE, threshold = 0){
-
-  frost_risk_range <- which(HourTemp < threshold)
-  frost_risk_weights <- rep(0, length(HourTemp))
-  frost_risk_weights[frost_risk_range] <- 1
-  if (summ == TRUE)
-    return(cumsum(frost_risk_weights))
-  else return(frost_risk_weights)
+  
+  #Selecting those hours below the threshold
+  
+    frost_risk_range <- which(HourTemp < threshold)
+  
+  #Giving a value of zero tho the whole record for then computing the frost risk for those relevant hours
+    
+    frost_risk_weights <- rep(0, length(HourTemp))
+  
+  #Frost event assignation
+    
+    frost_risk_weights[frost_risk_range] <- 1
+  
+  #End of the function
+    
+    if (summ == TRUE)
+    return(cumsum(frost_risk_weights)) else return(frost_risk_weights)
 }

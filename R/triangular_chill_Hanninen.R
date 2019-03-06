@@ -49,7 +49,8 @@ triangular_chill_Hanninen <- function (ExtrDailyTemp, summ = TRUE){
     
       ExtrDailyTemp[rel_days_cond3, "Triang_Chill_Hann"] <- -0.159 * ExtrDailyTemp[rel_days_cond3, "Tmean"] + 
                                                            1.621
-  
+  #End of the function
+      
   if (summ == TRUE)
     return(cumsum(ExtrDailyTemp$Triang_Chill_Hann)) else return(ExtrDailyTemp$Triang_Chill_Hann)
 }

@@ -23,12 +23,23 @@
 
 modified_utah_model <- function(HourTemp, summ = TRUE){
   
-  chilling_weights <- rep(0,length(HourTemp))
-  relevant_hours <- which(HourTemp > 0 & HourTemp <= 21)
+  #Giving a value of zero to the whole record
   
-  chilling_weights[relevant_hours] <- sin((2 *pi * HourTemp[relevant_hours]) / 28)
+    chilling_weights <- rep(0,length(HourTemp))
   
-  chilling_weights[which(HourTemp > 21)] <- -1
+  #Selecting the hours which fit the condition for chill accumulation (0 < Temp <= 21)
   
-  if (summ == TRUE)
-    return(cumsum(chilling_weights)) else return(chilling_weights)}
+    relevant_hours <- which(HourTemp > 0 & HourTemp <= 21)
+  
+    #Calculating chill values for those hours
+    
+      chilling_weights[relevant_hours] <- sin((2 *pi * HourTemp[relevant_hours]) / 28)
+  
+  #For hours above 21 C one chill accumulation is reduced in 1 hour
+      
+    chilling_weights[which(HourTemp > 21)] <- -1
+    
+  #End of the function
+  
+    if (summ == TRUE)
+      return(cumsum(chilling_weights)) else return(chilling_weights)}
