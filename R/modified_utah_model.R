@@ -35,7 +35,7 @@ modified_utah_model <- function(HourTemp, summ = TRUE){
     
       chilling_weights[relevant_hours] <- sin((2 *pi * HourTemp[relevant_hours]) / 28)
   
-  #For hours above 21 C one chill accumulation is reduced in 1 hour
+  #For hours above 21 C chill accumulation is reduced in 1 hour
       
     chilling_weights[which(HourTemp > 21)] <- -1
     

@@ -24,9 +24,9 @@
 
 rate_of_chill_Chmielewski <- function (ExtrDailyTemp, summ = TRUE){
   
-  #Threshold reported in the paper 
+  #Threshold (Tc) reported in the paper 
   
-    threshold <- 4.2 #abbreviation: TC
+    threshold <- 4.2 
   
   #Computing Tmean from Tmin and Tmax
     

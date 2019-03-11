@@ -33,7 +33,7 @@ triangular_chill_Legave <- function (ExtrDailyTemp, summ = TRUE) {
     
     threshold <- 1
   
-  #Temperature interval (Ic)defininf the range of efficient temperatures around Threshold
+  #Temperature interval (Ic) define the range of efficient temperatures around Threshold
   
     temp_interval <- 24 
   

@@ -24,14 +24,14 @@
 
 chilling_units_Harrington <- function(HourTemp, summ = TRUE){
 
-  #Giving a value of zero to all days for then change according to each situation.
+  #Giving a value of zero to all days for then changing according to each situation.
   #This is 0 for hours in which Temp < -4.66 or Temp > 16 C
   
     chilling_weights <- rep(0, length(HourTemp))
   
   #Selecting the hours which fit the condition: -4.66 < Temp < 16
     
-    relevant_hours <- which(HourTemp >= -4.66 & HourTemp < 16)
+    relevant_hours <- which(HourTemp >= -4.66 & HourTemp <= 16)
   
     #Computing chill for such condition
     

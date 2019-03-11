@@ -40,7 +40,7 @@ chill_days <- function (ExtrDailyTemp, summ = TRUE){
     if (!("Tmean" %in% names(ExtrDailyTemp))) 
       ExtrDailyTemp[,"Tmean"] <- (ExtrDailyTemp["Tmax"] + ExtrDailyTemp["Tmin"]) / 2
     
-  #As for Condition 1 (0 <= Threshold <= Tmin <= Tmax) I setted the Chill Days as  for the whole record and
+  #As for Condition 1 (0 <= Threshold <= Tmin <= Tmax) I setted the Chill Days as 0 for the whole record and
   #then the relevant days were changed
     
     ExtrDailyTemp[,"Chill_Days"] <- 0 
