@@ -24,7 +24,7 @@
 
 low_chill_model <- function (HourTemp, summ = TRUE) 
   return(chillR::step_model(HourTemp,
-                    df = data.frame(lower = c(-1000, 1.8, 7.9, 13.9, 16.9, 19.4, 21.5),
-                                    upper = c(1.8, 7.9, 13.9, 16.9, 19.4, 21.5, 1000),
-                                    weight = c(0, 0.5, 1, 0.5, 0, -0.5, -1)), summ = summ))
+                    df = data.frame(lower = c(-1000, 1.0, 1.8, 7.9, 13.9, 16.9, 19.4, 21.5),
+                                    upper = c(1.0, 1.8, 7.9, 13.9, 16.9, 19.4, 21.5, 1000),
+                                    weight = c(0, 0.5, 1, 0.5, 0, -0.5, -1, -1)), summ = summ))
 

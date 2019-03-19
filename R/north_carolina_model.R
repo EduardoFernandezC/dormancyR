@@ -22,6 +22,6 @@
 
 north_carolina_model <- function(HourTemp, summ = TRUE){
   return(chillR::step_model(HourTemp,
-                            df = data.frame(lower = c(-1000,1.6, 7.2, 13.0, 16.5, 19.0, 20.7, 22.1, 23.3),
-                                            upper = c(1.6, 7.2, 13.0, 16.5, 19.0, 20.7, 22.1, 23.3,1000),
-                                            weight = c(0,0.5,1,0.5,0,-0.5,-1,-1.5,-2)), summ = summ))}
+                            df = data.frame(lower = c(-1000, -1.1, 1.6, 7.2, 13.0, 16.5, 19.0, 20.7, 22.1, 23.3),
+                                            upper = c(-1.1, 1.6, 7.2, 13.0, 16.5, 19.0, 20.7, 22.1, 23.3, 1000),
+                                            weight = c(0, 0.5, 1, 0.5, 0, -0.5, -1, -1.5, -2, -2)), summ = summ))}
