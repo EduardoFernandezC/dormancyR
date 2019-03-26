@@ -24,7 +24,7 @@ This is the number of the day within the year.}
 tempResponse_daily function. This parameter also allows the use of a model specified by the user.}
 }
 \description{
-This function allows to compute metrics from models which use daily temperature as inputs, rather than hourly data.
+This function allows to compute metrics from models which use as input daily temperature istead hourly data.
 It is an extension of the tempResponse_daily function.
 }
 \examples{

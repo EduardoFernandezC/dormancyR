@@ -26,7 +26,7 @@ triangular_chill_Hanninen <- function (ExtrDailyTemp, summ = TRUE){
     if (!("Tmean" %in% names(ExtrDailyTemp)))
       ExtrDailyTemp[,"Tmean"] <- (ExtrDailyTemp["Tmax"] + ExtrDailyTemp["Tmin"]) / 2
   
-  #As for condition 1 (Tmean <= -3.4 or Tmean > 10.4) chill unit is equal to 0 I have set all the values
+  #As for condition 1 (Tmean <= -3.4 or Tmean > 10.4) chill unit is equal to 0 I have setted all the values
   #a 0. From this I will extract those events in which chill unit has a value above 0
   
     ExtrDailyTemp[,"Triang_Chill_Hann"] <- 0 

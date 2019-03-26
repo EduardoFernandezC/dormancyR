@@ -9,7 +9,7 @@
 #' over the period or as the actual accumulation for each hour.
 #'
 #' @references Linsley-Noakes G. and Allan P. 1994. Comparison of two models for the prediction of rest
-#' competition in peaches. Sci. Hortic. 59(2): 107-113
+#' competion in peaches. Sci. Hortic. 59(2): 107-113
 #' 
 #' @examples 
 #' #Example 1

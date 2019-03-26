@@ -2,7 +2,7 @@
 % Please edit documentation in R/chile_agromet3chillR.R
 \name{chile_agromet3chillR}
 \alias{chile_agromet3chillR}
-\title{Convert a weather file downloaded from the Chilean Agromet website to chillR format}
+\title{Convert a weahter file downloaded from the Chilean Agromet website to chillR format}
 \usage{
 chile_agromet3chillR(downloaded_weather_file)
 }
@@ -14,7 +14,7 @@ chile_agromet3chillR(downloaded_weather_file)
 Convert downloaded weather data into a data frame that makes running other chillR functions easy.
 }
 \examples{
-# file <- "path:(x)"
+file <- "path:(x)"
 
-# chile_agromet3chillR(file)
+chile_agromet3chillR(file)
 }

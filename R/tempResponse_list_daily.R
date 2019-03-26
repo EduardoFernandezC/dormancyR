@@ -1,6 +1,6 @@
 #' Temperature response for data in lists
 #' 
-#' This function allows to compute metrics from models which use daily temperature as inputs, rather than hourly data.
+#' This function allows to compute metrics from models which use as input daily temperature istead hourly data.
 #' It is an extension of the tempResponse_daily function.
 #' 
 #' @param temperature_list List of temperatures as those produced by temperature_generation from chillR.
