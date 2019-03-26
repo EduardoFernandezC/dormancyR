@@ -28,5 +28,5 @@ tempResponse(data, Start_JDay = 345, End_JDay = 58,
 }
 \references{
 Linsley-Noakes G. and Allan P. 1994. Comparison of two models for the prediction of rest
-competition in peaches. Sci. Hortic. 59(2): 107-113
+competion in peaches. Sci. Hortic. 59(2): 107-113
 }
