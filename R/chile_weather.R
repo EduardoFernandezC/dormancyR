@@ -32,7 +32,7 @@
 #' @param path_zip_tmax Character string input. Location of the zip file containing maximum
 #' temperatures. This input must include the name and extension of the file.
 #'
-#'@importFrom utils read.table unzip
+#' @importFrom utils read.table unzip
 #'
 #' @examples
 #' #Getting the location of zip files
