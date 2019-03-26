@@ -13,6 +13,7 @@
 #' bud - burst of crop and forest species. Agric. For. Meteorol. 126(1-2): 1-13.
 #' doi:10.1016/j.agrformet.2004.03.002
 #' 
+#' 
 #' @examples
 #' library(chillR)
 #' 
