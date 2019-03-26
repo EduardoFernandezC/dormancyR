@@ -15,11 +15,3 @@ All is ok
 ## Downstream dependencies
 I have also run R CMD check `devtools::revdep_check()` on downstream dependencies 
 All packages passed 
-
-## Resubmission
-This is a resubmission. In this version I have:
-
-* Converted the DESCRIPTION title to title case.
-
-* More clearly identified the copyright holders in the DESCRIPTION
-  and LICENSE files.
