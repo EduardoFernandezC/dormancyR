@@ -22,7 +22,7 @@
 #' "1950-01-01" which correspond to the oldest date posible to use.
 #' @param End_Date Character string input in the form "YYYY-MM-DD". This parameter represents the
 #' final date of the period of interest. If it is not provided, the default is established as
-#' "2017-12-31" which correspond to the earliest date posible to use.
+#' "2017-12-31" which corresponds to the earliest possible date that can be used for the assessment.
 #' @param latitude Numerical input. Latitude of the site of interest in decimal format.
 #' @param longitude Numerical input. Longitude of the site of interest in decimal format.
 #' @param Number_of_stations Numerical input. Number of stations wanted to use as closest stations to
