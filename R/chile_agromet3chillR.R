@@ -1,4 +1,4 @@
-#'Convert a weahter file downloaded from the Chilean Agromet website to chillR format
+#'Convert a weather file downloaded from the Chilean Agromet website to chillR format
 #'
 #'Convert downloaded weather data into a data frame that makes running other chillR functions easy.
 #'
