@@ -16,5 +16,5 @@ Convert downloaded weather data into a data frame that makes running other chill
 \examples{
 # file <- "path:(x)"
 
-chile_agromet3chillR(file)
+# chile_agromet3chillR(file)
 }
