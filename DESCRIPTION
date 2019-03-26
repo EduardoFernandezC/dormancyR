@@ -5,7 +5,7 @@ Version: 0.1.0
 Author: Eduardo Fernández
 Maintainer: Eduardo Fernández <efernand@uni-bonn.de>
 Description: This package is a personal package to develop some function for estimating alternative chilling metrics for deciduous fruit trees. It contains functions to use the models alternatives to the "Dynamic Model", "Chilling Hours Model" and "Utah Model", which are included in the chillR package. Models in here can also by used as input models for chillR functions. Additionally, this package contains a function to handle easily weather data from Chile, as well as a function to estimate metrics related to frost events.
-License: What license is it under?
+License: GPL
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
