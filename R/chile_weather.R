@@ -57,8 +57,8 @@ chile_weather <- function(output, Initial_Date = "1950-01-01", End_Date = "2017-
   
   #Getting the names of the files inside the zip document using a dataframe
     
-    path_tmin <- unzip(path_zip_tmin, list = T)
-    path_tmax <- unzip(path_zip_tmax, list = T)
+    path_tmin <- utils::unzip(path_zip_tmin, list = T)
+    path_tmax <- utils::unzip(path_zip_tmax, list = T)
   
   #"unziping" both Tmin and Tmax files
     
