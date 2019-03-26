@@ -8,7 +8,7 @@
 #'@examples
 #'# file <- "path:(x)"
 #'
-#'chile_agromet3chillR(file)
+#'# chile_agromet3chillR(file)
 
 chile_agromet3chillR <- function(downloaded_weather_file){
   
