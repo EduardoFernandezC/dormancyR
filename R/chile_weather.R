@@ -11,7 +11,7 @@
 #'
 #' @param output Character string input which define the kind of data wanted. There are three options
 #' for this parameter. "info_stations" provides a dataframe with information about a given number
-#' of weather stations (set in "Number_of_stations" parameter) located close to the ubication
+#' of weather stations (set in "Number_of_stations" parameter) located close to the location
 #' established with "latitude" and "longitude" parameters. "station_list_data" provides a list of
 #' dataframes containing minimum and maximum temperature records from each weather station
 #' obtained with the "info_stations" option within the period established in the call of the function.
