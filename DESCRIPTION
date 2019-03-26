@@ -7,6 +7,9 @@ Maintainer: Eduardo Fernández <efernand@uni-bonn.de>
 Date: 2019-03-26
 Description: Develop some functions for estimating alternative chilling metrics for deciduous fruit trees. The package contains functions to use the models alternatives to the "Dynamic Model", "Chilling Hours Model" and "Utah Model", which are included in the chillR package (Luedeling 2018). These can also by used as input models for chillR functions. Additionally, this package contains a function to handle easily weather data from Chile, as well as a function to estimate metrics related to frost events. Eike Luedeling (2018). chillR: Statistical Methods for Phenology Analysis in Temperate Fruit Trees <https://cran.r-project.org/web/packages/chillR/index.html>
 Depends: R (>= 2.10)
+Imports:
+    chillR
+    ggplot2
 License: GPL
 Encoding: UTF-8
 LazyData: true
