@@ -6,7 +6,7 @@
 #'(https://www.agromet.cl/datos-historicos) as a csv file ("Datos / Exportar a csv" option).
 #'
 #'@examples
-#'file <- "path:(x)"
+#'# file <- "path:(x)"
 #'
 #'chile_agromet3chillR(file)
 
