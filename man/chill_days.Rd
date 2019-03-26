@@ -7,7 +7,7 @@
 chill_days(ExtrDailyTemp, summ = TRUE)
 }
 \arguments{
-\item{ExtrDailyTemp}{Dataframe containing colums "Tmax" and "Tmin". These values must correspond to daily
+\item{ExtrDailyTemp}{Dataframe containing columns "Tmax" and "Tmin". These values must correspond to daily
 records.}
 
 \item{summ}{Boolean parameter indicating whether the computed metric should be provided as cumulative values
@@ -16,7 +16,7 @@ over the period or as the actual accumulation for each hour.}
 \description{
 This function computes the Chill Days according to the model proposed by Cesaraccio et al. (2004) developed
 for several tree species including pears, kiwifruit and sweet cherries. In this function chill days are
-computed without the negative (-) tranformation made in the original paper.
+computed without the negative (-) transformation made in the original paper.
 }
 \examples{
 library(chillR)
@@ -29,8 +29,7 @@ data <- KA_weather
 data[,"Chill_Days"] <- chill_days(data, summ = FALSE)
 
 #Example 3
-tempResponse_daily(KA_weather, Start_JDay = 345, End_JDay = 58, models = list(Chill_Days = chill_days),
-QControl = T) ##what is this QControl? not in the temperature_daily function that's currently in chillR
+tempResponse_daily(KA_weather, Start_JDay = 345, End_JDay = 58, models = list(Chill_Days = chill_days))
 }
 \references{
 Cesaraccio C., Spano D., Snyder R. and Duce P. 2004. Chilling and forcing model to predict
