@@ -5,6 +5,9 @@
 #'@param downloaded_weather_file full path of a weather file downloaded from the Chilean Agromet website
 #'(https://www.agromet.cl/datos-historicos) as a csv file ("Datos / Exportar a csv" option).
 #'
+#'@importFrom chillR make_JDay
+#'@importFrom utils read.table
+#'
 #'@examples
 #'# file <- "path:(x)"
 #'
