@@ -11,7 +11,7 @@
 #'
 #' @param output Character string input which define the kind of data wanted. There are three options
 #' for this parameter. "info_stations" provides a dataframe with information about a given number
-#' of weather stations (set in "Number_of_stations" parameter) located close to the ubication
+#' of weather stations (set in "Number_of_stations" parameter) located close to the location
 #' established with "latitude" and "longitude" parameters. "station_list_data" provides a list of
 #' dataframes containing minimum and maximum temperature records from each weather station
 #' obtained with the "info_stations" option within the period established in the call of the function.
@@ -22,7 +22,7 @@
 #' "1950-01-01" which correspond to the oldest date posible to use.
 #' @param End_Date Character string input in the form "YYYY-MM-DD". This parameter represents the
 #' final date of the period of interest. If it is not provided, the default is established as
-#' "2017-12-31" which correspond to the earliest date posible to use.
+#' "2017-12-31" which corresponds to the earliest possible date that can be used for the assessment.
 #' @param latitude Numerical input. Latitude of the site of interest in decimal format.
 #' @param longitude Numerical input. Longitude of the site of interest in decimal format.
 #' @param Number_of_stations Numerical input. Number of stations wanted to use as closest stations to
@@ -32,15 +32,17 @@
 #' @param path_zip_tmax Character string input. Location of the zip file containing maximum
 #' temperatures. This input must include the name and extension of the file.
 #'
+#' @importFrom utils read.table unzip
+#'
 #' @examples
 #' #Getting the location of zip files
-#' path_zip_tmin<-"[Your folder]\\cr2_tasminDaily_2018_ghcn.zip"
-#' path_zip_tmax<-"[Your folder]\\cr2_tasmaxDaily_2018_ghcn.zip"
+#' #path_zip_tmin<-"[Your folder]\\cr2_tasminDaily_2018_ghcn.zip"
+#' #path_zip_tmax<-"[Your folder]\\cr2_tasmaxDaily_2018_ghcn.zip"
 #'
 #' #Call of the function
-#' chile_weather(output = "my_data", Initial_Date = "2000-01-01", End_Date = "2017-12-31",
-#'               latitude = -32.8958, longitude = -71.2092, Number_of_stations = 25,
-#'               path_zip_tmin = path_zip_tmin, path_zip_tmax = path_zip_tmax)
+#' #chile_weather(output = "my_data", Initial_Date = "2000-01-01", End_Date = "2017-12-31",
+#' #            latitude = -32.8958, longitude = -71.2092, Number_of_stations = 25,
+#' #            path_zip_tmin = path_zip_tmin, path_zip_tmax = path_zip_tmax)
 
 
 chile_weather <- function(output, Initial_Date = "1950-01-01", End_Date = "2017-12-31",
@@ -57,8 +59,8 @@ chile_weather <- function(output, Initial_Date = "1950-01-01", End_Date = "2017-
   
   #Getting the names of the files inside the zip document using a dataframe
     
-    path_tmin <- unzip(path_zip_tmin, list = T)
-    path_tmax <- unzip(path_zip_tmax, list = T)
+    path_tmin <- utils::unzip(path_zip_tmin, list = T)
+    path_tmax <- utils::unzip(path_zip_tmax, list = T)
   
   #"unziping" both Tmin and Tmax files
     

@@ -12,7 +12,7 @@ chile_weather(output, Initial_Date = "1950-01-01",
 \arguments{
 \item{output}{Character string input which define the kind of data wanted. There are three options
 for this parameter. "info_stations" provides a dataframe with information about a given number
-of weather stations (set in "Number_of_stations" parameter) located close to the ubication
+of weather stations (set in "Number_of_stations" parameter) located close to the location
 established with "latitude" and "longitude" parameters. "station_list_data" provides a list of
 dataframes containing minimum and maximum temperature records from each weather station
 obtained with the "info_stations" option within the period established in the call of the function.
@@ -25,7 +25,7 @@ initial date of the period of interest. If it is not provided, the default is es
 
 \item{End_Date}{Character string input in the form "YYYY-MM-DD". This parameter represents the
 final date of the period of interest. If it is not provided, the default is established as
-"2017-12-31" which correspond to the earliest date posible to use.}
+"2017-12-31" which corresponds to the earliest possible date that can be used for the assessment.}
 
 \item{latitude}{Numerical input. Latitude of the site of interest in decimal format.}
 

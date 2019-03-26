@@ -2,9 +2,9 @@
 #'
 #' This function computes the Chill Days according to the model proposed by Cesaraccio et al. (2004) developed
 #' for several tree species including pears, kiwifruit and sweet cherries. In this function chill days are
-#' computed without the negative (-) tranformation made in the original paper.
+#' computed without the negative (-) transformation made in the original paper.
 #'
-#' @param ExtrDailyTemp Dataframe containing colums "Tmax" and "Tmin". These values must correspond to daily
+#' @param ExtrDailyTemp Dataframe containing columns "Tmax" and "Tmin". These values must correspond to daily
 #' records.
 #' @param summ Boolean parameter indicating whether the computed metric should be provided as cumulative values
 #' over the period or as the actual accumulation for each hour.
@@ -12,6 +12,7 @@
 #' @references Cesaraccio C., Spano D., Snyder R. and Duce P. 2004. Chilling and forcing model to predict
 #' bud - burst of crop and forest species. Agric. For. Meteorol. 126(1-2): 1-13.
 #' doi:10.1016/j.agrformet.2004.03.002
+#' 
 #' 
 #' @examples
 #' library(chillR)
@@ -24,7 +25,8 @@
 #' data[,"Chill_Days"] <- chill_days(data, summ = FALSE)
 #' 
 #' #Example 3
-#' tempResponse_daily(KA_weather, Start_JDay = 345, End_JDay = 58, models = list(Chill_Days = chill_days),
+#' tempResponse_daily(KA_weather, Start_JDay = 345, 
+#' End_JDay = 58, models = list(Chill_Days = chill_days),
 #' QControl = T) ##what is this QControl? not in the temperature_daily function that's currently in chillR
 
 chill_days <- function (ExtrDailyTemp, summ = TRUE){
@@ -40,7 +42,7 @@ chill_days <- function (ExtrDailyTemp, summ = TRUE){
     if (!("Tmean" %in% names(ExtrDailyTemp))) 
       ExtrDailyTemp[,"Tmean"] <- (ExtrDailyTemp["Tmax"] + ExtrDailyTemp["Tmin"]) / 2
     
-  #As for Condition 1 (0 <= Threshold <= Tmin <= Tmax) I setted the Chill Days as 0 for the whole record and
+  #As for Condition 1 (0 <= Threshold <= Tmin <= Tmax) I set the Chill Days as 0 for the whole record and
   #then the relevant days were changed
     
     ExtrDailyTemp[,"Chill_Days"] <- 0 
@@ -53,10 +55,12 @@ chill_days <- function (ExtrDailyTemp, summ = TRUE){
     
     #Value of Chill Days according to the condition 2
     
-      ExtrDailyTemp[rel_days_cond2,"Chill_Days"] <- (ExtrDailyTemp[rel_days_cond2,"Tmean"] - 
-                                                       ExtrDailyTemp[rel_days_cond2,"Tmin"]) - 
-        ((ExtrDailyTemp[rel_days_cond2,"Tmax"] - threshold)^2) / (2 * (ExtrDailyTemp[rel_days_cond2,"Tmax"] -
-                                                                       ExtrDailyTemp[rel_days_cond2,"Tmin"]))
+      ExtrDailyTemp[rel_days_cond2,"Chill_Days"] <- 
+        (ExtrDailyTemp[rel_days_cond2,"Tmean"] - 
+            ExtrDailyTemp[rel_days_cond2,"Tmin"]) - 
+        ((ExtrDailyTemp[rel_days_cond2,"Tmax"] - threshold)^2) / 
+        (2 * (ExtrDailyTemp[rel_days_cond2,"Tmax"] -
+      ExtrDailyTemp[rel_days_cond2,"Tmin"]))
   
   #Relevant days which fit the condition 3: 0 <= Tmin <= Tmax <= Threshold
     
@@ -87,8 +91,9 @@ chill_days <- function (ExtrDailyTemp, summ = TRUE){
     
       ExtrDailyTemp[rel_days_cond5,"Chill_Days"] <- (ExtrDailyTemp[rel_days_cond5,"Tmax"]^2) /
         (2 * (ExtrDailyTemp[rel_days_cond5,"Tmax"] - ExtrDailyTemp[rel_days_cond5,"Tmin"])) -
-        (((ExtrDailyTemp[rel_days_cond5,"Tmax"] - threshold)^2) / (2 * (ExtrDailyTemp[rel_days_cond5,"Tmax"] - 
-                                                                        ExtrDailyTemp[rel_days_cond5,"Tmin"])))
+        (((ExtrDailyTemp[rel_days_cond5,"Tmax"] - threshold)^2) / 
+           (2 * (ExtrDailyTemp[rel_days_cond5,"Tmax"] - 
+        ExtrDailyTemp[rel_days_cond5,"Tmin"])))
   
   #End of the function
     if (summ == TRUE)
