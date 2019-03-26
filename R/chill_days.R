@@ -2,7 +2,7 @@
 #'
 #' This function computes the Chill Days according to the model proposed by Cesaraccio et al. (2004) developed
 #' for several tree species including pears, kiwifruit and sweet cherries. In this function chill days are
-#' computed without the negative (-) tranformation made in the original paper.
+#' computed without the negative (-) transformation made in the original paper.
 #'
 #' @param ExtrDailyTemp Dataframe containing colums "Tmax" and "Tmin". These values must correspond to daily
 #' records.
@@ -40,7 +40,7 @@ chill_days <- function (ExtrDailyTemp, summ = TRUE){
     if (!("Tmean" %in% names(ExtrDailyTemp))) 
       ExtrDailyTemp[,"Tmean"] <- (ExtrDailyTemp["Tmax"] + ExtrDailyTemp["Tmin"]) / 2
     
-  #As for Condition 1 (0 <= Threshold <= Tmin <= Tmax) I setted the Chill Days as 0 for the whole record and
+  #As for Condition 1 (0 <= Threshold <= Tmin <= Tmax) I set the Chill Days as 0 for the whole record and
   #then the relevant days were changed
     
     ExtrDailyTemp[,"Chill_Days"] <- 0 
