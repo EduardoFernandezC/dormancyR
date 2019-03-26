@@ -4,7 +4,7 @@
 #' for several tree species including pears, kiwifruit and sweet cherries. In this function chill days are
 #' computed without the negative (-) transformation made in the original paper.
 #'
-#' @param ExtrDailyTemp Dataframe containing colums "Tmax" and "Tmin". These values must correspond to daily
+#' @param ExtrDailyTemp Dataframe containing columns "Tmax" and "Tmin". These values must correspond to daily
 #' records.
 #' @param summ Boolean parameter indicating whether the computed metric should be provided as cumulative values
 #' over the period or as the actual accumulation for each hour.
