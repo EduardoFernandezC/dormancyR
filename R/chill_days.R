@@ -54,10 +54,12 @@ chill_days <- function (ExtrDailyTemp, summ = TRUE){
     
     #Value of Chill Days according to the condition 2
     
-      ExtrDailyTemp[rel_days_cond2,"Chill_Days"] <- (ExtrDailyTemp[rel_days_cond2,"Tmean"] - 
-                                                       ExtrDailyTemp[rel_days_cond2,"Tmin"]) - 
-        ((ExtrDailyTemp[rel_days_cond2,"Tmax"] - threshold)^2) / (2 * (ExtrDailyTemp[rel_days_cond2,"Tmax"] -
-                                                                       ExtrDailyTemp[rel_days_cond2,"Tmin"]))
+      ExtrDailyTemp[rel_days_cond2,"Chill_Days"] <- 
+        (ExtrDailyTemp[rel_days_cond2,"Tmean"] - 
+            ExtrDailyTemp[rel_days_cond2,"Tmin"]) - 
+        ((ExtrDailyTemp[rel_days_cond2,"Tmax"] - threshold)^2) / 
+        (2 * (ExtrDailyTemp[rel_days_cond2,"Tmax"] -
+      ExtrDailyTemp[rel_days_cond2,"Tmin"]))
   
   #Relevant days which fit the condition 3: 0 <= Tmin <= Tmax <= Threshold
     
@@ -88,8 +90,9 @@ chill_days <- function (ExtrDailyTemp, summ = TRUE){
     
       ExtrDailyTemp[rel_days_cond5,"Chill_Days"] <- (ExtrDailyTemp[rel_days_cond5,"Tmax"]^2) /
         (2 * (ExtrDailyTemp[rel_days_cond5,"Tmax"] - ExtrDailyTemp[rel_days_cond5,"Tmin"])) -
-        (((ExtrDailyTemp[rel_days_cond5,"Tmax"] - threshold)^2) / (2 * (ExtrDailyTemp[rel_days_cond5,"Tmax"] - 
-                                                                        ExtrDailyTemp[rel_days_cond5,"Tmin"])))
+        (((ExtrDailyTemp[rel_days_cond5,"Tmax"] - threshold)^2) / 
+           (2 * (ExtrDailyTemp[rel_days_cond5,"Tmax"] - 
+        ExtrDailyTemp[rel_days_cond5,"Tmin"])))
   
   #End of the function
     if (summ == TRUE)
