@@ -2,7 +2,7 @@
 % Please edit documentation in R/chile_agromet3chillR.R
 \name{chile_agromet3chillR}
 \alias{chile_agromet3chillR}
-\title{Convert a weahter file downloaded from the Chilean Agromet website to chillR format}
+\title{Convert a weather file downloaded from the Chilean Agromet website to chillR format}
 \usage{
 chile_agromet3chillR(downloaded_weather_file)
 }
