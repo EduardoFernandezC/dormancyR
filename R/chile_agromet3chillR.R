@@ -14,7 +14,7 @@ chile_agromet3chillR <- function(downloaded_weather_file){
   
   #loading the original dataframe downloaded from the agromet website
   
-    original_data <- read.table(downloaded_weather_file, sep = ",", header = T,
+    original_data <- utils::read.table(downloaded_weather_file, sep = ",", header = T,
                                  dec = ",", na.strings = "--")
   
   #crating a new data frame to summarize the output
