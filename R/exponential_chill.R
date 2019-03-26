@@ -1,7 +1,7 @@
 #' Exponential chilling model (Legave et. al. 2008, 2013)
 #'
 #' This function computes the chill in an exponential way proposed by Legave et. al. (2008) and Legave et. al.
-#' (2013). This model, which uses Tmax as input an a threshold of 15 celsius degree, was selected as one of the
+#' (2013). This model, which uses Tmax as input an a threshold of 15 Celsius degree, was selected as one of the
 #' "bests" over several models proposed by the same authors.
 #'
 #' @param ExtrDailyTemp Dataframe containing colums "Tmax" and "Tmin". These values must correspond to daily
