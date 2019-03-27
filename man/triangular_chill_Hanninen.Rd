@@ -20,8 +20,8 @@ Hanninen (1990) and Krammer (1994).
 \examples{
 library(chillR)
 
-tempResponse_daily(KA_weather, Start_JDay = 345, End_JDay = 58, models = list(Triangular_Chill =
-                                                                            triangular_chill_Hanninen))
+tempResponse_daily(KA_weather, Start_JDay = 345, End_JDay = 58,
+ models = list(Triangular_Chill = triangular_chill_Hanninen))
 }
 \references{
 Hanninen H. 1990. Modelling bud dormancy release in trees from cool and temperate regions.

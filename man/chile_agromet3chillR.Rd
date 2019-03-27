@@ -14,7 +14,6 @@ chile_agromet3chillR(downloaded_weather_file)
 Convert downloaded weather data into a data frame that makes running other chillR functions easy.
 }
 \examples{
-#file <- "path:(x)"
-
-#chile_agromet3chillR(file)
+data <- Agromet_Weather_data
+chile_agromet3chillR(data)
 }

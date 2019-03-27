@@ -20,7 +20,7 @@
 #' library(chillR)
 #' 
 #' #Example 1
-#' exponential_chill_Tmax(KA_weather, summ = F)
+#' exponential_chill_Tmax(KA_weather, summ = FALSE)
 #' 
 #' #Example 2
 #' tempResponse_daily(KA_weather, Start_JDay = 345, End_JDay = 58, 

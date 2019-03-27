@@ -16,7 +16,7 @@
 #' 
 #' #Example 1
 #' data <- stack_hourly_temps(KA_weather, latitude = 50.62)
-#' chilling_units_Harrington(data$hourtemps$Temp, summ = T)
+#' chilling_units_Harrington(data$hourtemps$Temp, summ = TRUE)
 #' 
 #' #Example 2
 #' tempResponse(data, Start_JDay = 345, End_JDay = 58,

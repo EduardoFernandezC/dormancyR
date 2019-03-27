@@ -21,8 +21,8 @@ models proposed by the same authors.
 \examples{
 library(chillR)
 
-tempResponse_daily(data, Start_JDay = 345, End_JDay = 58, models = list(Triangular_Chill_Legave =
-                                                                        triangular_chill_Legave))
+tempResponse_daily(KA_weather, Start_JDay = 345, End_JDay = 58, 
+                   models = list(Triangular_Chill_Legave = triangular_chill_Legave))
 }
 \references{
 Legave J., Farrera I., Almeras T. and Calleja M. 2008. Selecting models of apple flowering time

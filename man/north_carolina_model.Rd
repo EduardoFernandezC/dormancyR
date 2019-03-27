@@ -19,8 +19,9 @@ estimate metrics from hourly temperature records.
 }
 \examples{
 #Example 1
+library(chillR)
 data <- stack_hourly_temps(KA_weather, latitude = 50.62)
-north_carolina_model(data$hourtemps$Temp, summ = T)
+north_carolina_model(data$hourtemps$Temp, summ = TRUE)
 
 #Example 2
 tempResponse(data, Start_JDay = 345, End_JDay = 58,

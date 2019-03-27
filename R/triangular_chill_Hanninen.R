@@ -16,8 +16,8 @@
 #' @examples 
 #' library(chillR)
 #' 
-#' tempResponse_daily(KA_weather, Start_JDay = 345, End_JDay = 58, models = list(Triangular_Chill =
-#'                                                                             triangular_chill_Hanninen))
+#' tempResponse_daily(KA_weather, Start_JDay = 345, End_JDay = 58,
+#'  models = list(Triangular_Chill = triangular_chill_Hanninen))
 
 triangular_chill_Hanninen <- function (ExtrDailyTemp, summ = TRUE){
   

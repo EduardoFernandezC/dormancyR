@@ -16,11 +16,11 @@
 #' library(chillR)
 #' 
 #' #Example 1
-#' rate_of_chill_Chmielewski(KA_weather, summ = T)
+#' rate_of_chill_Chmielewski(KA_weather, summ = TRUE)
 #' 
 #' #Example 2
-#' tempResponse_daily(data, Start_JDay = 345, End_JDay = 58, models = list(Rate_of_Chill =
-#'                                                                         rate_of_chill_Chmielewski))
+#' tempResponse_daily(KA_weather, Start_JDay = 345, End_JDay = 58,
+#'                    models = list(Rate_of_Chill = rate_of_chill_Chmielewski))
 
 rate_of_chill_Chmielewski <- function (ExtrDailyTemp, summ = TRUE){
   

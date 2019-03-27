@@ -29,7 +29,7 @@ tempResponse_list_daily <- function (temperature_list, Start_JDay = 1, End_JDay 
   output <- list()
   for (i in 1:length(temperature_list)) {
     
-    if (!("JDay" %in% names(temperature_list[[i]]))) data <- make_JDay(temperature_list[[i]]) else
+    if (!("JDay" %in% names(temperature_list[[i]]))) data <- chillR::make_JDay(temperature_list[[i]]) else
       data <- temperature_list[[i]]
     
     output[[i]] <- tempResponse_daily(data, Start_JDay = Start_JDay, 

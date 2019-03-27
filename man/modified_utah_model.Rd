@@ -21,7 +21,7 @@ estimate metrics from hourly temperature records.
 library(chillR) 
 #Example 1
 data <- stack_hourly_temps(KA_weather, latitude = 50.62)
-modified_utah_model(data$hourtemps$Temp, summ = T)
+modified_utah_model(data$hourtemps$Temp, summ = TRUE)
 
 #Example 2
 tempResponse(data, Start_JDay = 345, End_JDay = 58,
