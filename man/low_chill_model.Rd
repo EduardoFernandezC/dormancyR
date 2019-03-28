@@ -27,6 +27,7 @@ low_chill_model(data$hourtemps$Temp, summ = TRUE)
 #Example 2
 tempResponse(data, Start_JDay = 345, End_JDay = 58,
 models = list(Low_Chill = low_chill_model))
+
 }
 \references{
 Gilreath P. and Buchanan D. 1981. Rest prediction model for low-chilling sungold nectarine. J. Am.

@@ -21,6 +21,8 @@
 #' #Example 2
 #' tempResponse(data, Start_JDay = 345, End_JDay = 58,
 #' models = list(Low_Chill = low_chill_model))
+#' 
+#' @export low_chill_model
 
 low_chill_model <- function (HourTemp, summ = TRUE) 
   return(chillR::step_model(HourTemp,

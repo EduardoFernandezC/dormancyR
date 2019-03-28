@@ -33,4 +33,5 @@ uses daily mean, max or min temperatures as input.
 library(chillR)
 
 tempResponse_daily(KA_weather, Start_JDay = 335, End_JDay = 58)
+
 }

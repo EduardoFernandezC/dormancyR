@@ -20,6 +20,8 @@
 #' #Example 2
 #' tempResponse(data, Start_JDay = 345, End_JDay = 58,
 #'              models = list(Modified_Units = modified_utah_model))
+#'              
+#' @export modified_utah_model
 
 modified_utah_model <- function(HourTemp, summ = TRUE){
   

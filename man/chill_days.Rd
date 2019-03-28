@@ -31,6 +31,7 @@ data[,"Chill_Days"] <- chill_days(data, summ = FALSE)
 #Example 3
 tempResponse_daily(KA_weather, Start_JDay = 345, End_JDay = 58,
                     models = list(Chill_Days = chill_days))
+                    
 }
 \references{
 Cesaraccio C., Spano D., Snyder R. and Duce P. 2004. Chilling and forcing model to predict

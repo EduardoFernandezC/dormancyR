@@ -21,6 +21,8 @@
 #' #Example 2
 #' tempResponse(data, Start_JDay = 345, End_JDay = 58,
 #' models = list(Chill_Harrington = chilling_units_Harrington))
+#' 
+#' @export chilling_units_Harrington
 
 chilling_units_Harrington <- function(HourTemp, summ = TRUE){
 

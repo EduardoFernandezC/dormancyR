@@ -27,6 +27,7 @@ exponential_chill_Tmax(KA_weather, summ = FALSE)
 #Example 2
 tempResponse_daily(KA_weather, Start_JDay = 345, End_JDay = 58, 
 models = list(Exp_Chill = exponential_chill_Tmax))
+
 }
 \references{
 Legave J., Farrera I., Almeras T. and Calleja M. 2008. Selecting models of apple flowering time

@@ -8,6 +8,8 @@
 #'@examples
 #'data <- Agromet_Weather_data
 #'chile_agromet3chillR(data)
+#'
+#'@export chile_agromet3chillR
 
 
 chile_agromet3chillR <- function(downloaded_weather_file){

@@ -16,6 +16,8 @@
 #' 
 #' data <- stack_hourly_temps(KA_weather, latitude = 50.62)
 #' frost_risk(data$hourtemps$Temp, summ = TRUE, threshold = -1)
+#' 
+#' @export frost_risk
 
 frost_risk <- function(HourTemp, summ = TRUE, threshold = 0){
   

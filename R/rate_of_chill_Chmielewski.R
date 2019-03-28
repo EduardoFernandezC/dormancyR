@@ -21,6 +21,8 @@
 #' #Example 2
 #' tempResponse_daily(KA_weather, Start_JDay = 345, End_JDay = 58,
 #'                    models = list(Rate_of_Chill = rate_of_chill_Chmielewski))
+#' 
+#' @export rate_of_chill_Chmielewski
 
 rate_of_chill_Chmielewski <- function (ExtrDailyTemp, summ = TRUE){
   

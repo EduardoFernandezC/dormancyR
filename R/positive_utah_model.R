@@ -20,6 +20,8 @@
 #' #Example 2
 #' tempResponse(data, Start_JDay = 345, End_JDay = 58,
 #'              models = list(Positive_Units = positive_utah_model))
+#' 
+#' @export positive_utah_model
 
 positive_utah_model <- function(HourTemp, summ = TRUE){
   return(chillR::step_model(HourTemp,

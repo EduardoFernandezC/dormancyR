@@ -26,6 +26,7 @@ positive_utah_model(data$hourtemps$Temp, summ = TRUE)
 #Example 2
 tempResponse(data, Start_JDay = 345, End_JDay = 58,
              models = list(Positive_Units = positive_utah_model))
+
 }
 \references{
 Linsley-Noakes G. and Allan P. 1994. Comparison of two models for the prediction of rest

@@ -26,6 +26,7 @@ modified_utah_model(data$hourtemps$Temp, summ = TRUE)
 #Example 2
 tempResponse(data, Start_JDay = 345, End_JDay = 58,
              models = list(Modified_Units = modified_utah_model))
+             
 }
 \references{
 Linvill D. 1990. Calculating chilling hours and chill units from daily maximum and minimum

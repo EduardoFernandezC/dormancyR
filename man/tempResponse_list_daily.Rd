@@ -31,4 +31,5 @@ It is an extension of the tempResponse_daily function.
 library(chillR)
 
 tempResponse_list_daily(KA_weather, Start_JDay = 345, End_JDay = 58)
+
 }

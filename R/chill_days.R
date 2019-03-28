@@ -26,6 +26,8 @@
 #' #Example 3
 #' tempResponse_daily(KA_weather, Start_JDay = 345, End_JDay = 58,
 #'                     models = list(Chill_Days = chill_days))
+#'                     
+#' @export chill_days
 
 chill_days <- function (ExtrDailyTemp, summ = TRUE){
     

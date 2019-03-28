@@ -25,6 +25,8 @@
 #' #Example 2
 #' tempResponse_daily(KA_weather, Start_JDay = 345, End_JDay = 58, 
 #' models = list(Exp_Chill = exponential_chill_Tmax))
+#' 
+#' @export exponential_chill_Tmax
 
 exponential_chill_Tmax <- function (ExtrDailyTemp, summ = TRUE) {
   

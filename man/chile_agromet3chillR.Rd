@@ -16,4 +16,5 @@ Convert downloaded weather data into a data frame that makes running other chill
 \examples{
 data <- Agromet_Weather_data
 chile_agromet3chillR(data)
+
 }

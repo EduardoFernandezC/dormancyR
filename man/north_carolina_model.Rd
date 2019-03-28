@@ -26,6 +26,7 @@ north_carolina_model(data$hourtemps$Temp, summ = TRUE)
 #Example 2
 tempResponse(data, Start_JDay = 345, End_JDay = 58,
              models = list(North_Carolina_Units = north_carolina_model))
+
 }
 \references{
 Shaltout A. and Unrath C. 1983. Rest completion prediction model for starkrimsom delicious apples.

@@ -59,4 +59,6 @@ Function require both zip files in the same folder.
 #chile_weather(output = "my_data", Initial_Date = "2000-01-01", End_Date = "2017-12-31",
 #                latitude = -32.8958, longitude = -71.2092, Number_of_stations = 25,
 #                path_zip_tmin = path_zip_tmin, path_zip_tmax = path_zip_tmax)
+
+
 }

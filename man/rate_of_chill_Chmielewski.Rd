@@ -26,6 +26,7 @@ rate_of_chill_Chmielewski(KA_weather, summ = TRUE)
 #Example 2
 tempResponse_daily(KA_weather, Start_JDay = 345, End_JDay = 58,
                    models = list(Rate_of_Chill = rate_of_chill_Chmielewski))
+
 }
 \references{
 Chmielewski F., Blumel K., Henniges Y., Blanke M., Weber R. and Zoth M. (2011).

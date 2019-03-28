@@ -27,6 +27,7 @@ chilling_units_Harrington(data$hourtemps$Temp, summ = TRUE)
 #Example 2
 tempResponse(data, Start_JDay = 345, End_JDay = 58,
 models = list(Chill_Harrington = chilling_units_Harrington))
+
 }
 \references{
 Harrington C., Gould P. and St.Clair J. (2010). Modeling the effects of winter environment on

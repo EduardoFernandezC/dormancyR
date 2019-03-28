@@ -18,6 +18,8 @@
 #' library(chillR)
 #' 
 #' tempResponse_daily(KA_weather, Start_JDay = 335, End_JDay = 58)
+#' 
+#' @export tempResponse_daily
 
 tempResponse_daily <- function (data, Start_JDay = 1, End_JDay = 366,
                                 models = list(Rate_of_Chill = rate_of_chill_Chmielewski,
