@@ -1,5 +1,9 @@
-GDH_5 <- function (HourTemp, summ = TRUE) 
-{
+#' Growing degree hours model for Tb = 5 celsius degree
+#' 
+#' @param HourTemp Vector of hourly temperatures
+#' @param summ Boolean parameter to add the cumulative summ as output
+
+GDH_5 <- function (HourTemp, summ = TRUE) {
   Stress <- 1
   Tb <- 5
   Tu <- 25
