@@ -2,6 +2,8 @@
 #' 
 #' @param HourTemp Vector of hourly temperatures
 #' @param summ Boolean parameter to add the cumulative summ as output
+#' 
+#' @export GDH_10
 
 GDH_10 <- function (HourTemp, summ = TRUE) {
   Stress <- 1
