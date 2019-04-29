@@ -2,15 +2,22 @@
 % Please edit documentation in R/GDH_5.R
 \name{GDH_5}
 \alias{GDH_5}
-\title{Growing degree hours model for Tb = 5 celsius degree}
+\title{Growing degree hours model for base temperature of 5 celsius degree}
 \usage{
 GDH_5(HourTemp, summ = TRUE)
 }
 \arguments{
 \item{HourTemp}{Vector of hourly temperatures}
 
-\item{summ}{Boolean parameter to add the cumulative summ as output}
+\item{summ}{Boolean parameter to add the cumulative sum as output}
 }
 \description{
-Growing degree hours model for Tb = 5 celsius degree
+Modification of the actual model developed to quantify the heat between two periods. In this case the
+function computes the metric by using as base temperature 10 celsius degree instead of 4 celsius degree 
+as the original model.
+}
+\examples{
+
+GDH_5(sample(c(1 : 30), 100, replace = TRUE), summ = TRUE)
+
 }

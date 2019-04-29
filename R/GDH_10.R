@@ -1,7 +1,15 @@
-#' Growing degree hours model for Tb = 10 celsius degree
+#' Growing degree hours model for base temperature of 10 celsius degree
+#' 
+#' Modification of the actual model developed to quantify the heat between two periods. In this case the
+#' function computes the metric by using as base temperature 10 celsius degree instead of 4 celsius degree 
+#' as the original model.
 #' 
 #' @param HourTemp Vector of hourly temperatures
-#' @param summ Boolean parameter to add the cumulative summ as output
+#' @param summ Boolean parameter to add the cumulative sum as output
+#' 
+#' @examples  
+#' 
+#' GDH_10(sample(c(1 : 30), 100, replace = TRUE), summ = TRUE)
 #' 
 #' @export GDH_10
 
