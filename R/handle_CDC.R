@@ -58,7 +58,7 @@ handle_CDC <- function(action, latitude, longitude, begin = 19160101,
   # Get the information of the weather stations.
   
   stations <- utils::read.csv("https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/daily/kl/historical/KL_Tageswerte_Beschreibung_Stationen.txt",
-                       skip = 2, header = F, colClasses = "character")[,1]
+                              skip = 2, header = F, colClasses = "character")[,1]
   
   # Delete the extra white spaces at the end of the characters
   
@@ -93,7 +93,7 @@ handle_CDC <- function(action, latitude, longitude, begin = 19160101,
   # data
   
   zip_files <- utils::read.csv("https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/daily/kl/historical/",
-                        skip = 7, colClasses = "character", header = FALSE)
+                               skip = 7, colClasses = "character", header = FALSE)
   
   # Remove extra rows by reading a html file as csv
   
@@ -169,14 +169,14 @@ handle_CDC <- function(action, latitude, longitude, begin = 19160101,
     
     # Extract, in the temporary directory, just the file containing the data
     utils::unzip("tempdir/data.zip", files = paste("produkt_klima_tag_", station_in_period[i, "Begin"], "_",
-                                            station_in_period[i, "End"], "_",
-                                            station_in_period[i, "Station_ID"], ".txt", sep = ""),
-          exdir = "tempdir")
+                                                   station_in_period[i, "End"], "_",
+                                                   station_in_period[i, "Station_ID"], ".txt", sep = ""),
+                 exdir = "tempdir")
     
     # Import such file. It keeps the important columns only
     data <- utils::read.csv(paste("tempdir/produkt_klima_tag_", station_in_period[i, "Begin"], "_",
-                           station_in_period[i, "End"], "_", station_in_period[i, "Station_ID"],
-                           ".txt", sep = ""), sep = ";")[c("STATIONS_ID", "MESS_DATUM", "TNK", "TXK", "TMK")]
+                                  station_in_period[i, "End"], "_", station_in_period[i, "Station_ID"],
+                                  ".txt", sep = ""), sep = ";")[c("STATIONS_ID", "MESS_DATUM", "TNK", "TXK", "TMK")]
     
     colnames(data) <- c("Station_ID", "YEARMODA", "Tmin", "Tmax", "Tmean")
     
@@ -190,6 +190,9 @@ handle_CDC <- function(action, latitude, longitude, begin = 19160101,
     data[which(data$Tmax == -999.0), "Tmax"] <- NA
     data[which(data$Tmin == -999.0), "Tmin"] <- NA
     data[which(data$Tmean == -999.0), "Tmean"] <- NA
+    
+    # Filter the dataframe by the period selected before
+    data <- dplyr::filter(data, YEARMODA >= begin & YEARMODA <= end)
     
     data <- list(data)
     
