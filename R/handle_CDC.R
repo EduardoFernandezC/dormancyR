@@ -140,7 +140,28 @@ handle_CDC <- function(action, latitude, longitude, begin = 19160101,
     return(station_in_period[c(1: number_of_stations),])
   
   
-  # Specify the URL where the data is 
+  # primer dataframe to include the complete period of interest
+  
+  primer <- data.frame(YEARMODA = c(begin, end),
+                       Year = c(as.numeric(substr(begin, 1, 4)), as.numeric(substr(end, 1, 4))),
+                       Month = c(as.numeric(substr(begin, 5, 6)), as.numeric(substr(end, 5, 6))),
+                       Day = c(as.numeric(substr(begin, 7, 8)), as.numeric(substr(end, 7, 8))),
+                       Tmin = as.numeric(NA),
+                       Tmax = as.numeric(NA),
+                       Tmean = as.numeric(NA))
+  
+  # Add all rows for the period
+  
+  primer <- chillR::make_all_day_table(primer)
+  
+  # Add YEARMODA value for future use in merging dataframes
+  
+  primer["YEARMODA"] <- paste(substr(primer$DATE, 1, 4), substr(primer$DATE, 6, 7),
+                              substr(primer$DATE, 9, 10), sep = "")
+  primer["YEARMODA"] <- as.numeric(primer$YEARMODA)
+  
+  
+  # Downloading the data. Specify the URL where the data is 
   
   master_URL <- "https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/daily/kl/historical/"
   
@@ -180,19 +201,23 @@ handle_CDC <- function(action, latitude, longitude, begin = 19160101,
     
     colnames(data) <- c("Station_ID", "YEARMODA", "Tmin", "Tmax", "Tmean")
     
-    data <- data.frame(Station_name = as.character(station_in_period[i, "Station_name"]),
-                       data)
-    
-    # Add NA rows for missing days
-    data <- chillR::make_all_day_table(data)
-    
     # Add NA for missing values
     data[which(data$Tmax == -999.0), "Tmax"] <- NA
     data[which(data$Tmin == -999.0), "Tmin"] <- NA
     data[which(data$Tmean == -999.0), "Tmean"] <- NA
     
-    # Filter the dataframe by the period selected before
-    data <- dplyr::filter(data, YEARMODA >= begin & YEARMODA <= end)
+    # Merge weather data with primer data and remove missing columns
+    data <- dplyr::left_join(primer, data, by = "YEARMODA")
+    data <- dplyr::select(data, -c("Tmin.x", "Tmax.x", "Tmean.x"))
+    
+    # Add station name and station ID to the data
+    data["Station_name"] <- as.character(station_in_period[i, "Station_name"])
+    data["Station_ID"] <- as.character(station_in_period[i, "Station_ID"])
+    
+    colnames(data)[c(7, 8, 9)] <- c("Tmin", "Tmax", "Tmean")
+    
+    # Order the data by columns
+    data <- data[, c(10, 6, 1, 2, 3, 4, 5, 7, 8, 9)]
     
     data <- list(data)
     
