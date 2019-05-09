@@ -65,7 +65,7 @@ handle_CDC <- function(action, latitude, longitude, begin = 19160101,
   stations <- trimws(stations)
   
   # Identify the mistakes while importing the data. Those rows starting with letters instead of numbers
-  # as the correct rows. This is because the information of the state was traspased to the row n+1
+  # are the correct rows. This is because the information of the state was passed to the row n+1
   
   wrong_rows <- which(substr(stations, 2, 2) %in% c(LETTERS, letters))
   
@@ -73,7 +73,7 @@ handle_CDC <- function(action, latitude, longitude, begin = 19160101,
   
   stations[wrong_rows - 1] <- paste(stations[wrong_rows - 1], stations[wrong_rows], sep = "")
   
-  # Remove the extra values due mistakes
+  # Remove the extra values due to these mistakes
   
   stations <- stations[-wrong_rows]
   
@@ -88,18 +88,18 @@ handle_CDC <- function(action, latitude, longitude, begin = 19160101,
   
   stations$Station_ID <- as.character(stations$Station_ID)
   
-  # As the total number of zip files (containing the data) is different as the number given for the
-  # information of the stations I had get such data in order to identify those stations which have
-  # data
+  # As the total number of zip files (containing data) is different from the number given in the
+  # station overview list, I had get retrieve the list of zip files in order to identify those
+  # stations that have data
   
   zip_files <- utils::read.csv("https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/daily/kl/historical/",
                                skip = 7, colClasses = "character", header = FALSE)
   
-  # Remove extra rows by reading a html file as csv
+  # Remove extra rows by reading an html file as csv
   
   zip_files <- zip_files[c(1 : (length(zip_files$V1) - 2)),]
   
-  # Make a dataframe of the information of the zip files to ease the downloading process
+  # Make a dataframe of the information of the zip files to facilitate the downloading process
   
   zip_files <- data.frame(Station_ID = as.character(substr(zip_files, 23, 27)),
                           Begin = as.character(substr(zip_files, 29, 36)),
@@ -110,7 +110,7 @@ handle_CDC <- function(action, latitude, longitude, begin = 19160101,
   zip_files$Begin <- as.character(zip_files$Begin)
   zip_files$End <- as.character(zip_files$End)
   
-  # Meger the dataframes on the information of the stations and the dataframe on the zip file information
+  # Merge the dataframes on the information of the stations and the dataframe on the zip file information
   # by Station_ID. This keep the rows in both dataframes.
   
   stations <- dplyr::inner_join(stations, zip_files, by = "Station_ID")
@@ -127,7 +127,7 @@ handle_CDC <- function(action, latitude, longitude, begin = 19160101,
   stations_sorted <- stations[order(stations$Distance), ]
   
   # Remove those stations which end the record before the begin or those which start after the end
-  # definied in the call of the function 
+  # defined in the call of the function 
   
   station_in_period <- stations_sorted[-which(stations_sorted$End < begin | stations_sorted$Begin > end),]
   
@@ -198,6 +198,9 @@ handle_CDC <- function(action, latitude, longitude, begin = 19160101,
     data <- utils::read.csv(paste("tempdir/produkt_klima_tag_", station_in_period[i, "Begin"], "_",
                                   station_in_period[i, "End"], "_", station_in_period[i, "Station_ID"],
                                   ".txt", sep = ""), sep = ";")[c("STATIONS_ID", "MESS_DATUM", "TNK", "TXK", "TMK")]
+    
+    # While we have focused on temperature data so far, consider adding more to the dataset. At least rainfall
+    # would be very useful. You can also make this optional by adding a corresponding parameter to the call.
     
     colnames(data) <- c("Station_ID", "YEARMODA", "Tmin", "Tmax", "Tmean")
     
