@@ -15,7 +15,7 @@
 #' ("ATM_pressure"); the rainfall ("Rainfall"); the precipitation as snow ("Snow"), the minimum 
 #' temperature 5 cm above the ground ("Tmin_5cm"); the air temperature 2 m above ground (minimum - "Tmin",
 #' mean - "Tmean", and maximum - "Tmax"); the relative humidity ("RH"); and the vapour pressure deficit
-#' (VPD). Default is set to Tmin, Tmax and Tmean
+#' (VPD).
 #' 
 #' @param latitude Numeric parameter. The latitude (in decimal degrees) of the location of interest.
 #' 
@@ -37,12 +37,11 @@
 #' @details 
 #' If "info_stations" is used, the function returns a dataframe (9 columns x number_of_stations) containing
 #' information such as the name, latitude, longitude, begin, end and distance of the weather stations.
-#' If "my_data" is chosen, it downloads the weather data from the CDC website. As default, the output is
-#' a dataframe (in chillR format) containing minimum, maximum and mean daily records from the closest
+#' If "my_data" is chosen, it downloads the weather data from the CDC website. The output is
+#' a dataframe (in chillR format) containing daily records from the closest
 #' weather station. If "list_data" option is used, the function returns a list of dataframes as that
 #' described above. The length of the list is equal to the number of stations or to the number_of_stations
-#' minus 1 if complete_list = FALSE. Additional variables can be required by using the parameter
-#' variables.
+#' minus 1 if complete_list = FALSE.
 #' 
 #' @examples 
 #'     
@@ -52,11 +51,11 @@
 #'            
 #' @export handle_CDC
 
-handle_CDC <- function(action, variables = c("Tmin", "Tmax", "Tmean"),  latitude, longitude,
+handle_CDC <- function(action, variables,  latitude, longitude,
                        begin = 19160101, end = chillR::Date2YEARMODA(Sys.Date()), number_of_stations = 25,
                        complete_list = FALSE){
   
-  # Checking if action and dates are valid inputs
+  # Checking if action, dates and variables are valid inputs
   
   if (!action %in% c("info_stations", "my_data", "list_data")) 
     stop("Please provide a valid action")
@@ -64,13 +63,11 @@ handle_CDC <- function(action, variables = c("Tmin", "Tmax", "Tmean"),  latitude
   if (nchar(begin) != 8 | nchar(end) != 8)
     stop("Invalid date for begin or end parameters. Please introduce a date in format YEARMODA")
   
-  variables <- variables
-  
   if(length(which(!variables %in% c("Wind_speed", "Wind_speed_max", "ATM_pressure", "Rainfall", "Snow",
                                     "Tmin_5cm", "Tmean", "Tmin", "Tmax", "RH", "VPD"))) != 0)
     stop("One or more invalid variable(s) selected. Please provide variables such as:
-         Wind_speed, Wind_speed_max, ATM_pressure, Rainfall, Snow, Tmin_5cm, Tmean, Tmin, Tmax,
-         RH, VPD.")
+    Wind_speed, Wind_speed_max, ATM_pressure, Rainfall, Snow, Tmin_5cm, Tmean, Tmin, Tmax,
+    RH, VPD.")
   
   # Get the information of the weather stations.
   
@@ -156,7 +153,7 @@ handle_CDC <- function(action, variables = c("Tmin", "Tmax", "Tmean"),  latitude
   if (action == "info_stations")
     return(station_in_period[c(1: number_of_stations),])
   
-  
+ 
   # primer dataframe to include the complete period of interest
   
   primer <- data.frame(YEARMODA = c(begin, end),
