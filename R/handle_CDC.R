@@ -10,6 +10,13 @@
 #' to a location. "my_data" downloads the records for the closest weather station. "list_data" downloads
 #' the records for several weather stations which are close to the location of interest.
 #' 
+#' @param variables Character vector of the variables required. For now, the function can returns the
+#' wind speed (mean - "Wind_speed" and maximum - "Wind_speed_max"); the atmospheric pressure
+#' ("ATM_pressure"); the rainfall ("Rainfall"); the precipitation as snow ("Snow"), the minimum 
+#' temperature 5 cm above the ground ("Tmin_5cm"); the air temperature 2 m above ground (minimum - "Tmin",
+#' mean - "Tmean", and maximum - "Tmax"); the relative humidity ("RH"); and the vapour pressure deficit
+#' (VPD). Default is set to Tmin, Tmax and Tmean
+#' 
 #' @param latitude Numeric parameter. The latitude (in decimal degrees) of the location of interest.
 #' 
 #' @param longitude Numeric parameter. The longitude (in decimal degrees) of the location of interest.
@@ -30,21 +37,23 @@
 #' @details 
 #' If "info_stations" is used, the function returns a dataframe (9 columns x number_of_stations) containing
 #' information such as the name, latitude, longitude, begin, end and distance of the weather stations.
-#' If "my_data" is chosen, it downloads the weather data from the CDC website. The output is a dataframe
-#' (in chillR format) containing minimum, maximum and mean daily records from the closest weather station.
-#' If "list_data" option is used, the function returns a list of dataframes as that described above.
-#' The length of the list is equal to the number of stations or to the number_of_stations minus 1 if 
-#' complete_list = FALSE.
+#' If "my_data" is chosen, it downloads the weather data from the CDC website. As default, the output is
+#' a dataframe (in chillR format) containing minimum, maximum and mean daily records from the closest
+#' weather station. If "list_data" option is used, the function returns a list of dataframes as that
+#' described above. The length of the list is equal to the number of stations or to the number_of_stations
+#' minus 1 if complete_list = FALSE. Additional variables can be required by using the parameter
+#' variables.
 #' 
 #' @examples 
 #'     
-#' handle_CDC(action = "info_stations", latitude = 53.5373, longitude = 9.6397, begin = 20000101,
-#'            end = 20101231, number_of_stations = 25, complete_list = FALSE)
+#' handle_CDC(action = "info_stations", variables = c("Tmin", "Tmax", "Tmean"), latitude = 53.5373,
+#'            longitude = 9.6397, begin = 20000101, end = 20101231, number_of_stations = 25,
+#'            complete_list = FALSE)
 #'            
 #' @export handle_CDC
 
-handle_CDC <- function(action, latitude, longitude, begin = 19160101,
-                       end = chillR::Date2YEARMODA(Sys.Date()), number_of_stations = 25,
+handle_CDC <- function(action, variables = c("Tmin", "Tmax", "Tmean"),  latitude, longitude,
+                       begin = 19160101, end = chillR::Date2YEARMODA(Sys.Date()), number_of_stations = 25,
                        complete_list = FALSE){
   
   # Checking if action and dates are valid inputs
@@ -55,6 +64,14 @@ handle_CDC <- function(action, latitude, longitude, begin = 19160101,
   if (nchar(begin) != 8 | nchar(end) != 8)
     stop("Invalid date for begin or end parameters. Please introduce a date in format YEARMODA")
   
+  variables <- variables
+  
+  if(length(which(!variables %in% c("Wind_speed", "Wind_speed_max", "ATM_pressure", "Rainfall", "Snow",
+                                    "Tmin_5cm", "Tmean", "Tmin", "Tmax", "RH", "VPD"))) != 0)
+    stop("One or more invalid variable(s) selected. Please provide variables such as:
+         Wind_speed, Wind_speed_max, ATM_pressure, Rainfall, Snow, Tmin_5cm, Tmean, Tmin, Tmax,
+         RH, VPD.")
+  
   # Get the information of the weather stations.
   
   stations <- utils::read.csv("https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/daily/kl/historical/KL_Tageswerte_Beschreibung_Stationen.txt",
@@ -64,7 +81,7 @@ handle_CDC <- function(action, latitude, longitude, begin = 19160101,
   
   stations <- trimws(stations)
   
-  # Identify the mistakes while importing the data. Those rows starting with letters instead of numbers
+  # Identify the mistakes while importing the data. Those rows starting with numbers instead of letters
   # are the correct rows. This is because the information of the state was passed to the row n+1
   
   wrong_rows <- which(substr(stations, 2, 2) %in% c(LETTERS, letters))
@@ -160,6 +177,10 @@ handle_CDC <- function(action, latitude, longitude, begin = 19160101,
                               substr(primer$DATE, 9, 10), sep = "")
   primer["YEARMODA"] <- as.numeric(primer$YEARMODA)
   
+  # Remove Tmin, Tmax and Tmean from the primer dataframe for make it clearer
+  
+  primer <- primer[, c("DATE", "YEARMODA", "Year", "Month", "Day")]
+  
   
   # Downloading the data. Specify the URL where the data is 
   
@@ -176,51 +197,68 @@ handle_CDC <- function(action, latitude, longitude, begin = 19160101,
   if (action == "my_data") number_of_stations <- 1 
   if (action == "list_data") number_of_stations <- number_of_stations
   
+  # Variable names in the original dataframe
+  
+  variables_gers <- c("FM", "FX", "PM", "RSK", "SHK_TAG", "TGK", "TMK", "TNK", "TXK", "UPM", "VPM")
+  
   # Get the data for the number of stations used by calling the function
   
   list_data <- list()
   for (i in 1 : number_of_stations) {
     
     # URL of the individual station
+    
     URL <- paste(master_URL, "tageswerte_KL_", station_in_period[i, "Station_ID"], "_",
                  station_in_period[i, "Begin"], "_", station_in_period[i, "End"], "_hist.zip", sep = "")
     
     # Download the zip file
+    
     utils::download.file(URL, destfile = "tempdir/data.zip")
     
     # Extract, in the temporary directory, just the file containing the data
+    
     utils::unzip("tempdir/data.zip", files = paste("produkt_klima_tag_", station_in_period[i, "Begin"], "_",
                                                    station_in_period[i, "End"], "_",
                                                    station_in_period[i, "Station_ID"], ".txt", sep = ""),
                  exdir = "tempdir")
     
-    # Import such file. It keeps the important columns only
+    # Import such file. It keeps all the columns
+    
     data <- utils::read.csv(paste("tempdir/produkt_klima_tag_", station_in_period[i, "Begin"], "_",
                                   station_in_period[i, "End"], "_", station_in_period[i, "Station_ID"],
-                                  ".txt", sep = ""), sep = ";")[c("STATIONS_ID", "MESS_DATUM", "TNK", "TXK", "TMK")]
+                                  ".txt", sep = ""), sep = ";",
+                            colClasses = c("numeric", "numeric", rep("character", length(variables_gers))), 
+                            na.strings = "-999")[c("STATIONS_ID", "MESS_DATUM", variables_gers)]
     
-    # While we have focused on temperature data so far, consider adding more to the dataset. At least rainfall
-    # would be very useful. You can also make this optional by adding a corresponding parameter to the call.
     
-    colnames(data) <- c("Station_ID", "YEARMODA", "Tmin", "Tmax", "Tmean")
+    # In the step above, data were imported as character to remove missing values (-999) automatically.
+    # This step set all the variables as numeric vectors
     
-    # Add NA for missing values
-    data[which(data$Tmax == -999.0), "Tmax"] <- NA
-    data[which(data$Tmin == -999.0), "Tmin"] <- NA
-    data[which(data$Tmean == -999.0), "Tmean"] <- NA
+    for (variables_ger in variables_gers){
+      
+      data[ ,variables_ger] <- as.numeric(data[, variables_ger])}
     
-    # Merge weather data with primer data and remove missing columns
+    # Add colnames in a more or less understandable format
+    
+    colnames(data) <- c("Station_ID", "YEARMODA", "Wind_speed", "Wind_speed_max", "ATM_pressure",
+                        "Rainfall", "Snow", "Tmin_5cm", "Tmean", "Tmin", "Tmax", "RH", "VPD")
+    
+    # Select just the variables required when calling the function
+    
+    data <- dplyr::select(data, c("Station_ID", "YEARMODA", variables))
+    
+    # Merge weather data with primer data by YEARMODA column 
+    
     data <- dplyr::left_join(primer, data, by = "YEARMODA")
-    data <- dplyr::select(data, -c("Tmin.x", "Tmax.x", "Tmean.x"))
     
     # Add station name and station ID to the data
+    
     data["Station_name"] <- as.character(station_in_period[i, "Station_name"])
     data["Station_ID"] <- as.character(station_in_period[i, "Station_ID"])
     
-    colnames(data)[c(7, 8, 9)] <- c("Tmin", "Tmax", "Tmean")
+    # Order the data by columns and variables selected by calling the function
     
-    # Order the data by columns
-    data <- data[, c(10, 6, 1, 2, 3, 4, 5, 7, 8, 9)]
+    data <- data[, c("Station_name", "Station_ID", "DATE", "YEARMODA", "Year", "Month", "Day", variables)]
     
     data <- list(data)
     

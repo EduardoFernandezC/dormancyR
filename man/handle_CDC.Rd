@@ -4,15 +4,22 @@
 \alias{handle_CDC}
 \title{Handle historic weather records from stations across Germany}
 \usage{
-handle_CDC(action, latitude, longitude, begin = 19160101,
-  end = chillR::Date2YEARMODA(Sys.Date()), number_of_stations = 25,
-  complete_list = FALSE)
+handle_CDC(action, variables = c("Tmin", "Tmax", "Tmean"), latitude,
+  longitude, begin = 19160101, end = chillR::Date2YEARMODA(Sys.Date()),
+  number_of_stations = 25, complete_list = FALSE)
 }
 \arguments{
 \item{action}{Character parameter to decide on 3 options. Options are "info_stations", "my_data" and
 "list_data". "info_stations" returns a dataframe with the information on close weather stations
 to a location. "my_data" downloads the records for the closest weather station. "list_data" downloads
 the records for several weather stations which are close to the location of interest.}
+
+\item{variables}{Character vector of the variables required. For now, the function can returns the
+wind speed (mean - "Wind_speed" and maximum - "Wind_speed_max"); the atmospheric pressure
+("ATM_pressure"); the rainfall ("Rainfall"); the precipitation as snow ("Snow"), the minimum 
+temperature 5 cm above the ground ("Tmin_5cm"); the air temperature 2 m above ground (minimum - "Tmin",
+mean - "Tmean", and maximum - "Tmax"); the relative humidity ("RH"); and the vapour pressure deficit
+(VPD). Default is set to Tmin, Tmax and Tmean}
 
 \item{latitude}{Numeric parameter. The latitude (in decimal degrees) of the location of interest.}
 
@@ -40,15 +47,17 @@ Center (CDC - <https://cdc.dwd.de/portal/>) of Germany.
 \details{
 If "info_stations" is used, the function returns a dataframe (9 columns x number_of_stations) containing
 information such as the name, latitude, longitude, begin, end and distance of the weather stations.
-If "my_data" is chosen, it downloads the weather data from the CDC website. The output is a dataframe
-(in chillR format) containing minimum, maximum and mean daily records from the closest weather station.
-If "list_data" option is used, the function returns a list of dataframes as that described above.
-The length of the list is equal to the number of stations or to the number_of_stations minus 1 if 
-complete_list = FALSE.
+If "my_data" is chosen, it downloads the weather data from the CDC website. As default, the output is
+a dataframe (in chillR format) containing minimum, maximum and mean daily records from the closest
+weather station. If "list_data" option is used, the function returns a list of dataframes as that
+described above. The length of the list is equal to the number of stations or to the number_of_stations
+minus 1 if complete_list = FALSE. Additional variables can be required by using the parameter
+variables.
 }
 \examples{
     
-handle_CDC(action = "info_stations", latitude = 53.5373, longitude = 9.6397, begin = 20000101,
-           end = 20101231, number_of_stations = 25, complete_list = FALSE)
+handle_CDC(action = "info_stations", variables = c("Tmin", "Tmax", "Tmean"), latitude = 53.5373,
+           longitude = 9.6397, begin = 20000101, end = 20101231, number_of_stations = 25,
+           complete_list = FALSE)
            
 }
