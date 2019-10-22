@@ -3,7 +3,7 @@
 #' It allows to: 1) obtain information of the weather stations from Germany; 2) get weather data for a
 #' place of interest given the coordinates; and 3) get weather data from several weather stations
 #' close to a specific location given its coordinates. The functions take data from the "Climatic Data
-#' Center (CDC - <https://cdc.dwd.de/portal/>) of Germany.
+#' Center (CDC - https://cdc.dwd.de/portal/) of Germany.
 #' 
 #' @param action Character parameter to decide on 3 options. Options are "info_stations", "my_data" and
 #' "list_data". "info_stations" returns a dataframe with the information on close weather stations

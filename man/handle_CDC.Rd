@@ -42,7 +42,7 @@ first weather station.}
 It allows to: 1) obtain information of the weather stations from Germany; 2) get weather data for a
 place of interest given the coordinates; and 3) get weather data from several weather stations
 close to a specific location given its coordinates. The functions take data from the "Climatic Data
-Center (CDC - <https://cdc.dwd.de/portal/>) of Germany.
+Center (CDC - https://cdc.dwd.de/portal/) of Germany.
 }
 \details{
 If "info_stations" is used, the function returns a dataframe (9 columns x number_of_stations) containing

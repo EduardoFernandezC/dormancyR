@@ -1,0 +1,2 @@
+utils::globalVariables(c("Hour", "Wind_speed", "Wind_direction", "Temp", "Humidity", "Above_Ground_Temp",
+                         "Soil_Temp", "Precipitation", "Radiation", "PAR", "YEARMODA", "Year", "Month", "Day"))

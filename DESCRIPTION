@@ -5,9 +5,9 @@ Version: 0.1.0
 Date: 2019-03-26
 Author: Eduardo Fernández
 Maintainer: Eduardo Fernández <efernand@uni-bonn.de>
-Description: Develop some functions for estimating alternative chilling metrics for deciduous fruit trees. The package contains functions to use the models alternatives to the "Dynamic Model", "Chilling Hours Model" and "Utah Model", which are included in the chillR package (Luedeling 2018). These can also by used as input models for chillR functions. Additionally, this package contains a function to handle easily weather data from Chile, as well as a function to estimate metrics related to frost events.
+Description: Some functions for estimating chilling metrics for deciduous fruit trees according to alternative chill models. The package contains functions to use the models Utah Modified, North Carolina, Low Chill, among others. These can also by used as input models for chillR functions (Luedeling 2019). Additionally, this package contains functions to handle weather data from different sources in Chile and Germany, as well as functions to estimate metrics related to frost events and heat accumulation according to a modification of Growing Degree Hour.
 Depends: R (>= 2.10)
-Imports: chillR, sp, dplyr
+Imports: chillR, sp, dplyr, tidyr
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
