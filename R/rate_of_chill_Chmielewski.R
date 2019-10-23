@@ -4,9 +4,10 @@
 #' Chmielewski et al. (2001) in Germany.
 #'
 #' @param ExtrDailyTemp Dataframe containing colums "Tmax" and "Tmin". These values must correspond to daily
-#' records.
+#' records
+#' 
 #' @param summ Boolean parameter indicating whether the computed metric should be provided as cumulative values
-#' over the period or as the actual accumulation for each hour.
+#' over the period or as the actual accumulation for each hour
 #'
 #' @references Chmielewski F., Blumel K., Henniges Y., Blanke M., Weber R. and Zoth M. (2011).
 #' Phenological models for the beginning of apple blossom in Germany. Meteorol. Z. 20(5): 487-496.

@@ -14,14 +14,14 @@ tempResponse_daily(data, Start_JDay = 1, End_JDay = 366,
 \item{data}{Could be a list of two or more elements. This list should contain a dataframe that could be
 called "weather" if this is obtained from the fix_weather function in chillR or "data" is the list is
 obtained from the chile_weather function in "eduaRdo" package. A third option is just a dataframe.
-In any case, dataframe should contains colums "Year", "Month", "Day", "JDay", "Tmin" and "Tmax".}
+In any case, dataframe should contains colums "Year", "Month", "Day", "JDay", "Tmin" and "Tmax"}
 
-\item{Start_JDay}{The start date for computing the outputs. This is the number of the day within the year.}
+\item{Start_JDay}{The start date for computing the outputs. This is the number of the day within the year}
 
-\item{End_JDay}{The end date for computing the outputs. This is the number of the day within the year.}
+\item{End_JDay}{The end date for computing the outputs. This is the number of the day within the year}
 
 \item{models}{A list of chill functions to compute the metric for the period of interest. Each model
-should be named. Default provides five models (See datails).}
+should be named. Default provides five models (See datails)}
 }
 \description{
 This function produces a summarized dataframe of chill responses computed by several chill models which

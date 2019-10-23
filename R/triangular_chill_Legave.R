@@ -5,9 +5,10 @@
 #' models proposed by the same authors.
 #'
 #' @param ExtrDailyTemp Dataframe containing colums "Tmax" and "Tmin". These values must correspond to daily
-#' records.
+#' records
+#' 
 #' @param summ Boolean parameter indicating whether the computed metric should be provided as cumulative values
-#' over the period or as the actual accumulation for each hour.
+#' over the period or as the actual accumulation for each hour
 #'
 #' @references Legave J., Farrera I., Almeras T. and Calleja M. 2008. Selecting models of apple flowering time
 #' and understanding how global warming has had and impact on this trait. J. Horticult. Sci. Biotechnol. 83(1):

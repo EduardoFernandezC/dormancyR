@@ -12,16 +12,16 @@ tempResponse_list_daily(temperature_list, Start_JDay = 1,
   triangular_chill_Legave))
 }
 \arguments{
-\item{temperature_list}{List of temperatures as those produced by temperature_generation from chillR.}
+\item{temperature_list}{List of temperatures as those produced by temperature_generation from chillR}
 
 \item{Start_JDay}{Numeric input representing the initial date for computing the metrics in Julian Day format
-This is the number of the day within the year.}
+This is the number of the day within the year}
 
 \item{End_JDay}{Numeric input representing the end date for computing the metrics in Julian Day format
-This is the number of the day within the year.}
+This is the number of the day within the year}
 
 \item{models}{List of functions to compute the metrics. Default is settled to those models used in
-tempResponse_daily function. This parameter also allows the use of a model specified by the user.}
+tempResponse_daily function. This parameter also allows the use of a model specified by the user}
 }
 \description{
 This function allows to compute metrics from models which use daily temperature as inputs, rather than hourly data.

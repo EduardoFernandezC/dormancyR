@@ -4,9 +4,10 @@
 #' Shaltout and Unrath (1983). This function is compatible with some 'chillR' functions (i.e tempResponse) to
 #' estimate metrics from hourly temperature records.
 #'
-#' @param HourTemp Vector of hourly temperatures.
+#' @param HourTemp Vector of hourly temperatures
+#' 
 #' @param summ Boolean parameter indicating whether the computed metric should be provided as cumulative values
-#' over the period or as the actual accumulation for each hour.
+#' over the period or as the actual accumulation for each hour
 #'
 #' @references Shaltout A. and Unrath C. 1983. Rest completion prediction model for starkrimsom delicious apples.
 #' J. Am. Soc. Hort. Sci. 108(6): 957-961

@@ -8,10 +8,10 @@ exponential_chill_Tmax(ExtrDailyTemp, summ = TRUE)
 }
 \arguments{
 \item{ExtrDailyTemp}{Dataframe containing columns "Tmax" and "Tmin". These values must correspond to daily
-records.}
+records}
 
 \item{summ}{Boolean parameter indicating whether the computed metric should be provided as cumulative values
-over the period or as the actual accumulation for each hour.}
+over the period or as the actual accumulation for each hour}
 }
 \description{
 This function computes the chill in an exponential way proposed by Legave et. al. (2008) and Legave et. al.

@@ -3,13 +3,16 @@
 #' This function allows to compute metrics from models which use daily temperature as inputs, rather than hourly data.
 #' It is an extension of the tempResponse_daily function.
 #' 
-#' @param temperature_list List of temperatures as those produced by temperature_generation from chillR.
+#' @param temperature_list List of temperatures as those produced by temperature_generation from chillR
+#' 
 #' @param Start_JDay Numeric input representing the initial date for computing the metrics in Julian Day format
-#' This is the number of the day within the year.
+#' This is the number of the day within the year
+#' 
 #' @param End_JDay Numeric input representing the end date for computing the metrics in Julian Day format
-#' This is the number of the day within the year.
+#' This is the number of the day within the year
+#' 
 #' @param models List of functions to compute the metrics. Default is settled to those models used in
-#' tempResponse_daily function. This parameter also allows the use of a model specified by the user.
+#' tempResponse_daily function. This parameter also allows the use of a model specified by the user
 #' 
 #' @examples 
 #' library(chillR)

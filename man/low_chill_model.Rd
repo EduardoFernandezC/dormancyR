@@ -7,10 +7,10 @@
 low_chill_model(HourTemp, summ = TRUE)
 }
 \arguments{
-\item{HourTemp}{Vector of hourly temperatures.}
+\item{HourTemp}{Vector of hourly temperatures}
 
 \item{summ}{Boolean parameter indicating whether the computed metric should be provided as cumulative values
-over the period or as the actual accumulation for each hour.}
+over the period or as the actual accumulation for each hour}
 }
 \description{
 Function to compute winter chill for deciduous trees according to the Low-chill model proposed by

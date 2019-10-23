@@ -8,10 +8,10 @@ rate_of_chill_Chmielewski(ExtrDailyTemp, summ = TRUE)
 }
 \arguments{
 \item{ExtrDailyTemp}{Dataframe containing colums "Tmax" and "Tmin". These values must correspond to daily
-records.}
+records}
 
 \item{summ}{Boolean parameter indicating whether the computed metric should be provided as cumulative values
-over the period or as the actual accumulation for each hour.}
+over the period or as the actual accumulation for each hour}
 }
 \description{
 Function to calculate winter chill for deciduos fruit trees according to the model (sequential model) proposed by

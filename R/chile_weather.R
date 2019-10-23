@@ -16,21 +16,28 @@
 #' dataframes containing minimum and maximum temperature records from each weather station
 #' obtained with the "info_stations" option within the period established in the call of the function.
 #' Finally, "my_data" provides the first dataframe of the previous list and represent the
-#' data of the closest weather station to the ubication established.
+#' data of the closest weather station to the ubication established
+#' 
 #' @param Initial_Date Character string input in the form "YYYY-MM-DD". This parameter represents the
 #' initial date of the period of interest. If it is not provided, the default is established as
-#' "1950-01-01" which correspond to the oldest date posible to use.
+#' "1950-01-01" which correspond to the oldest date posible to use
+#' 
 #' @param End_Date Character string input in the form "YYYY-MM-DD". This parameter represents the
 #' final date of the period of interest. If it is not provided, the default is established as
-#' "2017-12-31" which corresponds to the earliest posible date that can be used for the assesment.
-#' @param latitude Numerical input. Latitude of the site of interest in decimal format.
-#' @param longitude Numerical input. Longitude of the site of interest in decimal format.
+#' "2017-12-31" which corresponds to the earliest posible date that can be used for the assesment
+#' 
+#' @param latitude Numerical input. Latitude of the site of interest in decimal format
+#' 
+#' @param longitude Numerical input. Longitude of the site of interest in decimal format
+#' 
 #' @param Number_of_stations Numerical input. Number of stations wanted to use as closest stations to
-#' the site of interest. Default option is the value 25.
+#' the site of interest. Default option is the value 25
+#' 
 #' @param path_zip_tmin Character string input. Location of the zip file containing minimum
-#' temperatures. This input must include the name and extension of the file.
+#' temperatures. This input must include the name and extension of the file
+#' 
 #' @param path_zip_tmax Character string input. Location of the zip file containing maximum
-#' temperatures. This input must include the name and extension of the file.
+#' temperatures. This input must include the name and extension of the file
 #'
 #' @examples
 #' #Getting the location of zip files

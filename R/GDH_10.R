@@ -5,6 +5,7 @@
 #' as the original model.
 #' 
 #' @param HourTemp Vector of hourly temperatures
+#' 
 #' @param summ Boolean parameter to add the cumulative sum as output
 #' 
 #' @examples  

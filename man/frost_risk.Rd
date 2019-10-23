@@ -7,12 +7,12 @@
 frost_risk(HourTemp, summ = TRUE, threshold = 0)
 }
 \arguments{
-\item{HourTemp}{Vector of hourly temperatures.}
+\item{HourTemp}{Vector of hourly temperatures}
 
 \item{summ}{Boolean parameter indicating whether the computed metric should be provided as cumulative values
-over the period or as the actual accumulation for each hour.}
+over the period or as the actual accumulation for each hour}
 
-\item{threshold}{Numeric vector below which it is considered a potential frost event. Default to 0 celsius degree.}
+\item{threshold}{Numeric vector below which it is considered a potential frost event. Default to 0 celsius degree}
 }
 \description{
 This function computes the numbers of hours below a given threshold. This function allows to attempt the
@@ -20,8 +20,8 @@ potential risk of spring frost events for deciduous trees. This function is comp
 functions (i.e tempResponse) to estimate metrics from hourly temperature records.
 }
 \note{
-By using this function as model input for chillR::tempResponse, the threshold parameter is settled to
-default.
+By using this function as model input for chillR::tempResponse, the threshold parameter is set to
+the default.
 }
 \examples{
 library(chillR) 

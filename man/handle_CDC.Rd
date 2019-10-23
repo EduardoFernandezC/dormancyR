@@ -12,31 +12,31 @@ handle_CDC(action, variables, latitude, longitude, begin = 19160101,
 \item{action}{Character parameter to decide on 3 options. Options are "info_stations", "my_data" and
 "list_data". "info_stations" returns a dataframe with the information on close weather stations
 to a location. "my_data" downloads the records for the closest weather station. "list_data" downloads
-the records for several weather stations which are close to the location of interest.}
+the records for several weather stations which are close to the location of interest}
 
 \item{variables}{Character vector of the variables required. For now, the function can returns the
 wind speed (mean - "Wind_speed" and maximum - "Wind_speed_max"); the atmospheric pressure
 ("ATM_pressure"); the rainfall ("Rainfall"); the precipitation as snow ("Snow"), the minimum 
 temperature 5 cm above the ground ("Tmin_5cm"); the air temperature 2 m above ground (minimum - "Tmin",
 mean - "Tmean", and maximum - "Tmax"); the relative humidity ("RH"); and the vapour pressure deficit
-(VPD).}
+(VPD)}
 
-\item{latitude}{Numeric parameter. The latitude (in decimal degrees) of the location of interest.}
+\item{latitude}{Numeric parameter. The latitude (in decimal degrees) of the location of interest}
 
-\item{longitude}{Numeric parameter. The longitude (in decimal degrees) of the location of interest.}
+\item{longitude}{Numeric parameter. The longitude (in decimal degrees) of the location of interest}
 
 \item{begin}{Numeric parameter. The start date of the period by which the record is required. It has
-to be specified in YEARMODA format.}
+to be specified in YEARMODA format}
 
 \item{end}{Numeric parameter. The end date of the period by which the record is required. It has
-to be specified in YEARMODA format.}
+to be specified in YEARMODA format}
 
 \item{number_of_stations}{Numeric parameter. The numbers of stations to select from the point of 
-interest.}
+interest}
 
 \item{complete_list}{Boolean parameter. If "my_data" option has been used this allows to skip the first
 weather station when using the "list_data" option. It avoids include a repetead dataframe for the
-first weather station.}
+first weather station}
 }
 \description{
 It allows to: 1) obtain information of the weather stations from Germany; 2) get weather data for a

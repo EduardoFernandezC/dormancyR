@@ -4,9 +4,10 @@
 #' Hanninen (1990) and Krammer (1994).
 #'
 #' @param ExtrDailyTemp Dataframe containing colums "Tmax" and "Tmin". These values must correspond to daily
-#' records.
+#' records
+#' 
 #' @param summ Boolean parameter indicating whether the computed metric should be provided as cumulative values
-#' over the period or as the actual accumulation for each hour.
+#' over the period or as the actual accumulation for each hour
 #'
 #' @references Hanninen H. 1990. Modelling bud dormancy release in trees from cool and temperate regions.
 #' Acta For. Fenn. 213: 1-47 doi:10.14214/aff.7660

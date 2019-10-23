@@ -4,9 +4,10 @@
 #' Gilreath and Buchanan (1981). This function is compatible with some 'chillR' functions (i.e tempResponse) to
 #' estimate metrics from hourly temperature records.
 #'
-#' @param HourTemp Vector of hourly temperatures.
+#' @param HourTemp Vector of hourly temperatures
+#' 
 #' @param summ Boolean parameter indicating whether the computed metric should be provided as cumulative values
-#' over the period or as the actual accumulation for each hour.
+#' over the period or as the actual accumulation for each hour
 #'
 #' @references Gilreath P. and Buchanan D. 1981. Rest prediction model for low-chilling sungold nectarine. J. Am.
 #' Soc. Hort. Sci. 106(4): 426 - 429

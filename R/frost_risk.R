@@ -4,12 +4,15 @@
 #' potential risk of spring frost events for deciduous trees. This function is compatible with some 'chillR'
 #' functions (i.e tempResponse) to estimate metrics from hourly temperature records.
 #'
-#' @param HourTemp Vector of hourly temperatures.
+#' @param HourTemp Vector of hourly temperatures
+#' 
 #' @param summ Boolean parameter indicating whether the computed metric should be provided as cumulative values
-#' over the period or as the actual accumulation for each hour.
-#' @param threshold Numeric vector below which it is considered a potential frost event. Default to 0 celsius degree.
-#' @note By using this function as model input for chillR::tempResponse, the threshold parameter is settled to
-#' default.
+#' over the period or as the actual accumulation for each hour
+#' 
+#' @param threshold Numeric vector below which it is considered a potential frost event. Default to 0 celsius degree
+#' 
+#' @note By using this function as model input for chillR::tempResponse, the threshold parameter is set to
+#' the default.
 #' 
 #' @examples
 #' library(chillR) 

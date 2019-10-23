@@ -5,9 +5,10 @@
 #' computed without the negative (-) transformation made in the original paper.
 #'
 #' @param ExtrDailyTemp Dataframe containing columns "Tmax" and "Tmin". These values must correspond to daily
-#' records.
+#' records
+#' 
 #' @param summ Boolean parameter indicating whether the computed metric should be provided as cumulative values
-#' over the period or as the actual accumulation for each hour.
+#' over the period or as the actual accumulation for each hour
 #'
 #' @references Cesaraccio C., Spano D., Snyder R. and Duce P. 2004. Chilling and forcing model to predict
 #' bud - burst of crop and forest species. Agric. For. Meteorol. 126(1-2): 1-13.

@@ -4,9 +4,10 @@
 #' Linsley-Noakes and Allan (1994). This function is compatible with some 'chillR' functions (i.e tempResponse)
 #' to estimate metrics from hourly temperature records.
 #'
-#' @param HourTemp Vector of hourly temperatures.
+#' @param HourTemp Vector of hourly temperatures
+#' 
 #' @param summ Boolean parameter indicating whether the computed metric should be provided as cumulative values
-#' over the period or as the actual accumulation for each hour.
+#' over the period or as the actual accumulation for each hour
 #'
 #' @references Linsley-Noakes G. and Allan P. 1994. Comparison of two models for the prediction of rest
 #' completion in peaches. Sci. Hortic. 59(2): 107-113

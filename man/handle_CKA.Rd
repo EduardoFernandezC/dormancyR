@@ -8,19 +8,19 @@ handle_CKA(folder_path, vars = c("Temp"), time_step = "hourly",
   check_data = T)
 }
 \arguments{
-\item{folder_path}{Chacter string. This is the complete directory name where the files are stored.}
+\item{folder_path}{Chacter string. This is the complete directory name where the files are stored}
 
 \item{vars}{Character string. Variables of interest returned by the function. These are:
 "Wind_speed (m/s)", "Wind_direction (degrees)", "Temp (Celsius)", "Tmean (Celsius)", "Tmax (Celsius)",
 "Tmin (Celsius)", "Humidity (%)", "Above_Ground_Temp (Celsius)", "Soil_Temp (Celsius)", "Precipitation (mm)",
-"Radiation (W/m2)" and "PAR (umol/m2/s)". Deffault is set to temperature ("Temp")}
+"Radiation (W/m2)" and "PAR (umol/m2/s)". Default is set to temperature ("Temp")}
 
 \item{time_step}{Character string. This is related to the frequency in which the data was recorded. Normally,
 CKA records weather parameters each 10 min. However, this function only returns values for hourly and 
-daily time steps. Deffault is set to "hourly"}
+daily time steps. Default is set to "hourly"}
 
 \item{check_data}{Boolean parameter to define wether the data should be quality checked or not. This means to
-look for missing hours or days and fill them through linear interpolation. This only works for temperature.}
+look for missing hours or days and fill them through linear interpolation. This only works for temperature}
 }
 \description{
 This function allows to handle weather data recorded by weather stations located in Campus Klein Altendorf

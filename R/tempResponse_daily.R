@@ -8,11 +8,14 @@
 #' @param data Could be a list of two or more elements. This list should contain a dataframe that could be
 #' called "weather" if this is obtained from the fix_weather function in chillR or "data" is the list is
 #' obtained from the chile_weather function in "eduaRdo" package. A third option is just a dataframe.
-#' In any case, dataframe should contains colums "Year", "Month", "Day", "JDay", "Tmin" and "Tmax".
-#' @param Start_JDay The start date for computing the outputs. This is the number of the day within the year.
-#' @param End_JDay The end date for computing the outputs. This is the number of the day within the year.
+#' In any case, dataframe should contains colums "Year", "Month", "Day", "JDay", "Tmin" and "Tmax"
+#' 
+#' @param Start_JDay The start date for computing the outputs. This is the number of the day within the year
+#' 
+#' @param End_JDay The end date for computing the outputs. This is the number of the day within the year
+#' 
 #' @param models A list of chill functions to compute the metric for the period of interest. Each model
-#' should be named. Default provides five models (See datails).
+#' should be named. Default provides five models (See datails)
 #' 
 #' @examples 
 #' library(chillR)
