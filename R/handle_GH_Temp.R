@@ -21,11 +21,10 @@
 #' 
 #' # handle_GH_data(path_data = path, time_step = "daily")
 #' 
-#' @export handle_GH_data
+#' @export handle_GH_Temp
 #' @importFrom dplyr "%>%"
 
-
-handle_GH_data <- function(path_data, time_step = "hourly") {
+handle_GH_Temp <- function(path_data, time_step = "hourly") {
   
   
   # Read the data in xls format
