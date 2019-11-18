@@ -38,6 +38,10 @@
 #' 
 #' @param path_zip_tmax Character string input. Location of the zip file containing maximum
 #' temperatures. This input must include the name and extension of the file
+#' 
+#' @param stations_df A dataframe containing the list of stations for which this function will retrieve
+#' weather data. It is important that this dataframe be produced by this function under the output 
+#' "info_stations". The default is set to NULL
 #'
 #' @examples
 #' #Getting the location of zip files
@@ -47,14 +51,19 @@
 #' #Call of the function
 #' #chile_weather(output = "my_data", Initial_Date = "2000-01-01", End_Date = "2017-12-31",
 #' #                latitude = -32.8958, longitude = -71.2092, Number_of_stations = 25,
-#' #                path_zip_tmin = path_zip_tmin, path_zip_tmax = path_zip_tmax)
+#' #                path_zip_tmin = path_zip_tmin, path_zip_tmax = path_zip_tmax,
+#' #                stations_df = NULL)
 #' 
 #' 
 #' @export chile_weather
 
 chile_weather <- function(output, Initial_Date = "1950-01-01", End_Date = "2017-12-31",
                           latitude = latitude, longitude = longitude, Number_of_stations = 25,
-                          path_zip_tmin = path_zip_tmin, path_zip_tmax = path_zip_tmax){
+                          path_zip_tmin = path_zip_tmin, path_zip_tmax = path_zip_tmax, stations_df = NULL){
+  
+  
+  if (!(output %in% c("my_data", "info_stations", "station_list_data")))
+    stop("Please provide a valid output for the function")
   
   
   #Saving the actual work directory
@@ -185,6 +194,11 @@ chile_weather <- function(output, Initial_Date = "1950-01-01", End_Date = "2017-
   
   #Merging Tmin y Tmax according to the code of the station for the total number of stations setted
   
+  # Check if the df with the station list has been provided while calling the function
+  
+  if (is.data.frame(stations_df) & "Cod_Station" %in% colnames(stations_df) & "Name" %in% colnames(stations_df))
+    Sumarized_stations <- stations_df
+  
   dfs <- NULL
   
   for (i in 1 : length(Sumarized_stations$Cod_Station)) {
@@ -207,10 +221,11 @@ chile_weather <- function(output, Initial_Date = "1950-01-01", End_Date = "2017-
     dfs <- c(dfs, list(daily_data))
   }
   
-  rm(daily_data)
-  
-  if(output == "station_list_data")
+  if(output == "station_list_data" & is.null(stations_df))
     return(dfs[2 : Number_of_stations])
+  
+  if(output == "station_list_data" & is.data.frame(stations_df))
+    return(dfs[2 : length(stations_df[, 1])])
   
   if(output == "my_data")
     return(dfs[[1]])
@@ -221,11 +236,7 @@ chile_weather <- function(output, Initial_Date = "1950-01-01", End_Date = "2017-
   
   for (i in 1 : length(dfs)) {
     
-    if (table(is.na(dfs[[i]][, c("Tmin", "Tmax")]))[[1]] != length(dfs[[i]][, 1]) * 2) {
-      
-      NobsTemp <- table(is.na(dfs[[i]][, c("Tmin", "Tmax")]))[[1]]} else {
-        
-        NobsTemp <- length(dfs[[i]][, 1]) * 2}
+    NobsTemp <- length(which(!is.na(dfs[[i]]["Tmin"]))) + length(which(!is.na(dfs[[i]]["Tmax"])))
     
     N_obs <- c(N_obs, NobsTemp)}
   

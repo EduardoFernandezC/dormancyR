@@ -7,7 +7,8 @@
 chile_weather(output, Initial_Date = "1950-01-01",
   End_Date = "2017-12-31", latitude = latitude,
   longitude = longitude, Number_of_stations = 25,
-  path_zip_tmin = path_zip_tmin, path_zip_tmax = path_zip_tmax)
+  path_zip_tmin = path_zip_tmin, path_zip_tmax = path_zip_tmax,
+  stations_df = NULL)
 }
 \arguments{
 \item{output}{Character string input which define the kind of data wanted. There are three options
@@ -39,6 +40,10 @@ temperatures. This input must include the name and extension of the file}
 
 \item{path_zip_tmax}{Character string input. Location of the zip file containing maximum
 temperatures. This input must include the name and extension of the file}
+
+\item{stations_df}{A dataframe containing the list of stations for which this function will retrieve
+weather data. It is important that this dataframe be produced by this function under the output 
+"info_stations". The default is set to NULL}
 }
 \description{
 This function allows to obtain information about weather stations located in Chile as well as
@@ -58,7 +63,8 @@ Function require both zip files in the same folder.
 #Call of the function
 #chile_weather(output = "my_data", Initial_Date = "2000-01-01", End_Date = "2017-12-31",
 #                latitude = -32.8958, longitude = -71.2092, Number_of_stations = 25,
-#                path_zip_tmin = path_zip_tmin, path_zip_tmax = path_zip_tmax)
+#                path_zip_tmin = path_zip_tmin, path_zip_tmax = path_zip_tmax,
+#                stations_df = NULL)
 
 
 }
