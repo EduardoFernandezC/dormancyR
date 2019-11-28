@@ -4,7 +4,7 @@
 #' contains options to check for missing observations and fill them through linear interpolation.
 #' 
 #' @param path_data Character string. This is the directory in which the data is stored. It is important to note
-#' that the file must be a ".csv" (using sep = ",") file
+#' that the file must be in ".csv" (using sep = ",") or ".xlsx" format
 #' 
 #' @param vars Character string. Climate related variables that will be returned by the function. It has two
 #' options for temperature according to the time_step parameter. Tmean, Tmin and Tmax only work for daily
@@ -20,6 +20,9 @@
 #' @param latitude Numeric vector. If the check_data parameter is used, this is to fill the gaps by linear
 #' interpolation according to the latitude of the place. Default is NULL
 #' 
+#' @param sep Sometimes the file is saved in ".csv" format but the character for separating the rows is not ","
+#' (comma). With sep, this can be set to a different separator character only if the user knows it
+#'  
 #' @details 
 #' This function has an option to fill the gaps through linear interpolation. However, this step is ONLY
 #' recommended if the sensor was placed in normal environmental conditions. Otherwise, the values used to fill
@@ -33,13 +36,13 @@
 #' # path <- "C:/Users/...../...."
 #' 
 #' # handle_tinytag(path_data = path, vars = c("Tmin", "Tmean", "Tmax"),
-#' # time_step = "daily", check_data = T, latitude = 50.62)
+#' # time_step = "daily", check_data = T, latitude = 50.62, sep = NULL)
 #' 
 #' @export handle_tinytag
 #' @importFrom dplyr "%>%"
 
 handle_tinytag <- function(path_data, vars = c("Temp", "Humidity"), time_step = "hourly", check_data = T,
-                           latitude = NULL){
+                           latitude = NULL, sep = NULL){
   
   requireNamespace("dplyr")
   
@@ -66,18 +69,43 @@ handle_tinytag <- function(path_data, vars = c("Temp", "Humidity"), time_step = 
   
   # Load the data from the "Tynitag" datalogger
   
-  weather <- utils::read.csv(path_data, skip = 4,
-                             col.names = c("Eingenschaft", "Date", "Temperature",
-                                           "Humidity"))[, c("Date", "Temperature", "Humidity")]
+  
+  # Check the extension of the file
+  
+  if (tools::file_ext(path_data) %in% c("xls", "xlsx")){
+    
+    weather <- suppressWarnings(suppressMessages(readxl::read_xlsx(path_data, sheet = 1, skip = 4,
+                                                                   col_types = c("numeric", "date",
+                                                                                 "numeric", "numeric"))))
+    
+    colnames(weather) <- c("Eingenschaft", "Date", "Temp", "Humidity")
+    
+    weather <- weather[c("Date", "Temp", "Humidity")]}
   
   
-  # Remove the C and RH characters from each row
   
-  weather <- tidyr::separate(weather, Temperature, c("Temp", "Unit"), sep = " ",
-                             convert = TRUE)
-  
-  weather <- tidyr::separate(weather, Humidity, c("Humidity", "Unit"), sep = " ",
-                             convert = TRUE)[c("Date", "Temp", "Humidity")]
+  if (tools::file_ext(path_data) %in% c("csv")){
+    
+    if (!is.null(sep)){
+      
+      weather <- utils::read.csv(path_data, skip = 4, sep = sep,
+                                 col.names = c("Eingenschaft", "Date", "Temperature",
+                                               "Humidity"))[, c("Date", "Temperature", "Humidity")]}
+    
+    else {
+      
+      weather <- utils::read.csv(path_data, skip = 4,
+                                 col.names = c("Eingenschaft", "Date", "Temperature",
+                                               "Humidity"))[, c("Date", "Temperature", "Humidity")]}
+    
+    
+    # Remove the C and RH characters from each row
+    
+    weather <- tidyr::separate(weather, Temperature, c("Temp", "Unit"), sep = " ",
+                               convert = TRUE)
+    
+    weather <- tidyr::separate(weather, Humidity, c("Humidity", "Unit"), sep = " ",
+                               convert = TRUE)[c("Date", "Temp", "Humidity")]}
   
   
   # Separate the hour from the date
@@ -86,19 +114,24 @@ handle_tinytag <- function(path_data, vars = c("Temp", "Humidity"), time_step = 
   
   # Separate the hour and minute from the hour column
   
-  weather <- tidyr::separate(weather, "Hour", c("Hour", "Min"), convert = TRUE)
+  weather <- suppressWarnings(tidyr::separate(weather, "Hour", c("Hour", "Min"), convert = TRUE))
   
   
   # Add the Year, Month, Day, Hour, Min and condition columns
   
-  weather <- data.frame(Year = as.numeric(substr(weather$Date, 7, 10)),
-                        Month = as.numeric(substr(weather$Date, 4, 5)),
-                        Day = as.numeric(substr(weather$Date, 1, 2)),
-                        Hour = weather$Hour,
-                        Min = weather$Min,
-                        Temp = weather$Temp,
-                        Humidity = weather$Humidity)  
+  weather <- tidyr::separate(weather, "Date", c("Year", "Month", "Day"), convert = TRUE)
   
+  if (!(length(unique(weather$Year)) < length(unique(weather$Month)) & 
+        length(unique(weather$Month)) < length(unique(weather$Day)))){
+    
+    colnames(weather) <- c("Day", "Month", "Year", "Hour", "Min", "Temp", "Humidity")
+    
+    weather <- weather[c("Year", "Month", "Day", colnames(weather)[4 : length(colnames(weather))])]}
+  
+  
+  if (nchar(as.character(weather[1, "Year"])) == 2){
+    
+    weather$Year <- weather$Year + 2000}
   
   # Summarise the data by hour
   

@@ -172,7 +172,7 @@ chile_weather <- function(output, Initial_Date = "1950-01-01", End_Date = "2017-
   #Selecting the relevant weather stations according to the number of stations
   
   Sumarized_stations <- Sorted_Stations[c(1 : Number_of_stations), ]
-  colnames(Sumarized_stations) <- c("Cod_Station", "Institution", "Source", "Name", "Altitude", "Latitude",
+  colnames(Sumarized_stations) <- c("Cod_Station", "Institution", "Source", "Name", "Elevation", "Latitude",
                                     "Longitude", "Distance")
   
   #Creating a primer data for the period of interest

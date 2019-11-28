@@ -5,11 +5,12 @@
 \title{Get weather data from Tinytag sensor in chillR format}
 \usage{
 handle_tinytag(path_data, vars = c("Temp", "Humidity"),
-  time_step = "hourly", check_data = T, latitude = NULL)
+  time_step = "hourly", check_data = T, latitude = NULL,
+  sep = NULL)
 }
 \arguments{
 \item{path_data}{Character string. This is the directory in which the data is stored. It is important to note
-that the file must be a ".csv" (using sep = ",") file}
+that the file must be in ".csv" (using sep = ",") or ".xlsx" format}
 
 \item{vars}{Character string. Climate related variables that will be returned by the function. It has two
 options for temperature according to the time_step parameter. Tmean, Tmin and Tmax only work for daily
@@ -24,6 +25,9 @@ functions contained in chillR to fill the gaps. Default is TRUE}
 
 \item{latitude}{Numeric vector. If the check_data parameter is used, this is to fill the gaps by linear
 interpolation according to the latitude of the place. Default is NULL}
+
+\item{sep}{Sometimes the file is saved in ".csv" format but the character for separating the rows is not ","
+(comma). With sep, this can be set to a different separator character only if the user knows it}
 }
 \description{
 This function returns weather data (temperature and humidity) from tinytag sensors (model TGP-4500). It also
@@ -42,6 +46,6 @@ the gaps are not representatives for the conditions.
 # path <- "C:/Users/...../...."
 
 # handle_tinytag(path_data = path, vars = c("Tmin", "Tmean", "Tmax"),
-# time_step = "daily", check_data = T, latitude = 50.62)
+# time_step = "daily", check_data = T, latitude = 50.62, sep = NULL)
 
 }
