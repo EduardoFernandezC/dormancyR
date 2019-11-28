@@ -42,13 +42,13 @@
 #' @param stations_df A dataframe containing the list of stations for which this function will retrieve
 #' weather data. It is important that this dataframe be produced by this function under the output 
 #' "info_stations". The default is set to NULL
-#'
+#' 
 #' @examples
-#' #Getting the location of zip files
+#' ##Getting the location of zip files
 #' #path_zip_tmin<-"[Your folder]\\cr2_tasminDaily_2018_ghcn.zip"
 #' #path_zip_tmax<-"[Your folder]\\cr2_tasmaxDaily_2018_ghcn.zip"
 #'
-#' #Call of the function
+#' ##Call of the function
 #' #chile_weather(output = "my_data", Initial_Date = "2000-01-01", End_Date = "2017-12-31",
 #' #                latitude = -32.8958, longitude = -71.2092, Number_of_stations = 25,
 #' #                path_zip_tmin = path_zip_tmin, path_zip_tmax = path_zip_tmax,
