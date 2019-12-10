@@ -7,7 +7,7 @@ Author: Eduardo Fernandez
 Maintainer: Eduardo Fernandez <efernand@uni-bonn.de>
 Description: Some functions for estimating chilling metrics for deciduous fruit trees according to alternative chill models. The package contains functions to use the models Utah Modified, North Carolina, Low Chill, among others. These can also by used as input models for chillR functions (Luedeling 2019). Additionally, this package contains functions to handle weather data from different sources in Chile and Germany, as well as functions to estimate metrics related to frost events and heat accumulation according to a modification of Growing Degree Hour.
 Depends: R (>= 3.0)
-Imports: chillR, sp, dplyr, tidyr, readxl, readr
+Imports: chillR, sp, dplyr, tidyr, readxl, readr, stringr, XML
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
