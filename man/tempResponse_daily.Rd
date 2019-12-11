@@ -13,7 +13,7 @@ tempResponse_daily(data, Start_JDay = 1, End_JDay = 366,
 \arguments{
 \item{data}{Could be a list of two or more elements. This list should contain a dataframe that could be
 called "weather" if this is obtained from the fix_weather function in chillR or "data" is the list is
-obtained from the chile_weather function in "eduaRdo" package. A third option is just a dataframe.
+obtained from the chile_weather function. A third option is just a dataframe.
 In any case, dataframe should contains colums "Year", "Month", "Day", "JDay", "Tmin" and "Tmax"}
 
 \item{Start_JDay}{The start date for computing the outputs. This is the number of the day within the year}

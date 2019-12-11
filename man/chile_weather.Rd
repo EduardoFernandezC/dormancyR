@@ -22,11 +22,11 @@ data of the closest weather station to the ubication established}
 
 \item{Initial_Date}{Character string input in the form "YYYY-MM-DD". This parameter represents the
 initial date of the period of interest. If it is not provided, the default is established as
-"1950-01-01" which correspond to the oldest date posible to use}
+"1950-01-01" which correspond to the oldest date possible to use}
 
 \item{End_Date}{Character string input in the form "YYYY-MM-DD". This parameter represents the
 final date of the period of interest. If it is not provided, the default is established as
-"2017-12-31" which corresponds to the earliest posible date that can be used for the assesment}
+"2017-12-31" which corresponds to the earliest possible date that can be used for the assesment}
 
 \item{latitude}{Numerical input. Latitude of the site of interest in decimal format}
 
