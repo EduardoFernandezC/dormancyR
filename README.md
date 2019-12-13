@@ -1,9 +1,7 @@
 
-<img src="vignettes/bare_tree.jpg" alt = "ethnobotanyR logo" align = "right" width = "25%" height = "25%"/>
+<img src="vignettes/dormancyR.png" alt = "ethnobotanyR logo" align = "right" width = "25%" height = "25%"/>
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-
-<!-- badges: start -->
 
 # dormancyR
 
