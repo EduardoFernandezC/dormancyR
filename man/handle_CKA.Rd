@@ -4,8 +4,7 @@
 \alias{handle_CKA}
 \title{Get weather data from Campus Klein Altendorf in chillR format}
 \usage{
-handle_CKA(folder_path, vars = c("Temp"), time_step = "hourly",
-  check_data = T)
+handle_CKA(folder_path, vars = c("Temp"), time_step = "hourly", check_data = T)
 }
 \arguments{
 \item{folder_path}{Chacter string. This is the complete directory name where the files are stored}

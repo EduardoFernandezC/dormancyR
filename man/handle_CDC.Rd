@@ -4,9 +4,16 @@
 \alias{handle_CDC}
 \title{Handle historic weather records from stations across Germany}
 \usage{
-handle_CDC(action, variables, latitude, longitude, begin = 19160101,
-  end = chillR::Date2YEARMODA(Sys.Date()), number_of_stations = 25,
-  complete_list = FALSE)
+handle_CDC(
+  action,
+  variables,
+  latitude,
+  longitude,
+  begin = 19160101,
+  end = chillR::Date2YEARMODA(Sys.Date()),
+  number_of_stations = 25,
+  complete_list = FALSE
+)
 }
 \arguments{
 \item{action}{Character parameter to decide on 3 options. Options are "info_stations", "my_data" and

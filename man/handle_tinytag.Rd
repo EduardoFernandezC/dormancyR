@@ -4,9 +4,14 @@
 \alias{handle_tinytag}
 \title{Get weather data from Tinytag sensor in chillR format}
 \usage{
-handle_tinytag(path_data, vars = c("Temp", "Humidity"),
-  time_step = "hourly", check_data = T, latitude = NULL,
-  sep = NULL)
+handle_tinytag(
+  path_data,
+  vars = c("Temp", "Humidity"),
+  time_step = "hourly",
+  check_data = T,
+  latitude = NULL,
+  sep = NULL
+)
 }
 \arguments{
 \item{path_data}{Character string. This is the directory in which the data is stored. It is important to note

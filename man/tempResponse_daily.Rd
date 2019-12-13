@@ -4,11 +4,14 @@
 \alias{tempResponse_daily}
 \title{Summarize chill responses from daily chill functions}
 \usage{
-tempResponse_daily(data, Start_JDay = 1, End_JDay = 366,
-  models = list(Rate_of_Chill = rate_of_chill_Chmielewski, Chill_Days =
-  chill_days, Exponential_Chill = exponential_chill_Tmax,
-  Triangula_Chill_Haninnen = triangular_chill_Hanninen,
-  Triangular_Chill_Legave = triangular_chill_Legave))
+tempResponse_daily(
+  data,
+  Start_JDay = 1,
+  End_JDay = 366,
+  models = list(Rate_of_Chill = rate_of_chill_Chmielewski, Chill_Days = chill_days,
+    Exponential_Chill = exponential_chill_Tmax, Triangula_Chill_Haninnen =
+    triangular_chill_Hanninen, Triangular_Chill_Legave = triangular_chill_Legave)
+)
 }
 \arguments{
 \item{data}{Could be a list of two or more elements. This list should contain a dataframe that could be
