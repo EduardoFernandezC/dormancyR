@@ -1,5 +1,6 @@
 ---
 output: github_document
+bibliography: packages.bib
 ---
 
 <img src="vignettes/bare_tree.jpg" alt = "ethnobotanyR logo" align = "right" width = "25%" height = "25%"/>
@@ -26,5 +27,30 @@ knitr::opts_chunk$set(
 
 ```
 
-# alternative_chill_functions
-R functions for the alternative_chill_functions package. It contains functions to estimate chill metrics according to alternative horticultural and forest chill models. Most of the functions are compatible with the "chillR" package (Luedeling, 2018). It also contains functions to handle historic Chilean weather data downloaded from the Center for Climate and Resilience Research (www.cr2.cl) and current data downloaded from the Chilean Agromet website (https://www.agromet.cl/datos-historicos). Finally, this package also contains a function to download weather data from the German Climate Data Center (https://cdc.dwd.de/portal/). This package was used in a scientific manuscript which is now under review.
+
+```{r, warning=FALSE, include = FALSE}
+#Automatically write R package citation entries to a .bib file
+knitr::write_bib(c(.packages(), 
+                   'bayesplot', 
+                   'chillR',
+                   'decisionSupport',
+                   'dplyr',
+                   'ethnobotanyR',
+                   'ggplot2', 
+                   'ggridges', 
+                   'graphics',
+                   'plyr', 
+                   'reshape', 
+                   'tidyverse',
+                   'kableExtra',
+                   'MASS'), 'packages.bib')
+```
+
+
+# dormancyR
+
+`dormancyR` aims to provide alternatives to common chill models used in horticulture to compute chill metrics in deciduous fruit tree orchards. The package produces outputs compatible with the `chillR` package [@R-chillR]. It also contains functions to handle historic and updated weather data downloaded from Chilean databases (<https://www.cr2.cl>, <https://www.agromet.cl/datos-historicos>). Finally, `dormancyR` also contains a function to obtain weather data from the German Climate Data Center (<https://cdc.dwd.de/portal/>).
+
+`dormancyR` was developed for a scientific manuscript
+
+# References

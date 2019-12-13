@@ -25,4 +25,6 @@ vignettes/*.pdf
 # Shiny token, see https://shiny.rstudio.com/articles/shinyapps.html
 rsconnect/
 .Rproj.user
-alternative_chill_functions.Rproj
+dormancyR.Rproj
+# bib files
+*.bib
