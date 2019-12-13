@@ -12,7 +12,7 @@ include the extension ("xls") of the file.}
 
 \item{vars}{Character string. Vector of one or more variables that are requested from the original weather file.
 Default is set to "Temp" since for now, the function only works for hourly records. Available options depend on
-the variables specified by the user while downloading. Possible inputs are "Precip_Acum", "Humidity",
+the variables specified by the user while downloading. Possible inputs are "Precip_Accum", "Humidity",
 "Wind_direction", "Solar_radiation", "Pressure_ATM", "Temp", "Tmax", "Tmin", "Soil_Tmean", "Soil_Tmax",
 "Wind_speed_max", "Surface_Tmean", "Surface_Tmax", "Soil_Tmin", "Surface_Tmin", "Wind_speed_mean". See details 
 for more information.}
