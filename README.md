@@ -1,5 +1,5 @@
 
-<img src="vignettes/dormancyR.png" alt = "dormancyR logo" align = "right" width = "25%" height = "25%"/>
+<img src="vignettes/dormancyR_2.png" alt = "dormancyR logo" align = "right" width = "25%" height = "25%"/>
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
@@ -9,12 +9,12 @@
 horticulture to compute chill metrics in deciduous fruit tree orchards.
 The package produces outputs compatible with the `chillR` package
 (Luedeling 2019). It also contains functions to handle historic and
-updated weather data downloaded from Chilean (Center for Climate and
-Resilience Research - <https://www.cr2.cl>; Agromet INIA -
-<https://www.agromet.cl/datos-historicos>) and German databases (Climate
-Data Center - <https://cdc.dwd.de/portal/>).
+updated weather data downloaded from Chilean ([Center for Climate and
+Resilience Research](https://www.cr2.cl) and [Agromet
+INIA](https://www.agromet.cl/datos-historicos)) and German databases
+([Climate Data Center](https://cdc.dwd.de/portal/)).
 
-`dormancyR` was developed for a scientific manuscript
+`dormancyR` was developed for a scientific manuscript DOI…
 
 # References
 
