@@ -1,5 +1,5 @@
 
-<img src="vignettes/dormancyR_2.png" alt = "dormancyR logo" align = "right" width = "25%" height = "25%"/>
+<img src="vignettes/dormancyR_3.png" alt = "dormancyR logo" align = "right" width = "25%" height = "25%"/>
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
