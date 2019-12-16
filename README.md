@@ -6,12 +6,17 @@
 # dormancyR
 
 `dormancyR` aims to provide alternatives to common chill models used in
-horticulture to compute chill metrics in deciduous fruit tree orchards.
-The package produces outputs compatible with the `chillR` package
-(Luedeling 2019). It also contains functions to handle historic and
-updated weather data downloaded from Chilean ([Center for Climate and
-Resilience Research](https://www.cr2.cl) and [Agromet
-INIA](https://www.agromet.cl/datos-historicos)) and German databases
+horticulture to  
+compute chill metrics in deciduous fruit tree orchards as well as
+functions to handle  
+weather data. The package produces outputs compatible with the `chillR`
+package  
+(Luedeling 2019). It also contains functions to handle historic ([Center
+for Climate and Resilience Research](https://www.cr2.cl)) and up-to-date
+([Agromet INIA](https://www.agromet.cl/datos-historicos)) weather data
+downloaded from  
+Chilean databases. `dormancyR` also contains weather data from a German
+database  
 ([Climate Data Center](https://cdc.dwd.de/portal/)).
 
 `dormancyR` was developed for a scientific manuscript DOI…
