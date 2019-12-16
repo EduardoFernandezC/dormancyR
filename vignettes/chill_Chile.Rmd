@@ -1,8 +1,9 @@
 ---
 title: "Compute chill metrics for Quillota, Chile"
+author: "Eduardo Fernandez C <br /><small>INRES-Horticultural Sciences, University of Bonn, Auf dem Huegel 6, 53121 Bonn, Germany<small/>"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{chill_Chile}
+  %\VignetteIndexEntry{Compute chill metrics for Quillota, Chile}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 bibliography: packages.bib
@@ -11,6 +12,9 @@ bibliography: packages.bib
 body {
 text-align: justify}
 </style>
+
+<!-- Print pdf version -->
+<!-- rmarkdown::render("vignettes/chill_Chile.Rmd", output_format = "pdf_document") -->
 
 ```{r, include = F}
 knitr::opts_chunk$set(
@@ -152,6 +156,7 @@ ggplot(chill_hour[[1]], aes(CP, ..density..)) +
 
 ```
 
+***I should conclude something here***
 
 
 
