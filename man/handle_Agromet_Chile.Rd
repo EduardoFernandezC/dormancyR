@@ -2,7 +2,7 @@
 % Please edit documentation in R/handle_Agromet_Chile.R
 \name{handle_Agromet_Chile}
 \alias{handle_Agromet_Chile}
-\title{Handle weahter data downloaded from the Agromet Chilean database}
+\title{Handle weather data downloaded from the Agromet Chilean database}
 \usage{
 handle_Agromet_Chile(pathfile, vars = c("Temp"))
 }

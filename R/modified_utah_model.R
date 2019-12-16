@@ -1,6 +1,6 @@
 #' Modified Utah model
 #'
-#' Function to calculate winter chill for deciduos trees according to the Modified Utah model proposed by
+#' Function to calculate winter chill for deciduous trees according to the Modified Utah model proposed by
 #' Linvill (1990). This function is compatible with some 'chillR' functions (i.e tempResponse) to
 #' estimate metrics from hourly temperature records.
 #'

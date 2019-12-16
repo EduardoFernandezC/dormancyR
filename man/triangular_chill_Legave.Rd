@@ -7,7 +7,7 @@
 triangular_chill_Legave(ExtrDailyTemp, summ = TRUE)
 }
 \arguments{
-\item{ExtrDailyTemp}{Dataframe containing colums "Tmax" and "Tmin". These values must correspond to daily
+\item{ExtrDailyTemp}{Dataframe containing columns "Tmax" and "Tmin". These values must correspond to daily
 records}
 
 \item{summ}{Boolean parameter indicating whether the computed metric should be provided as cumulative values

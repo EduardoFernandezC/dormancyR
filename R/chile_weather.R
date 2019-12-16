@@ -16,7 +16,7 @@
 #' dataframes containing minimum and maximum temperature records from each weather station
 #' obtained with the "info_stations" option within the period established in the call of the function.
 #' Finally, "my_data" provides the first dataframe of the previous list and represent the
-#' data of the closest weather station to the ubication established
+#' data of the closest weather station to the location established
 #' 
 #' @param Initial_Date Character string input in the form "YYYY-MM-DD". This parameter represents the
 #' initial date of the period of interest. If it is not provided, the default is established as
@@ -24,7 +24,7 @@
 #' 
 #' @param End_Date Character string input in the form "YYYY-MM-DD". This parameter represents the
 #' final date of the period of interest. If it is not provided, the default is established as
-#' "2017-12-31" which corresponds to the earliest possible date that can be used for the assesment
+#' "2017-12-31" which corresponds to the earliest possible date that can be used for the assessment
 #' 
 #' @param latitude Numerical input. Latitude of the site of interest in decimal format
 #' 

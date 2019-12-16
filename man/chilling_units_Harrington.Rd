@@ -13,7 +13,7 @@ chilling_units_Harrington(HourTemp, summ = TRUE)
 over the period or as the actual accumulation for each hour}
 }
 \description{
-Function to calculate winter chill for deciduos trees according to the Chilling units model proposed by
+Function to calculate winter chill for deciduous trees according to the Chilling units model proposed by
 Harrington (2010). This function is compatible with some 'chillR' functions (i.e tempResponse) to
 estimate metrics from hourly temperature records.
 }

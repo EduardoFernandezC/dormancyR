@@ -1,4 +1,4 @@
-#' Handle weahter data downloaded from the Agromet Chilean database
+#' Handle weather data downloaded from the Agromet Chilean database
 #' 
 #' This function convert a previously downloaded weather file into a dataframe in the chillR format. For now,
 #' the downloading part must be done directly by the user through accessing the website

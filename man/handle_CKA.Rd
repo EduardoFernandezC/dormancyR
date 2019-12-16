@@ -7,7 +7,7 @@
 handle_CKA(folder_path, vars = c("Temp"), time_step = "hourly", check_data = T)
 }
 \arguments{
-\item{folder_path}{Chacter string. This is the complete directory name where the files are stored}
+\item{folder_path}{Character string. This is the complete directory name where the files are stored}
 
 \item{vars}{Character string. Variables of interest returned by the function. These are:
 "Wind_speed (m/s)", "Wind_direction (degrees)", "Temp (Celsius)", "Tmean (Celsius)", "Tmax (Celsius)",
@@ -18,7 +18,7 @@ handle_CKA(folder_path, vars = c("Temp"), time_step = "hourly", check_data = T)
 CKA records weather parameters each 10 min. However, this function only returns values for hourly and 
 daily time steps. Default is set to "hourly"}
 
-\item{check_data}{Boolean parameter to define wether the data should be quality checked or not. This means to
+\item{check_data}{Boolean parameter to define whether the data should be quality checked or not. This means to
 look for missing hours or days and fill them through linear interpolation. This only works for temperature}
 }
 \description{

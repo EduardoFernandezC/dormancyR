@@ -25,7 +25,7 @@ observations. Temp works for hourly observations. The Humidity is also possible 
 \item{time_step}{Character string. This is the time step in which the data must be obtained. Default is set to
 "hourly"}
 
-\item{check_data}{Boolean parameter to decide wether the data should be quality checked or not. If so, it uses
+\item{check_data}{Boolean parameter to decide whether the data should be quality checked or not. If so, it uses
 functions contained in chillR to fill the gaps. Default is TRUE}
 
 \item{latitude}{Numeric vector. If the check_data parameter is used, this is to fill the gaps by linear

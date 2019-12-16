@@ -42,7 +42,7 @@ to be specified in YEARMODA format}
 interest}
 
 \item{complete_list}{Boolean parameter. If "my_data" option has been used this allows to skip the first
-weather station when using the "list_data" option. It avoids include a repetead dataframe for the
+weather station when using the "list_data" option. It avoids include a repeated dataframe for the
 first weather station}
 }
 \description{

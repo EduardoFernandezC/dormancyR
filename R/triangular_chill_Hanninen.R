@@ -1,9 +1,9 @@
 #' Triangular chill function (daily extremes input)
 #'
-#' Function to calculate winter chill for deciduos trees according to the Triangular chill function proposed by
+#' Function to calculate winter chill for deciduous trees according to the Triangular chill function proposed by
 #' Hanninen (1990) and Krammer (1994).
 #'
-#' @param ExtrDailyTemp Dataframe containing colums "Tmax" and "Tmin". These values must correspond to daily
+#' @param ExtrDailyTemp Dataframe containing columns "Tmax" and "Tmin". These values must correspond to daily
 #' records
 #' 
 #' @param summ Boolean parameter indicating whether the computed metric should be provided as cumulative values

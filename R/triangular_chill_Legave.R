@@ -4,7 +4,7 @@
 #' Legave et. al. (2013). This model, which uses Tmean as input, was selected as one of the "bests" over several
 #' models proposed by the same authors.
 #'
-#' @param ExtrDailyTemp Dataframe containing colums "Tmax" and "Tmin". These values must correspond to daily
+#' @param ExtrDailyTemp Dataframe containing columns "Tmax" and "Tmin". These values must correspond to daily
 #' records
 #' 
 #' @param summ Boolean parameter indicating whether the computed metric should be provided as cumulative values

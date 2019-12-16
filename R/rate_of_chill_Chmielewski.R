@@ -1,9 +1,9 @@
 #' Rate of chilling according to Chmielewski's model
 #'
-#' Function to calculate winter chill for deciduos fruit trees according to the model (sequential model) proposed by
+#' Function to calculate winter chill for deciduous fruit trees according to the model (sequential model) proposed by
 #' Chmielewski et al. (2001) in Germany.
 #'
-#' @param ExtrDailyTemp Dataframe containing colums "Tmax" and "Tmin". These values must correspond to daily
+#' @param ExtrDailyTemp Dataframe containing columns "Tmax" and "Tmin". These values must correspond to daily
 #' records
 #' 
 #' @param summ Boolean parameter indicating whether the computed metric should be provided as cumulative values
