@@ -23,7 +23,7 @@ database
 
 # References
 
-<div id="refs" class="references">
+<div id="refs" class="references hanging-indent">
 
 <div id="ref-R-chillR">
 
