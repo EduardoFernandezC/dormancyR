@@ -29,3 +29,5 @@ dormancyR.Rproj
 # bib files
 *.bib
 inst/doc
+doc
+Meta

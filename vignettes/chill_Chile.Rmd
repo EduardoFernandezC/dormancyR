@@ -13,9 +13,6 @@ body {
 text-align: justify}
 </style>
 
-<!-- Print pdf version -->
-<!-- rmarkdown::render("vignettes/chill_Chile.Rmd", output_format = "pdf_document") -->
-
 ```{r, include = F}
 knitr::opts_chunk$set(
   collapse = TRUE,
@@ -26,21 +23,13 @@ knitr::opts_chunk$set(
 ```{r, warning = F, include = F}
 #Automatically write R package citation entries to a .bib file
 knitr::write_bib(c(.packages(), 
-                   'bayesplot', 
                    'chillR',
-                   'decisionSupport',
                    'dplyr',
-                   'ethnobotanyR',
                    'ggplot2', 
-                   'ggridges', 
-                   'graphics',
-                   'plyr', 
-                   'reshape', 
-                   'tidyverse',
                    'kableExtra',
-                   'MASS',
                    'dormancyR'), 'packages.bib')
-library(tidyverse)
+require(tidyverse)
+require(kableExtra)
 ```
 
 ## Introduction
@@ -71,7 +60,7 @@ stations <- chile_weather("info_stations", Initial_Date = "2000-01-01", End_Date
                           path_zip_tmin = path_zip_tmin, path_zip_tmax = path_zip_tmax)
 ```
 ```{r, warning = F, echo = F}
-knitr::kable(stations[-c(1, 3)]) %>% kableExtra::kable_styling(bootstrap_options = "condensed")
+knitr::kable(stations[-c(1, 3)], "html") %>% kableExtra::kable_styling(bootstrap_options = "condensed")
 ```
 
 The weather stations listed above are the 10 closest ones to the location of interest. Worth to note that the function retrieves relevant information to check the quality of the data (*N_Obs* and *perc_days_complete* columns). In the case of the example, if a farmer has an orchard in **Quillota** he must select the first station of the list.
@@ -84,13 +73,13 @@ data <- chile_weather("my_data", Initial_Date = "2000-01-01", End_Date = "2017-1
                       path_zip_tmin = path_zip_tmin, path_zip_tmax = path_zip_tmax)
 ```
 ```{r, warning = F, echo = F}
-knitr::kable(head(data, 10)) %>% kableExtra::kable_styling(bootstrap_options = "condensed")
+knitr::kable(head(data, 10), "html") %>% kableExtra::kable_styling(bootstrap_options = "condensed")
 ```
 
 The later step returned a dataframe of weather data in the `chillR` format. However, as usual, the dataframe contains several missing data points. `perc_complete` from `dormancyR` computed the total percentage of data complete in each column of any datafram.
 
 ```{r perc_complete, echo = F}
-knitr::kable(perc_complete(data)) %>% kableExtra::kable_styling(bootstrap_options = "condensed")
+knitr::kable(perc_complete(data), "html") %>% kableExtra::kable_styling(bootstrap_options = "condensed")
 ```
 
 In this case, there is about 10% of missing both minimum and maximum temperature records. Most of the chill models do not allow the use of dataframes containing missing data. In this regard, we can use `patch_daily_temperatures` from `chillR` to use data from close weather stations after a bias correction. To do this, the function requires a list of dataframes containing the alternative data. This list can be provided by `chile_weather` in its last option of use. *station_list_data* option returns a list of dataframes containing weather data for all the stations listed in the *info_stations* option less the first weather station for which the data have been already downloaded in the *my_data* option.
@@ -125,7 +114,7 @@ chill_hour <- chillR::tempResponse_daily_list(patched[[1]], latitude = -32.88, S
                                                             LCM = low_chill_model), misstolerance = 5)
 ```
 ```{r, echo = F}
-knitr::kable(chill_hour[[1]][-c(2, 4)]) %>% kableExtra::kable_styling(bootstrap_options = "condensed")
+knitr::kable(chill_hour[[1]][-c(2, 4)], "html") %>% kableExtra::kable_styling(bootstrap_options = "condensed")
 ```
 
 The output from `tempResponse_daily_list` in `chillR` is a list containing dataframes such as the one shown above. The names of the columns for the chill models are defined in the argument `models`. Please note that **CH**, **UM** and **CP** stand for Chilling Hours, Utah and Dynamic models, all of which are programmed in `chillR`. On the other hand, **MUM**, **NC**, **PUM**, and **LCM** stand for Modified Utah, North Carolina, Positive Utah, and Low Chill models, all of which programmed in `dormancyR`. To use other chill models that use hourly temperature please see the documentation of the package.
@@ -142,7 +131,7 @@ chill_day <- tempResponse_daily(patched[[1]], Start_JDay = 121, End_JDay = 243,
                                               TrCL = triangular_chill_Legave))
 ```
 ```{r, echo = F}
-knitr::kable(chill_day[-c(2, 4)]) %>% kableExtra::kable_styling(bootstrap_options = "condensed")
+knitr::kable(chill_day[-c(2, 4)], "html") %>% kableExtra::kable_styling(bootstrap_options = "condensed")
 ```
 
 After this analysis and perhaps using more years of data, a farmer or farm adviser can plot the distribution of the winter chill accumulation to get an idea of the most likely values in her/his respective site.
