@@ -6,7 +6,7 @@
 #'(\url{https://www.agromet.cl/datos-historicos}) as a csv file (\emph{"Datos/Exportar a csv"} option)
 #'
 #'@examples
-#'data <- Agromet_Weather_data
+#'data <- agromet_weather_data
 #'chile_agromet3chillR(data)
 #'
 #'@export chile_agromet3chillR

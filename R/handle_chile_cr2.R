@@ -57,7 +57,7 @@
 #' 
 #' @export handle_chile_cr2
 
-handle_chile_cr2 <- function(action, begin = 19500101, End_Date = 20171231,
+handle_chile_cr2 <- function(action, begin = 19500101, end = 20171231,
                              latitude = latitude, longitude = longitude, number_of_stations = 25,
                              path_zip_tmin = path_zip_tmin, path_zip_tmax = path_zip_tmax, stations_df = NULL){
   

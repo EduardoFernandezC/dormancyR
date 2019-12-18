@@ -23,7 +23,7 @@ library(chillR)
 
 #Example 1
 
-exponential_chill_Tmax(KA_weather, summ = FALSE)
+exponential_chill(KA_weather, summ = FALSE)
 
 #Example 2
 

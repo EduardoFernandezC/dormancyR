@@ -64,8 +64,8 @@ minus 1 if \code{complete_list = FALSE}.
 }
 \examples{
     
-handle_cdc_germany(action = "info_stations", variables = c("Tmin", "Tmax", "Tmean"), latitude = 53.5373,
-                   longitude = 9.6397, begin = 20000101, end = 20101231, number_of_stations = 25,
-                   complete_list = FALSE)
+handle_cdc_germany(action = "info_stations", variables = c("Tmin", "Tmax", "Tmean"),
+                   latitude = 53.5373, longitude = 9.6397, begin = 20000101,
+                   end = 20101231, number_of_stations = 25, complete_list = FALSE)
            
 }

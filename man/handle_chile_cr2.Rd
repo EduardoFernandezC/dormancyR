@@ -7,7 +7,7 @@
 handle_chile_cr2(
   action,
   begin = 19500101,
-  End_Date = 20171231,
+  end = 20171231,
   latitude = latitude,
   longitude = longitude,
   number_of_stations = 25,
@@ -30,6 +30,10 @@ data of the closest weather station to the location established}
 initial date of the period of interest. If it is not provided, the default is established as
 19500101 which correspond to the oldest date possible to use}
 
+\item{end}{Numeric parameter in YEARMODA format. This parameter represents the
+final date of the period of interest. If it is not provided, the default is established as
+20171231 which corresponds to the earliest possible date that can be used for the assessment}
+
 \item{latitude}{Numerical input. Latitude of the site of interest in decimal format}
 
 \item{longitude}{Numerical input. Longitude of the site of interest in decimal format}
@@ -46,10 +50,6 @@ temperatures. This input must include the name and extension of the file}
 \item{stations_df}{A dataframe containing the list of stations for which this function will retrieve
 weather data. It is important that this dataframe be produced by this function under the action 
 \emph{"info_stations"}. The default is set to \code{NULL}}
-
-\item{end}{Numeric parameter in YEARMODA format. This parameter represents the
-final date of the period of interest. If it is not provided, the default is established as
-20171231 which corresponds to the earliest possible date that can be used for the assessment}
 }
 \description{
 This function allows to obtain information about weather stations located in Chile as well as
