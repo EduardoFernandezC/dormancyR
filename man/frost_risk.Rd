@@ -16,12 +16,12 @@ over the period or as the actual accumulation for each hour}
 }
 \description{
 This function computes the numbers of hours below a given threshold. This function allows to attempt the
-potential risk of spring frost events for deciduous trees. This function is compatible with some 'chillR'
-functions (i.e tempResponse) to estimate metrics from hourly temperature records.
+potential risk of spring frost events for deciduous trees. This function is compatible with some \code{\link{chillR}} functions
+(i.e \code{\link[chillR:tempResponse]{tempResponse}}) to estimate metrics from hourly temperature records.
 }
 \note{
-By using this function as model input for chillR::tempResponse, the threshold parameter is set to
-the default.
+By using this function as model input for \code{\link[chillR:tempResponse]{chillR::tempResponse}}, the threshold parameter is set to
+the default, 0.
 }
 \examples{
 library(chillR) 

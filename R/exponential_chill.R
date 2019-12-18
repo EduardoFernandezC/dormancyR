@@ -1,8 +1,8 @@
-#' Exponential chilling model (Legave et. al. 2008, 2013)
+#' Exponential chilling model (Legave \emph{et al.} 2008, 2013)
 #'
-#' This function computes the chill in an exponential way proposed by Legave et. al. (2008) and Legave et. al.
-#' (2013). This model, which uses Tmax as input an a threshold of 15 Celsius degree, was selected as one of the
-#' "bests" over several models proposed by the same authors.
+#' This function computes the chill using an exponential function proposed by Legave \emph{et al.} (2008) and Legave \emph{et al.}
+#' (2013). This model, which uses Tmax as input an a threshold of 15 Celsius degree, was selected by the authors as one of the
+#' "bests" over several alternatives.
 #'
 #' @param ExtrDailyTemp Dataframe containing columns "Tmax" and "Tmin". These values must correspond to daily
 #' records
@@ -21,15 +21,17 @@
 #' library(chillR)
 #' 
 #' #Example 1
+#' 
 #' exponential_chill_Tmax(KA_weather, summ = FALSE)
 #' 
 #' #Example 2
-#' tempResponse_daily(KA_weather, Start_JDay = 345, End_JDay = 58, 
-#' models = list(Exp_Chill = exponential_chill_Tmax))
 #' 
-#' @export exponential_chill_Tmax
+#' tempResponse_daily(KA_weather, Start_JDay = 345, End_JDay = 58, 
+#' models = list(Exp_Chill = exponential_chill))
+#' 
+#' @export exponential_chill
 
-exponential_chill_Tmax <- function (ExtrDailyTemp, summ = TRUE) {
+exponential_chill <- function (ExtrDailyTemp, summ = TRUE) {
   
   #Threshold reported in the paper for which the model works relatively well
   

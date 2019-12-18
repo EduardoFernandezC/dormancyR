@@ -1,14 +1,14 @@
-#' Get humidity and concentration of CO2 from the heated greenhouse at CKA
+#' Get humidity and concentration of \eqn{CO2} from the heated greenhouse at CKA
 #' 
-#' This function returns information about relative humidity and concentration of CO2 inside the heated
+#' This function returns information about relative humidity and concentration of \eqn{CO2} inside the heated
 #' greenhouse located at Campus Klein Altendorf of the University of Bonn. It has two options for time step
-#' (hourly and daily) basis.
+#' (\emph{hourly} and \emph{daily}) basis.
 #' 
 #' @param path_data Character string. This is the directory in which the file has been stored. It should include
 #' the complete name of the file in ".xls" format.
 #' 
 #' @param time_step Character string. Time step in which the data must be returned. It has two options for the
-#' frequency of records. "hourly" (the default) and "daily"
+#' frequency of records. \emph{"hourly"} (the default) and \emph{"daily"}
 #' 
 #' @examples
 #' 

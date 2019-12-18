@@ -1,9 +1,9 @@
-#' Temperature response for data in lists
+#' Daily temperature responses for data in lists
 #' 
 #' This function allows to compute metrics from models which use daily temperature as inputs, rather than hourly data.
-#' It is an extension of the tempResponse_daily function.
+#' It is an extension of the \code{\link{tempResponse_daily}} function.
 #' 
-#' @param temperature_list List of temperatures as those produced by temperature_generation from chillR
+#' @param temperature_list List of temperatures as those produced by \code{\link[chillR:temperature_generation]{chillR::temperature_generation}}
 #' 
 #' @param Start_JDay Numeric input representing the initial date for computing the metrics in Julian Day format
 #' This is the number of the day within the year
@@ -12,7 +12,7 @@
 #' This is the number of the day within the year
 #' 
 #' @param models List of functions to compute the metrics. Default is settled to those models used in
-#' tempResponse_daily function. This parameter also allows the use of a model specified by the user
+#' \code{\link{tempResponse_daily}} function. This parameter also allows the use of a model specified by the user
 #' 
 #' @examples 
 #' library(chillR)
@@ -22,11 +22,11 @@
 #' @export tempResponse_list_daily
 
 tempResponse_list_daily <- function (temperature_list, Start_JDay = 1, End_JDay = 366, 
-                                     models = list(Rate_of_Chill = rate_of_chill_Chmielewski,
+                                     models = list(Rate_of_Chill = rate_of_chill,
                                                    Chill_Days = chill_days,
-                                                   Exponential_Chill = exponential_chill_Tmax,
-                                                   Triangula_Chill_Haninnen = triangular_chill_Hanninen,
-                                                   Triangular_Chill_Legave= triangular_chill_Legave)) {
+                                                   Exponential_Chill = exponential_chill,
+                                                   Triangula_Chill_Haninnen = triangular_chill_1,
+                                                   Triangular_Chill_Legave= triangular_chill_1)) {
   
   if (is.data.frame(temperature_list)) 
     temperature_list <- list(temperature_list)

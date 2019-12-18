@@ -1,9 +1,9 @@
 #' Rate of chilling according to Chmielewski's model
 #'
 #' Function to calculate winter chill for deciduous fruit trees according to the model (sequential model) proposed by
-#' Chmielewski et al. (2001) in Germany.
+#' Chmielewski \emph{et al.} (2001) in Germany.
 #'
-#' @param ExtrDailyTemp Dataframe containing columns "Tmax" and "Tmin". These values must correspond to daily
+#' @param ExtrDailyTemp Dataframe containing columns \emph{"Tmax"} and \emph{"Tmin"}. These values must correspond to daily
 #' records
 #' 
 #' @param summ Boolean parameter indicating whether the computed metric should be provided as cumulative values
@@ -17,9 +17,11 @@
 #' library(chillR)
 #' 
 #' #Example 1
+#' 
 #' rate_of_chill(KA_weather, summ = TRUE)
 #' 
 #' #Example 2
+#' 
 #' tempResponse_daily(KA_weather, Start_JDay = 345, End_JDay = 58,
 #'                    models = list(Rate_of_Chill = rate_of_chill))
 #' 

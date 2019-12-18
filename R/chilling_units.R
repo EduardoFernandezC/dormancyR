@@ -1,8 +1,8 @@
-#' Chilling units (Harrington, 2010)
+#' Chilling units (Harrington \emph{et al.}, 2010)
 #'
-#' Function to calculate winter chill for deciduous trees according to the Chilling units model proposed by
-#' Harrington (2010). This function is compatible with some 'chillR' functions (i.e tempResponse) to
-#' estimate metrics from hourly temperature records.
+#' Function to calculate winter chill for deciduous trees according to the Chilling Units model proposed by
+#' Harrington \emph{et al.} (2010). This function is compatible with some \code{\link{chillR}} functions
+#' (i.e \code{\link[chillR:tempResponse]{tempResponse}}) to estimate metrics from hourly temperature records.
 #'
 #' @param HourTemp Vector of hourly temperatures
 #' 
@@ -16,10 +16,12 @@
 #' library(chillR) 
 #' 
 #' #Example 1
+#' 
 #' data <- stack_hourly_temps(KA_weather, latitude = 50.62)
 #' chilling_units(data$hourtemps$Temp, summ = TRUE)
 #' 
 #' #Example 2
+#' 
 #' tempResponse(data, Start_JDay = 345, End_JDay = 58,
 #' models = list(Chill_Harrington = chilling_units))
 #' 

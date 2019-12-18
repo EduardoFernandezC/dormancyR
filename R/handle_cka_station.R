@@ -1,8 +1,8 @@
-#' Get weather data from Campus Klein Altendorf in chillR format
+#' Get weather data from Campus Klein Altendorf in \code{\link{chillR}} format
 #' 
 #' This function allows to handle weather data recorded by the weather station located in Campus Klein Altendorf
 #' in Rhineland, Germany. Normally, the access to the data is restricted to CKA stuff but, any person could ask
-#' for it (https://www.cka.uni-bonn.de/forschung/wetterdaten/aktuelle-wetterdaten). It is important to note that
+#' for it at: \url{https://www.cka.uni-bonn.de/forschung/wetterdaten/aktuelle-wetterdaten}. It is important to note that
 #' CKA has the data organized into daily ".csv" files for the recent period as well as in ".zip" files for each year.
 #' This function only works for data downloaded and extracted as csv files into one common folder. This means, all the files 
 #' need to be in the same folder, independent of the year. The function returns the most important variables for
@@ -11,13 +11,13 @@
 #' @param folder_path Character string. This is the complete directory name where the files are stored
 #' 
 #' @param vars Character string. Variables of interest returned by the function. These are:
-#' "Wind_speed" (m/s), "Wind_direction" (degrees), "Temp" (Celsius), "Tmean" (Celsius), "Tmax" (Celsius),
-#' "Tmin" (Celsius), "Humidity" (%), "Above_Ground_Temp" (Celsius), "Soil_Temp" (Celsius), "Precipitation" (mm),
-#' "Radiation" (W/m2) and "PAR" (umol/m2/s). Default is set to temperature ("Temp")
+#' \emph{"Wind_speed"} (m/s), \emph{"Wind_direction"} (degrees), \emph{"Temp"} (Celsius), \emph{"Tmean"} (Celsius), \emph{"Tmax"} (Celsius),
+#' \emph{"Tmin"} (Celsius), \emph{"Humidity"} (%), \emph{"Above_Ground_Temp"} (Celsius), \emph{"Soil_Temp"} (Celsius), \emph{"Precipitation"} (mm),
+#' \emph{"Radiation"} (W/m2) and \emph{"PAR"} (umol/m2/s). Default is set to temperature (\emph{"Temp"})
 #' 
 #' @param time_step Character string. This is related to the frequency in which the data was recorded. Normally,
-#' CKA records weather parameters each 10 min. However, this function summarizes values into hourly and 
-#' daily basis. Default is set to "hourly"
+#' CKA records weather parameters each 10 min. However, this function summarizes values into \emph{hourly} and 
+#' \emph{daily} basis. Default is set to \emph{hourly}
 #' 
 #' @param check_data Boolean parameter to define whether the data should be quality checked or not. This means to
 #' look for missing hours or days and fill them through linear interpolation. This only works for temperature
@@ -25,9 +25,9 @@
 #' 
 #' @details 
 #' It is important to note that the data has to be downloaded by hand from the website or requested to the stuff
-#' working at CKA. The output is a data frame useful for further analysis with chillR or this package.
-#' The interpolation in check_data is made by using some functions contained in the chillR package. Tmin, Tmean and Tmax
-#' only work for "daily" time step and "Temp" only does for "hourly" time step.
+#' working at CKA. The output is a data frame useful for further analysis with \code{\link{chillR}} or this package.
+#' The interpolation in \code{check_data} is made by using some functions contained in the \code{\link{chillR}} package. \emph{Tmin}, \emph{Tmean} and \emph{Tmax}
+#' only work for \emph{daily} time step and \emph{Temp} only does for \emph{hourly} time step.
 #' 
 #' @examples
 #' 

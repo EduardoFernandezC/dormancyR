@@ -2,22 +2,22 @@
 % Please edit documentation in R/tempResponse_daily.R
 \name{tempResponse_daily}
 \alias{tempResponse_daily}
-\title{Summarize chill responses from daily chill functions}
+\title{Summarize chill responses from daily chill models}
 \usage{
 tempResponse_daily(
   data,
   Start_JDay = 1,
   End_JDay = 366,
-  models = list(Rate_of_Chill = rate_of_chill_Chmielewski, Chill_Days = chill_days,
-    Exponential_Chill = exponential_chill_Tmax, Triangula_Chill_Haninnen =
-    triangular_chill_Hanninen, Triangular_Chill_Legave = triangular_chill_Legave)
+  models = list(Rate_of_Chill = rate_of_chill, Chill_Days = chill_days,
+    Exponential_Chill = exponential_chill, Triangula_Chill_Haninnen = triangular_chill_1,
+    Triangular_Chill_Legave = triangular_chill_2)
 )
 }
 \arguments{
-\item{data}{Could be a list of two or more elements. This list should contain a dataframe that could be
-called "weather" if this is obtained from the fix_weather function in chillR or "data" is the list is
-obtained from the chile_weather function. A third option is just a dataframe.
-In any case, dataframe should contains columns "Year", "Month", "Day", "JDay", "Tmin" and "Tmax"}
+\item{data}{May be a list of two or more elements. This list should contain a dataframe that might be
+called \emph{"weather"} if this is obtained from the \code{\link[chillR:fix_weather]{chillR::fix_weather}} function.
+A second option is just a dataframe. In any case, the dataframe either contained in the list or introduced
+directly as dataframe, must contains the columns \emph{"Year", "Month", "Day", "JDay", "Tmin"} and \emph{"Tmax"}}
 
 \item{Start_JDay}{The start date for computing the outputs. This is the number of the day within the year}
 
@@ -31,6 +31,11 @@ This function produces a summarized dataframe of chill responses computed by sev
 estimate daily chill instead of the metric for each hour. Five models are predetermined, but this function
 also allows to include models predefined by the user. The only request is that such model function must
 uses daily mean, max or min temperatures as input.
+}
+\details{
+\code{tempResponse_daily} is an extension of \code{\link{chillR}} that returns temperature responses by
+using daily chill models. These models are \code{\link{rate_of_chill}}, \code{\link{chill_days}},
+\code{\link{exponential_chill}}, \code{\link{triangular_chill_1}}, \code{\link{triangular_chill_2}}.
 }
 \examples{
 library(chillR)

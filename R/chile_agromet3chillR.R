@@ -1,16 +1,15 @@
-#'Convert a weather file downloaded from the Chilean Agromet website to chillR format
+#'Convert a weather file downloaded from the Chilean Agromet website to \code{\link{chillR}} format
 #'
-#'Convert downloaded weather data into a data frame that makes running other chillR functions easy.
+#'Convert downloaded weather data into a data frame that makes running other \code{\link{chillR}} functions easy.
 #'
 #'@param downloaded_weather_file full path of a weather file downloaded from the Chilean Agromet website
-#'(https://www.agromet.cl/datos-historicos) as a csv file ("Datos / Exportar a csv" option)
+#'(\url{https://www.agromet.cl/datos-historicos}) as a csv file (\emph{"Datos/Exportar a csv"} option)
 #'
 #'@examples
 #'data <- Agromet_Weather_data
 #'chile_agromet3chillR(data)
 #'
 #'@export chile_agromet3chillR
-
 
 chile_agromet3chillR <- function(downloaded_weather_file){
   

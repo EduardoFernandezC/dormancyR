@@ -2,20 +2,20 @@
 #'
 #' This function allows to obtain information about weather stations located in Chile as well as
 #' a data frame containing historical records of minimum and maximum temperatures from those weather
-#' stations. This function works with data downloaded from the website of the Center for Climate and
-#' Resilience Research (CR)2 sponsored by the University of Chile. The function works for previously
+#' stations. This function works with data downloaded from the website of the
+#' \href{http://www.cr2.cl/}{Center for Climate and Resilience Research (CR)2} sponsored by the University of Chile. The function works for previously
 #' downloaded data in ".zip" format. Data can be downloaded from the following links:
-#' <http://www.cr2.cl/download/cr2_tasmindaily_2018_ghcn-zip/?wpdmdl=15125> for minimum temperatures and
-#' <http://www.cr2.cl/download/cr2_tasmaxdaily_2018_ghcn-zip/?wpdmdl=15126> for maximum temperatures.
+#' \url{http://www.cr2.cl/download/cr2_tasmindaily_2018_ghcn-zip/?wpdmdl=15125} for minimum temperatures and
+#' \url{http://www.cr2.cl/download/cr2_tasmaxdaily_2018_ghcn-zip/?wpdmdl=15126} for maximum temperatures.
 #' Function requires both zip files being in the same folder.
 #'
 #' @param action Character string input that defines the kind of data required. There are three options
-#' for this parameter. "info_stations" provides a dataframe with information about a given number
-#' of weather stations (set in "number_of_stations" parameter) located close to the location
-#' established with "latitude" and "longitude" parameters. "list_data" provides a list of
+#' for this parameter. \emph{"info_stations"} provides a dataframe with information about a given number
+#' of weather stations (set in \code{number_of_stations}) located close to the location
+#' established with \code{latitude} and \code{longitude} parameters. \emph{"list_data"} provides a list of
 #' dataframes containing minimum and maximum temperature records from each weather station
-#' obtained with the "info_stations" mode within the period established in the call of the function.
-#' Finally, "my_data" provides the first dataframe of the previous list and represent the
+#' obtained with the \emph{"info_stations"} mode within the period established in the call of the function.
+#' Finally, \emph{"my_data"} provides the first dataframe of the previous list and represent the
 #' data of the closest weather station to the location established
 #' 
 #' @param begin Numeric parameter in YEARMODA format. This parameter represents the
@@ -41,7 +41,7 @@
 #' 
 #' @param stations_df A dataframe containing the list of stations for which this function will retrieve
 #' weather data. It is important that this dataframe be produced by this function under the action 
-#' "info_stations". The default is set to NULL
+#' \emph{"info_stations"}. The default is set to \code{NULL}
 #' 
 #' @examples
 #' ##Getting the location of zip files
@@ -57,7 +57,7 @@
 #' 
 #' @export handle_chile_cr2
 
-handle_chile_cr2 <- function(action, begin = "1950-01-01", End_Date = "2017-12-31",
+handle_chile_cr2 <- function(action, begin = 19500101, End_Date = 20171231,
                              latitude = latitude, longitude = longitude, number_of_stations = 25,
                              path_zip_tmin = path_zip_tmin, path_zip_tmax = path_zip_tmax, stations_df = NULL){
   

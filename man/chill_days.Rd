@@ -2,7 +2,7 @@
 % Please edit documentation in R/chill_days.R
 \name{chill_days}
 \alias{chill_days}
-\title{Chill days (Cesaraccio et al. 2004)}
+\title{Chill days (Cesaraccio \emph{et al.}, 2004)}
 \usage{
 chill_days(ExtrDailyTemp, summ = TRUE)
 }
@@ -14,7 +14,7 @@ records}
 over the period or as the actual accumulation for each hour}
 }
 \description{
-This function computes the Chill Days according to the model proposed by Cesaraccio et al. (2004) developed
+This function computes the Chill Days according to the model proposed by Cesaraccio \emph{et al.} (2004) developed
 for several tree species including pears, kiwifruit and sweet cherries. In this function chill days are
 computed without the negative (-) transformation made in the original paper.
 }
@@ -22,13 +22,16 @@ computed without the negative (-) transformation made in the original paper.
 library(chillR)
 
 #Example 1
+
 chill_days(KA_weather, summ = TRUE)
 
 #Example 2
+
 data <- KA_weather
 data[,"Chill_Days"] <- chill_days(data, summ = FALSE)
 
 #Example 3
+
 tempResponse_daily(KA_weather, Start_JDay = 345, End_JDay = 58,
                     models = list(Chill_Days = chill_days))
                     

@@ -1,10 +1,10 @@
-#' Triangular chilling model (Legave et. al. 2008, 2013)
+#' Triangular chilling model (Legave \emph{et al.} 2008, 2013)
 #'
-#' This function computes the chill according to the triangular function proposed by Legave et. al. (2008) and
-#' Legave et. al. (2013). This model, which uses Tmean as input, was selected as one of the "bests" over several
+#' This function computes the chill according to the triangular function proposed by Legave \emph{et al.} (2008) and
+#' Legave \emph{et al.} (2013). This model, which uses Tmean as input, was selected as one of the "bests" over several
 #' models proposed by the same authors.
 #'
-#' @param ExtrDailyTemp Dataframe containing columns "Tmax" and "Tmin". These values must correspond to daily
+#' @param ExtrDailyTemp Dataframe containing columns \emph{"Tmax"} and \emph{"Tmin"}. These values must correspond to daily
 #' records
 #' 
 #' @param summ Boolean parameter indicating whether the computed metric should be provided as cumulative values

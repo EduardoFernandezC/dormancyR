@@ -1,30 +1,30 @@
-#' Get weather data from Tinytag sensor in chillR format
+#' Get weather data from Tinytag sensor in \code{\link{chillR}} format
 #' 
 #' This function returns weather data (temperature and humidity) from tinytag sensors (model TGP-4500). It also
 #' contains options to check for missing observations and fill them through linear interpolation.
 #' 
 #' @param path_data Character string. This is the directory in which the data is stored. It is important to note
-#' that the file must be in ".csv" (using sep = ",") or ".xlsx" format
+#' that the file must be in ".csv" (using "," as separator) or ".xlsx" format
 #' 
 #' @param vars Character string. Climate related variables that will be returned by the function. It has two
-#' options for temperature according to the time_step parameter. Tmean, Tmin and Tmax only work for daily
-#' observations. Temp works for hourly observations. The Humidity is also possible to obtain. Default is set to
-#' "Temp" and "Humidity"
+#' options for temperature according to the time_step parameter.\emph{Tmin}, \emph{Tmean} and \emph{Tmax} only work for daily
+#' observations. \emph{Temp} works for hourly observations. The \emph{Humidity} is also possible to obtain. Default is set to
+#' \emph{"Temp"} and \emph{"Humidity"}
 #' 
 #' @param time_step Character string. This is the time step in which the data must be obtained. Default is set to
-#' "hourly"
+#' \emph{"hourly"}
 #' 
 #' @param check_data Boolean parameter to decide whether the data should be quality checked or not. If so, it uses
-#' functions contained in chillR to fill the gaps. Default is TRUE
+#' \code{\link[chillR:interpolate_gaps_hourly]{chillR::interpolate_gaps_hourly}} to fill the gaps. Default is \code{TRUE}
 #' 
-#' @param latitude Numeric vector. If the check_data parameter is used, this is to fill the gaps by linear
-#' interpolation according to the latitude of the place. Default is NULL
+#' @param latitude Numeric vector. If the \code{check_data} parameter is used, this is to fill the gaps by linear
+#' interpolation according to the latitude of the place. Default is \code{NULL}
 #' 
 #' @param sep Sometimes the file is saved in ".csv" format but the character for separating the rows is not ","
 #' (comma). With sep, this can be set to a different separator character only if the user knows it
 #'  
 #' @details 
-#' This function has an option to fill the gaps through linear interpolation. However, this step is ONLY
+#' This function has an option to fill the gaps through linear interpolation. However, this step is \strong{ONLY}
 #' recommended if the sensor was placed in normal environmental conditions. Otherwise, the values used to fill
 #' the gaps are not representatives for the conditions.
 #' 

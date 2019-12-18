@@ -2,7 +2,7 @@
 #' 
 #' Modification of the actual model developed to quantify the heat between two periods. In this case the
 #' function computes the metric by using as base temperature 10 celsius degree instead of 4 celsius degree 
-#' as the original model.
+#' as the original model. This function is an extension of \code{\link[chillR:GDH]{chillR::GDH}}
 #' 
 #' @param HourTemp Vector of hourly temperatures
 #' 

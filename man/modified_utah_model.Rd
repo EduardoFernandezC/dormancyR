@@ -14,16 +14,20 @@ over the period or as the actual accumulation for each hour}
 }
 \description{
 Function to calculate winter chill for deciduous trees according to the Modified Utah model proposed by
-Linvill (1990). This function is compatible with some 'chillR' functions (i.e tempResponse) to
+Linvill (1990). This function is compatible with some \code{\link{chillR}} functions
+(i.e \code{\link[chillR:tempResponse]{tempResponse}}) to
 estimate metrics from hourly temperature records.
 }
 \examples{
 library(chillR) 
+
 #Example 1
+
 data <- stack_hourly_temps(KA_weather, latitude = 50.62)
 modified_utah_model(data$hourtemps$Temp, summ = TRUE)
 
 #Example 2
+
 tempResponse(data, Start_JDay = 345, End_JDay = 58,
              models = list(Modified_Units = modified_utah_model))
              

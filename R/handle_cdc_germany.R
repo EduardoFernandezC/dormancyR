@@ -1,22 +1,23 @@
 #' Handle historic weather records from stations across Germany
 #' 
-#' It allows to: 1) obtain information of the weather stations from Germany; 2) get weather data for a
+#' This function allows to: 1) obtain information of the weather stations from Germany; 2) get weather data for a
 #' place of interest given the coordinates; and 3) get weather data from several weather stations
-#' close to a specific location given its coordinates. The function takes data from the "Climatic Data
-#' Center (CDC - <https://cdc.dwd.de/portal/>) of Germany.
+#' close to a specific location given its coordinates. The function takes data from the 
+#' \href{https://www.dwd.de/EN/climate_environment/cdc/cdc_node.html}{Climate Data Center - CDC}
 #' 
-#' @param action Character parameter to decide on 3 options. Options are: "info_stations", "my_data" and
-#' "list_data". "info_stations" returns a dataframe with the information on close weather stations
-#' to the location defined by longitude and latitude parameters. "my_data" downloads the records for the
-#' closest weather station. "list_data" downloads the records for several weather stations which are close
+#' @param action Character parameter to decide on 3 options. Options are: \emph{"info_stations"},
+#' \emph{"my_data"} and
+#' \emph{"list_data"}. \emph{"info_stations"} returns a dataframe with the information on close weather stations
+#' to the location defined by \code{longitude} and \code{latitude} parameters. \emph{"my_data"} downloads the records for the
+#' closest weather station. \emph{"list_data"} downloads the records for several weather stations which are close
 #' to the location of interest
 #' 
 #' @param variables Character vector of the variables required. For now, the function can returns the
-#' wind speed (mean - "Wind_speed" and maximum - "Wind_speed_max"); the atmospheric pressure
-#' ("ATM_pressure"); the rainfall ("Rainfall"); the precipitation as snow ("Snow"), the minimum 
-#' temperature 5 cm above the ground ("Tmin_5cm"); the air temperature 2 m above ground (minimum - "Tmin",
-#' mean - "Tmean", and maximum - "Tmax"); the relative humidity ("RH"); and the vapour pressure deficit
-#' (VPD)
+#' wind speed (mean - \emph{"Wind_speed"} and maximum - \emph{"Wind_speed_max"}); the atmospheric pressure
+#' (\emph{"ATM_pressure"}); the rainfall (\emph{"Rainfall"}); the precipitation as snow (\emph{"Snow"}), the minimum 
+#' temperature 5 cm above the ground (\emph{"Tmin_5cm"}); the air temperature 2 m above ground (minimum - \emph{"Tmin"},
+#' mean - \emph{"Tmean"}, and maximum - \emph{"Tmax"}); the relative humidity (\emph{"RH"}); and the vapour pressure deficit
+#' (\emph{"VPD"})
 #' 
 #' @param latitude Numeric parameter. The latitude (in decimal degrees) of the location of interest
 #' 
@@ -31,18 +32,18 @@
 #' @param number_of_stations Numeric parameter. The numbers of stations to select from the point of 
 #' interest
 #' 
-#' @param complete_list Boolean parameter. If "my_data" option has been used this allows to skip the first
-#' weather station when using the "list_data" option. It avoids include a repeated dataframe for the
+#' @param complete_list Boolean parameter. If \emph{"my_data"} option has been used this allows to skip the first
+#' weather station when using the \emph{"list_data"} option. It avoids include a repeated dataframe for the
 #' first weather station
 #'  
 #' @details 
-#' If "info_stations" is used, the function returns a dataframe (9 columns x number_of_stations) containing
+#' If \emph{"info_stations"} is used, the function returns a dataframe (9 columns x \code{number_of_stations} rows) containing
 #' information such as the name, latitude, longitude, begin, end and distance of the weather stations.
-#' If "my_data" is chosen, it downloads the weather data from the CDC website. The output is
-#' a dataframe (in chillR format) containing daily records from the closest
-#' weather station. If "list_data" option is used, the function returns a list of dataframes as that one
-#' described above. The length of the list is equal to the number of stations or to the number_of_stations
-#' minus 1 if complete_list = FALSE.
+#' If \emph{"my_data"} is chosen, it downloads the weather data from the CDC website. The output is
+#' a dataframe (in \code{\link{chillR}} format) containing daily records from the closest
+#' weather station. If \emph{"list_data"} option is used, the function returns a list of dataframes as that one
+#' described above. The length of the list is equal to the \code{number_of_stations} or to the \code{number_of_stations}
+#' minus 1 if \code{complete_list = FALSE}.
 #' 
 #' @examples 
 #'     

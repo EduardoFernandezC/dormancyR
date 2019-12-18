@@ -1,8 +1,8 @@
 #' Handle weather data downloaded from the Agromet Chilean database
 #' 
-#' This function convert a previously downloaded weather file into a dataframe in the chillR format. For now,
+#' This function convert a previously downloaded weather file into a dataframe in the \code{\link{chillR}} format. For now,
 #' the downloading part must be done directly by the user through accessing the website
-#' http://agromet.inia.cl/estaciones.php. Once there, the user needs to select the weather station,
+#' \url{http://agromet.inia.cl/estaciones.php} Once there, the user needs to select the weather station,
 #' the variables requested, the time-step and the period of interest. Finally, the data must be downloaded in
 #' excel format and stored. For now, this function only works for files downloaded in the hourly time-step option.
 #' 
@@ -10,11 +10,11 @@
 #' include the extension (".xls") of the file.
 #' 
 #' @param vars Character string. Vector of one or more variables that are requested from the original weather file.
-#' Default is set to "Temp" since for now, the function only works for hourly records. Available options depend on
-#' the variables specified by the user while downloading from the website. Possible inputs are "Precip_Accum",
+#' Default is set to \emph{"Temp"} since for now, the function only works for hourly records. Available options depend on
+#' the variables specified by the user while downloading from the website. Possible inputs are \emph{"Precip_Accum",
 #' "Humidity",
 #' "Wind_direction", "Solar_radiation", "Pressure_ATM", "Temp", "Tmax", "Tmin", "Soil_Tmean", "Soil_Tmax",
-#' "Wind_speed_max", "Surface_Tmean", "Surface_Tmax", "Soil_Tmin", "Surface_Tmin", "Wind_speed_mean".
+#' "Wind_speed_max", "Surface_Tmean", "Surface_Tmax", "Soil_Tmin", "Surface_Tmin", "Wind_speed_mean"}.
 #' 
 #' @examples
 #' # As each user has different path for the folder this example is not running until "#"

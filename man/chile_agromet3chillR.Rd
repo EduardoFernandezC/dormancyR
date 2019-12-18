@@ -2,16 +2,16 @@
 % Please edit documentation in R/chile_agromet3chillR.R
 \name{chile_agromet3chillR}
 \alias{chile_agromet3chillR}
-\title{Convert a weather file downloaded from the Chilean Agromet website to chillR format}
+\title{Convert a weather file downloaded from the Chilean Agromet website to \code{\link{chillR}} format}
 \usage{
 chile_agromet3chillR(downloaded_weather_file)
 }
 \arguments{
 \item{downloaded_weather_file}{full path of a weather file downloaded from the Chilean Agromet website
-(https://www.agromet.cl/datos-historicos) as a csv file ("Datos / Exportar a csv" option)}
+(\url{https://www.agromet.cl/datos-historicos}) as a csv file (\emph{"Datos/Exportar a csv"} option)}
 }
 \description{
-Convert downloaded weather data into a data frame that makes running other chillR functions easy.
+Convert downloaded weather data into a data frame that makes running other \code{\link{chillR}} functions easy.
 }
 \examples{
 data <- Agromet_Weather_data

@@ -1,4 +1,4 @@
-#' Get weather data from the greenhouses at CKA in chillR format
+#' Get weather data from the greenhouses at CKA in \code{\link{chillR}} format
 #' 
 #' This function is to handle weather data obtained from the greenhouses located in Campus Klein Altendorf.
 #' For now, this only works for temperatures. Input files must be stored as ".xls" format.
@@ -7,11 +7,11 @@
 #' that the file must be a ".xls"
 #' 
 #' @param time_step Character string. This is the time step in which the data must be obtained. It has two options;
-#' "hourly" (the default) and "daily"
+#' \emph{"hourly"} (the default) and \emph{"daily"}
 #' 
 #' @note 
-#' In the "daily" mode, this function returns the variables Tmin, Tmean and Tmax. In contrast, under the "hourly"
-#' mode, it returns the mean temperature for each hour as "Temp".
+#' In the \emph{"daily"} mode, this function returns the variables \emph{Tmin}, \emph{Tmean} and \emph{Tmax}. In contrast, under the \emph{"hourly"}
+#' mode, it returns the mean temperature for each hour as \emph{"Temp"}.
 #' 
 #' @examples 
 #' # As each user has different path for the folder this example is not running until "#"
