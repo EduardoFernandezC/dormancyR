@@ -7,14 +7,14 @@
 #' excel format and stored. For now, this function only works for files downloaded in the hourly time-step option.
 #' 
 #' @param pathfile Character string. This is the complete path to the excel file containing the weather data. It must
-#' include the extension ("xls") of the file.
+#' include the extension (".xls") of the file.
 #' 
 #' @param vars Character string. Vector of one or more variables that are requested from the original weather file.
 #' Default is set to "Temp" since for now, the function only works for hourly records. Available options depend on
-#' the variables specified by the user while downloading. Possible inputs are "Precip_Accum", "Humidity",
+#' the variables specified by the user while downloading from the website. Possible inputs are "Precip_Accum",
+#' "Humidity",
 #' "Wind_direction", "Solar_radiation", "Pressure_ATM", "Temp", "Tmax", "Tmin", "Soil_Tmean", "Soil_Tmax",
-#' "Wind_speed_max", "Surface_Tmean", "Surface_Tmax", "Soil_Tmin", "Surface_Tmin", "Wind_speed_mean". See details 
-#' for more information.
+#' "Wind_speed_max", "Surface_Tmean", "Surface_Tmax", "Soil_Tmin", "Surface_Tmin", "Wind_speed_mean".
 #' 
 #' @examples
 #' # As each user has different path for the folder this example is not running until "#"
@@ -22,11 +22,11 @@
 #' 
 #' # path <- "C:/Users/...../...."
 #' 
-#' # handle_Agromet_Chile(pathfile = path, vars = c("Tmin", "Tmean", "Tmax"))
+#' # handle_agromet_chile(pathfile = path, vars = c("Tmin", "Tmean", "Tmax"))
 #' 
-#' @export handle_Agromet_Chile
+#' @export handle_agromet_chile
 
-handle_Agromet_Chile <- function(pathfile, vars = c("Temp")){
+handle_agromet_chile <- function(pathfile, vars = c("Temp")){
   
   # Check if the filepath provided exist or not
   

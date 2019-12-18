@@ -7,30 +7,30 @@
 #' downloaded data in ".zip" format. Data can be downloaded from the following links:
 #' <http://www.cr2.cl/download/cr2_tasmindaily_2018_ghcn-zip/?wpdmdl=15125> for minimum temperatures and
 #' <http://www.cr2.cl/download/cr2_tasmaxdaily_2018_ghcn-zip/?wpdmdl=15126> for maximum temperatures.
-#' Function require both zip files in the same folder.
+#' Function requires both zip files being in the same folder.
 #'
-#' @param output Character string input which define the kind of data wanted. There are three options
+#' @param action Character string input that defines the kind of data required. There are three options
 #' for this parameter. "info_stations" provides a dataframe with information about a given number
-#' of weather stations (set in "Number_of_stations" parameter) located close to the location
-#' established with "latitude" and "longitude" parameters. "station_list_data" provides a list of
+#' of weather stations (set in "number_of_stations" parameter) located close to the location
+#' established with "latitude" and "longitude" parameters. "list_data" provides a list of
 #' dataframes containing minimum and maximum temperature records from each weather station
-#' obtained with the "info_stations" option within the period established in the call of the function.
+#' obtained with the "info_stations" mode within the period established in the call of the function.
 #' Finally, "my_data" provides the first dataframe of the previous list and represent the
 #' data of the closest weather station to the location established
 #' 
-#' @param Initial_Date Character string input in the form "YYYY-MM-DD". This parameter represents the
+#' @param begin Numeric parameter in YEARMODA format. This parameter represents the
 #' initial date of the period of interest. If it is not provided, the default is established as
-#' "1950-01-01" which correspond to the oldest date possible to use
+#' 19500101 which correspond to the oldest date possible to use
 #' 
-#' @param End_Date Character string input in the form "YYYY-MM-DD". This parameter represents the
+#' @param end Numeric parameter in YEARMODA format. This parameter represents the
 #' final date of the period of interest. If it is not provided, the default is established as
-#' "2017-12-31" which corresponds to the earliest possible date that can be used for the assessment
+#' 20171231 which corresponds to the earliest possible date that can be used for the assessment
 #' 
 #' @param latitude Numerical input. Latitude of the site of interest in decimal format
 #' 
 #' @param longitude Numerical input. Longitude of the site of interest in decimal format
 #' 
-#' @param Number_of_stations Numerical input. Number of stations wanted to use as closest stations to
+#' @param number_of_stations Numerical input. Number of stations wanted to use as closest stations to
 #' the site of interest. Default option is the value 25
 #' 
 #' @param path_zip_tmin Character string input. Location of the zip file containing minimum
@@ -40,7 +40,7 @@
 #' temperatures. This input must include the name and extension of the file
 #' 
 #' @param stations_df A dataframe containing the list of stations for which this function will retrieve
-#' weather data. It is important that this dataframe be produced by this function under the output 
+#' weather data. It is important that this dataframe be produced by this function under the action 
 #' "info_stations". The default is set to NULL
 #' 
 #' @examples
@@ -49,21 +49,21 @@
 #' #path_zip_tmax<-"[Your folder]\\cr2_tasmaxDaily_2018_ghcn.zip"
 #'
 #' ##Call of the function
-#' #chile_weather(output = "my_data", Initial_Date = "2000-01-01", End_Date = "2017-12-31",
-#' #                latitude = -32.8958, longitude = -71.2092, Number_of_stations = 25,
+#' #handle_chile_cr2(action = "my_data", begin = 20000101, end = 20101030,
+#' #                latitude = -32.8958, longitude = -71.2092, number_of_stations = 25,
 #' #                path_zip_tmin = path_zip_tmin, path_zip_tmax = path_zip_tmax,
 #' #                stations_df = NULL)
 #' 
 #' 
-#' @export chile_weather
+#' @export handle_chile_cr2
 
-chile_weather <- function(output, Initial_Date = "1950-01-01", End_Date = "2017-12-31",
-                          latitude = latitude, longitude = longitude, Number_of_stations = 25,
-                          path_zip_tmin = path_zip_tmin, path_zip_tmax = path_zip_tmax, stations_df = NULL){
+handle_chile_cr2 <- function(action, begin = "1950-01-01", End_Date = "2017-12-31",
+                             latitude = latitude, longitude = longitude, number_of_stations = 25,
+                             path_zip_tmin = path_zip_tmin, path_zip_tmax = path_zip_tmax, stations_df = NULL){
   
   
-  if (!(output %in% c("my_data", "info_stations", "station_list_data")))
-    stop("Please provide a valid output for the function")
+  if (!(action %in% c("my_data", "info_stations", "list_data")))
+    stop("Please provide a valid action for the function")
   
   
   #Saving the actual work directory
@@ -114,9 +114,13 @@ chile_weather <- function(output, Initial_Date = "1950-01-01", End_Date = "2017-
                             col.names = Cod_stations_Tmin, na.strings = c("-9999", "-9999.000"))
   Tmin$Fecha <-as.Date(Tmin$Fecha)
   
+  # Add the column YEARMODA for subsetting
+  
+  Tmin$YEARMODA <- chillR::Date2YEARMODA(Tmin$Fecha)
+  
   #Selecting only the period of interest
   
-  Tmin <- Tmin[which(Tmin$Fecha >= Initial_Date & Tmin$Fecha <= End_Date), ]
+  Tmin <- Tmin[which(Tmin$YEARMODA >= begin & Tmin$YEARMODA <= end), ]
   
   #Loading the dataframe that contains the information about the weather stations available for 
   #Tmax records 
@@ -148,9 +152,13 @@ chile_weather <- function(output, Initial_Date = "1950-01-01", End_Date = "2017-
                             col.names = Cod_stations_Tmax, na.strings = c("-9999", "-9999.000"))
   Tmax$Fecha <- as.Date(Tmax$Fecha)
   
+  # Add the column YEARMODA for subsetting
+  
+  Tmax$YEARMODA <- chillR::Date2YEARMODA(Tmax$Fecha)
+  
   #Selecting the period of interest
   
-  Tmax <- Tmax[which(Tmax$Fecha >= Initial_Date & Tmax$Fecha <= End_Date), ]
+  Tmax <- Tmax[which(Tmax$YEARMODA >= begin & Tmax$YEARMODA <= end), ]
   
   #Changing to the actual working directory
   
@@ -171,19 +179,19 @@ chile_weather <- function(output, Initial_Date = "1950-01-01", End_Date = "2017-
   
   #Selecting the relevant weather stations according to the number of stations
   
-  Sumarized_stations <- Sorted_Stations[c(1 : Number_of_stations), ]
+  Sumarized_stations <- Sorted_Stations[c(1 : number_of_stations), ]
   colnames(Sumarized_stations) <- c("Cod_Station", "Institution", "Source", "Name", "Elevation", "Latitude",
                                     "Longitude", "Distance")
   
   #Creating a primer data for the period of interest
   
   primer_data <- data.frame(Weather_Station = NA,
-                            Year = c(as.numeric(substr(Initial_Date, 1, 4)),
-                                     as.numeric(substr(End_Date, 1, 4))),
-                            Month = c(as.numeric(substr(Initial_Date, 6, 7)),
-                                      as.numeric(substr(End_Date, 6, 7))),
-                            Day = c(as.numeric(substr(Initial_Date, 9, 10)),
-                                    as.numeric(substr(End_Date, 9, 10))),
+                            Year = c(as.numeric(substr(begin, 1, 4)),
+                                     as.numeric(substr(end, 1, 4))),
+                            Month = c(as.numeric(substr(begin, 5, 6)),
+                                      as.numeric(substr(end, 5, 6))),
+                            Day = c(as.numeric(substr(begin, 7, 8)),
+                                    as.numeric(substr(end, 7, 8))),
                             JDay = as.numeric(NA),
                             Tmin = as.numeric(NA),
                             Tmax = as.numeric(NA))
@@ -221,13 +229,13 @@ chile_weather <- function(output, Initial_Date = "1950-01-01", End_Date = "2017-
     dfs <- c(dfs, list(daily_data))
   }
   
-  if(output == "station_list_data" & is.null(stations_df))
-    return(dfs[2 : Number_of_stations])
+  if(action == "list_data" & is.null(stations_df))
+    return(dfs[2 : number_of_stations])
   
-  if(output == "station_list_data" & is.data.frame(stations_df))
+  if(action == "list_data" & is.data.frame(stations_df))
     return(dfs[2 : length(stations_df[, 1])])
   
-  if(output == "my_data")
+  if(action == "my_data")
     return(dfs[[1]])
   
   #Computing the number of observations for the whole period. This value includes Tmin + Tmax observations
@@ -248,7 +256,7 @@ chile_weather <- function(output, Initial_Date = "1950-01-01", End_Date = "2017-
   
   Sumarized_stations[, "Perc_days_complete"] <- round((N_obs / length(dfs[[1]][, 1])) * 100 / 2, 2)
   
-  if(output == "info_stations")
+  if(action == "info_stations")
     return(Sumarized_stations)
   
 }

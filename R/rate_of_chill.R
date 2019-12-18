@@ -17,15 +17,15 @@
 #' library(chillR)
 #' 
 #' #Example 1
-#' rate_of_chill_Chmielewski(KA_weather, summ = TRUE)
+#' rate_of_chill(KA_weather, summ = TRUE)
 #' 
 #' #Example 2
 #' tempResponse_daily(KA_weather, Start_JDay = 345, End_JDay = 58,
-#'                    models = list(Rate_of_Chill = rate_of_chill_Chmielewski))
+#'                    models = list(Rate_of_Chill = rate_of_chill))
 #' 
-#' @export rate_of_chill_Chmielewski
+#' @export rate_of_chill
 
-rate_of_chill_Chmielewski <- function (ExtrDailyTemp, summ = TRUE){
+rate_of_chill <- function (ExtrDailyTemp, summ = TRUE){
   
   #Threshold (Tc) reported in the paper 
   

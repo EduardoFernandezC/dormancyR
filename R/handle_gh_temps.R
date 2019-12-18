@@ -19,12 +19,12 @@
 #' 
 #' # path <- "C:/Users/...../...."
 #' 
-#' # handle_GH_data(path_data = path, time_step = "daily")
+#' # handle_gh_temps(path_data = path, time_step = "daily")
 #' 
-#' @export handle_GH_Temp
+#' @export handle_gh_temps
 #' @importFrom dplyr "%>%"
 
-handle_GH_Temp <- function(path_data, time_step = "hourly") {
+handle_gh_temps <- function(path_data, time_step = "hourly") {
   
   
   # Read the data in xls format

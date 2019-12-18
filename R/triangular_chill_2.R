@@ -21,11 +21,11 @@
 #' library(chillR)
 #' 
 #' tempResponse_daily(KA_weather, Start_JDay = 345, End_JDay = 58, 
-#'                    models = list(Triangular_Chill_Legave = triangular_chill_Legave))
+#'                    models = list(Triangular_Chill_Legave = triangular_chill_2))
 #' 
-#' @export triangular_chill_Legave
+#' @export triangular_chill_2
 
-triangular_chill_Legave <- function (ExtrDailyTemp, summ = TRUE) {
+triangular_chill_2 <- function (ExtrDailyTemp, summ = TRUE) {
   
   #Computing Tmean from Tmin and Tmax
   

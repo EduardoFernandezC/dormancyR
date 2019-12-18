@@ -17,15 +17,15 @@
 #' 
 #' #Example 1
 #' data <- stack_hourly_temps(KA_weather, latitude = 50.62)
-#' chilling_units_Harrington(data$hourtemps$Temp, summ = TRUE)
+#' chilling_units(data$hourtemps$Temp, summ = TRUE)
 #' 
 #' #Example 2
 #' tempResponse(data, Start_JDay = 345, End_JDay = 58,
-#' models = list(Chill_Harrington = chilling_units_Harrington))
+#' models = list(Chill_Harrington = chilling_units))
 #' 
-#' @export chilling_units_Harrington
+#' @export chilling_units
 
-chilling_units_Harrington <- function(HourTemp, summ = TRUE){
+chilling_units <- function(HourTemp, summ = TRUE){
 
   #Giving a value of zero to all days for then changing according to each situation.
   #This is 0 for hours in which Temp < -4.66 or Temp > 16 C

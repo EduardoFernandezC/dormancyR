@@ -1,8 +1,8 @@
-#' Get Humidity and concentration of CO2 from the heated greenhouse at CKA
+#' Get humidity and concentration of CO2 from the heated greenhouse at CKA
 #' 
 #' This function returns information about relative humidity and concentration of CO2 inside the heated
 #' greenhouse located at Campus Klein Altendorf of the University of Bonn. It has two options for time step
-#' (hourly and daily) records.
+#' (hourly and daily) basis.
 #' 
 #' @param path_data Character string. This is the directory in which the file has been stored. It should include
 #' the complete name of the file in ".xls" format.
@@ -17,12 +17,12 @@
 #' 
 #' # path <- "C:/Users/...../...."
 #' 
-#' # handle_GH_Hum_CO2(path_data = path, time_step = "daily")
+#' # handle_gh_hum_co2(path_data = path, time_step = "daily")
 #' 
-#' @export handle_GH_Hum_CO2
+#' @export handle_gh_hum_co2
 #' @importFrom dplyr "%>%"
 
-handle_GH_Hum_CO2 <- function(path_data, time_step = "hourly") {
+handle_gh_hum_co2 <- function(path_data, time_step = "hourly") {
   
   
   # Read the data in xls format
