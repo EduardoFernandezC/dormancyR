@@ -3,8 +3,7 @@ Type: Package
 Title: Functions to compute chill metrics
 Version: 0.2.1
 Date: 2019-03-26
-Author: Eduardo Fernandez
-Maintainer: Eduardo Fernandez <efernand@uni-bonn.de>
+Authors@R: person("Eduardo", "Fernandez C", email = "efernand@uni-bonn.de", role = c("aut", "cre"))
 Description: Chill functions for estimating chilling metrics for deciduous fruit trees. The package contains functions to use the models Utah Modified, North Carolina, Low Chill, among others. Additionally, this package contains functions to handle weather data from different data-bases in Chile and Germany, as well as functions to estimate metrics related to frost events and heat accumulation according to a modification of the Growing Degree Hour model.
 Depends: R (>= 3.0)
 Imports: chillR, sp, dplyr, tidyr, readxl, readr, stringr, XML, tidyverse, kableExtra, ggplot2
