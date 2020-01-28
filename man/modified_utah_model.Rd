@@ -34,5 +34,5 @@ tempResponse(data, Start_JDay = 345, End_JDay = 58,
 }
 \references{
 Linvill D. 1990. Calculating chilling hours and chill units from daily maximum and minimum
-temperature observations. HortScience 25(1): 14-16
+temperature observations. HortScience 25(1): 14-16. \href{https://journals.ashs.org/hortsci/view/journals/hortsci/25/1/article-p14.xml}{https://doi.org/10.21273/HORTSCI.25.1.14}
 }

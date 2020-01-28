@@ -34,5 +34,5 @@ tempResponse(data, Start_JDay = 345, End_JDay = 58,
 }
 \references{
 Linsley-Noakes G. and Allan P. 1994. Comparison of two models for the prediction of rest
-completion in peaches. Sci. Hortic. 59(2): 107-113
+completion in peaches. Sci. Hortic. 59(2): 107-113. \href{https://www.sciencedirect.com/science/article/pii/0304423894900779}{https://doi.org/10.1016/0304-4238(94)90077-9}
 }

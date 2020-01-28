@@ -26,7 +26,8 @@ tempResponse_daily(KA_weather, Start_JDay = 345, End_JDay = 58,
 }
 \references{
 Hanninen H. 1990. Modelling bud dormancy release in trees from cool and temperate regions.
-Acta For. Fenn. 213: 1-47 doi:10.14214/aff.7660
+Acta For. Fenn. 213: 1-47. \href{https://silvafennica.fi/article/7660}{doi:10.14214/aff.7660}
+
 Kramer K. 1994. Selecting a model to predict the onset of growth of \emph{Fagus sylvatica}.
-J. Appl. Ecol. 31(1): 172-181
+J. Appl. Ecol. 31(1): 172-181. \href{https://www.jstor.org/stable/2404609}{doi:10.2307/2404609}
 }

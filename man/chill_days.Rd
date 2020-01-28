@@ -38,6 +38,5 @@ tempResponse_daily(KA_weather, Start_JDay = 345, End_JDay = 58,
 }
 \references{
 Cesaraccio C., Spano D., Snyder R. and Duce P. 2004. Chilling and forcing model to predict
-bud - burst of crop and forest species. Agric. For. Meteorol. 126(1-2): 1-13.
-doi:10.1016/j.agrformet.2004.03.002
+bud - burst of crop and forest species. Agric. For. Meteorol. 126(1-2): 1-13. \href{https://www.sciencedirect.com/science/article/pii/S0168192304000632}{doi:10.1016/j.agrformet.2004.03.002}
 }

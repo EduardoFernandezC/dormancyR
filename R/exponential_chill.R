@@ -12,10 +12,11 @@
 #'
 #' @references Legave J., Farrera I., Almeras T. and Calleja M. 2008. Selecting models of apple flowering time
 #' and understanding how global warming has had and impact on this trait. J. Horticult. Sci. Biotechnol. 83(1):
-#' 76 - 84
+#' 76 - 84. \href{https://www.tandfonline.com/doi/abs/10.1080/14620316.2008.11512350}{doi:10.1080/14620316.2008.11512350}
+#' 
 #' Legave J., Blanke M., Christen D., Giovannini D, Mathieu V. and Oger R. 2013. A comprehensive overview of the
 #' spatial and temporal variability of apple bud dormancy release and blooming phenology in Western Europe.
-#' Int. J. Biometeorol. 57(2): 317 - 331. doi:10.1007/s00484-012-0551-9
+#' Int. J. Biometeorol. 57(2): 317 - 331. \href{https://link.springer.com/article/10.1007/s00484-012-0551-9}{doi:10.1007/s00484-012-0551-9}
 #' 
 #' @examples 
 #' library(chillR)

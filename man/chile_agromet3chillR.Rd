@@ -7,11 +7,11 @@
 chile_agromet3chillR(downloaded_weather_file)
 }
 \arguments{
-\item{downloaded_weather_file}{full path of a weather file downloaded from the Chilean Agromet website
+\item{downloaded_weather_file}{Full path of a weather file downloaded from the Chilean Agromet website
 (\url{https://www.agromet.cl/datos-historicos}) as a csv file (\emph{"Datos/Exportar a csv"} option)}
 }
 \description{
-Convert downloaded weather data into a data frame that makes running other \code{\link{chillR}} functions easy.
+Convert downloaded weather data into a data frame that makes running other \code{\link{chillR}} functions easily.
 }
 \examples{
 data <- agromet_weather_data

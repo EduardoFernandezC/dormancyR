@@ -7,14 +7,14 @@
 #' excel format and stored. For now, this function only works for files downloaded in the hourly time-step option.
 #' 
 #' @param pathfile Character string. This is the complete path to the excel file containing the weather data. It must
-#' include the extension (".xls") of the file.
+#' include the extension (".xls") of the file
 #' 
 #' @param vars Character string. Vector of one or more variables that are requested from the original weather file.
 #' Default is set to \emph{"Temp"} since for now, the function only works for hourly records. Available options depend on
 #' the variables specified by the user while downloading from the website. Possible inputs are \emph{"Precip_Accum",
 #' "Humidity",
 #' "Wind_direction", "Solar_radiation", "Pressure_ATM", "Temp", "Tmax", "Tmin", "Soil_Tmean", "Soil_Tmax",
-#' "Wind_speed_max", "Surface_Tmean", "Surface_Tmax", "Soil_Tmin", "Surface_Tmin", "Wind_speed_mean"}.
+#' "Wind_speed_max", "Surface_Tmean", "Surface_Tmax", "Soil_Tmin", "Surface_Tmin", "Wind_speed_mean"}
 #' 
 #' @examples
 #' # As each user has different path for the folder this example is not running until "#"

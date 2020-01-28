@@ -8,7 +8,7 @@
 #' @param data May be a list of two or more elements. This list should contain a dataframe that might be
 #' called \emph{"weather"} if this is obtained from the \code{\link[chillR:fix_weather]{chillR::fix_weather}} function.
 #' A second option is just a dataframe. In any case, the dataframe either contained in the list or introduced
-#' directly as dataframe, must contains the columns \emph{"Year", "Month", "Day", "JDay", "Tmin"} and \emph{"Tmax"}
+#' directly as dataframe, must contain the columns \emph{"Year", "Month", "Day", "JDay", "Tmin"} and \emph{"Tmax"}
 #' 
 #' @param Start_JDay The start date for computing the outputs. This is the number of the day within the year
 #' 

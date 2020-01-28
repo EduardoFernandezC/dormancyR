@@ -11,7 +11,7 @@
 #'
 #' @references Chmielewski F., Blumel K., Henniges Y., Blanke M., Weber R. and Zoth M. (2011).
 #' Phenological models for the beginning of apple blossom in Germany. Meteorol. Z. 20(5): 487-496.
-#' doi:10.1127/0941-2948/2011/0258
+#' \href{https://www.ingentaconnect.com/content/schweiz/mz/2011/00000020/00000005/art00004}{doi:10.1127/0941-2948/2011/0258}
 #' 
 #' @examples 
 #' library(chillR)

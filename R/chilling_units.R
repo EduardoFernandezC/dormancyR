@@ -10,7 +10,7 @@
 #' over the period or as the actual accumulation for each hour
 #'
 #' @references Harrington C., Gould P. and St.Clair J. (2010). Modeling the effects of winter environment on
-#' dormancy release of Douglas-fir. For. Ecol. Manage. 259(4): 798-808
+#' dormancy release of Douglas-fir. For. Ecol. Manage. 259(4): 798-808. \href{https://www.fs.usda.gov/treesearch/pubs/52193}{https://doi.org/10.1016/j.foreco.2009.06.018}
 #' 
 #' @examples
 #' library(chillR) 
