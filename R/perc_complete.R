@@ -22,15 +22,16 @@
 #' @export perc_complete
 #' 
 
-
-perc_complete <- function(x){
+perc_complete <- function (x) {
   
-  data <- data.frame(variable = colnames(x),
-                     percentage = NA)
+  data <- data.frame(variable = colnames(x), percentage = NA)
   
-  for (i in 1 : length(data$variable)){
+  data$variable <- as.character(data$variable)
+  
+  for (i in 1 : length(data$variable)) {
     
-    data[i, "percentage"] <- length(which(!is.na(x[, i]))) / length(x[, i]) * 100}
+    data[i, "percentage"] <- length(which(!is.na(x[, i])))/length(x[[i]]) * 100
+  }
   
-  
-  return(data)}
+  return(data)
+}
