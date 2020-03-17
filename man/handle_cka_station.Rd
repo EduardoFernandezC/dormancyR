@@ -16,31 +16,30 @@ handle_cka_station(
 
 \item{vars}{Character string. Variables of interest returned by the function. These are:
 \emph{"Wind_speed"} (m/s), \emph{"Wind_direction"} (degrees), \emph{"Temp"} (Celsius), \emph{"Tmean"} (Celsius), \emph{"Tmax"} (Celsius),
-\emph{"Tmin"} (Celsius), \emph{"Humidity"} (%), \emph{"Above_Ground_Temp"} (Celsius), \emph{"Soil_Temp"} (Celsius), \emph{"Precipitation"} (mm),
-\emph{"Radiation"} (W/m2) and \emph{"PAR"} (umol/m2/s). Default is set to temperature (\emph{"Temp"})}
+\emph{"Tmin"} (Celsius), \emph{"Humidity"} (\%), \emph{"Above_Ground_Temp"} (Celsius), \emph{"Soil_Temp"} (Celsius), \emph{"Precipitation"} (mm),
+\emph{"Radiation"} (W/m2) and \emph{"PAR"} (umol/m2/s). Default is set to temperature (\emph{"Temp"}) in an hourly basis}
 
 \item{time_step}{Character string. This is related to the frequency in which the data was recorded. Normally,
 CKA records weather parameters each 10 min. However, this function summarizes values into \emph{hourly} and 
 \emph{daily} basis. Default is set to \emph{hourly}}
 
 \item{check_data}{Boolean parameter to define whether the data should be quality checked or not. This means to
-look for missing hours or days and fill them through linear interpolation. This only works for temperature
+look for missing observations and fill them through \code{\link[chillR:interpolate_gaps_hourly]{chillR::interpolate_gaps_hourly}}. This only works for temperature
 records}
 }
 \description{
 This function allows to handle weather data recorded by the weather station located in Campus Klein Altendorf
-in Rhineland, Germany. Normally, the access to the data is restricted to CKA stuff but, any person could ask
+in Rhineland, Germany. Normally, the access to the data is restricted to CKA staff but, any person could ask
 for it at: \url{https://www.cka.uni-bonn.de/forschung/wetterdaten/aktuelle-wetterdaten}. It is important to note that
-CKA has the data organized into daily ".csv" files for the recent period as well as in ".zip" files for each year.
-This function only works for data downloaded and extracted as csv files into one common folder. This means, all the files 
+CKA has the data organized into daily \strong{'.csv'} files for the recent period as well as in \strong{'.zip'} files for each year.
+This function only works for data downloaded and extracted as \strong{'.csv'} files into one common folder. This means, all the files 
 need to be in the same folder, independent of the year. The function returns the most important variables for
 agricultural production. Among these, temperature, rainfall, wind speed, PAR, among others.
 }
 \details{
-It is important to note that the data has to be downloaded by hand from the website or requested to the stuff
-working at CKA. The output is a data frame useful for further analysis with \code{\link{chillR}} or this package.
-The interpolation in \code{check_data} is made by using some functions contained in the \code{\link{chillR}} package. \emph{Tmin}, \emph{Tmean} and \emph{Tmax}
-only work for \emph{daily} time step and \emph{Temp} only does for \emph{hourly} time step.
+It is important to note that the data has to be downloaded by hand from the website or requested to the staff
+at CKA. The output is a data frame useful for further analysis with \code{\link{chillR}} or this package. \emph{Tmin}, \emph{Tmean} and \emph{Tmax}
+only work for \emph{daily} time step whereas \emph{Temp} only does for \emph{hourly} time step.
 }
 \examples{
 
