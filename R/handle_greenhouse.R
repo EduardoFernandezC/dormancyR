@@ -14,6 +14,26 @@
 #' the options differed depending on the \code{time_step} parameter. For \code{time_step = 'daily'}, the options
 #' are \emph{'Tmean'}, \emph{'Tmin'}, and \emph{'Tmax'}
 #' 
+#' @param check_data Boolean parameter to check the observations for inconsistencies. Unfortunately,
+#' the dataloggers in the greenhouses often define missing records as 0. This makes exremely complicated 
+#' to know if one record was actually 0 or missing. This check for that inconsistency by comparing the
+#' temperature at a given hour 'x' with the mean for the previous hours (defined by the \code{n_hours}).
+#' If this difference is greater than a given threshold (i.e. \code{threshold}) the record is corrected to
+#' \code{NA}
+#' 
+#' @param n_hours Numeric input. This is the number of previous hours used to compute the mean and to check for
+#' inconsistencies. Default is set to 24 hours
+#' 
+#' @param threshold Numeric input. This is the limit to define whether the record was a true observation or not.
+#' Default is set to 10 celsius degree since greenhouse temperatures are controlled
+#' 
+#' @param fix_data Boolean parameter. If \code{fix_data = TRUE}, fill in the missing hours
+#' by the function \code{\link[chillR:interpolate_gaps_hourly]{interpolate_gaps_hourly}} from 
+#' \code{\link{chillR}}
+#' 
+#' @param na_strings Character vector of strings to interpret as missing values. By default,
+#' \code{handle_greenhouse} treats the word \emph{'FAULT'} and blank cells as missing data.
+#' 
 #' @note 
 #' In the \emph{'daily'} mode, this function can returns the variables \emph{'Tmin'}, \emph{'Tmean'} and \emph{'Tmax'}. In contrast, under the \emph{'hourly'}
 #' mode, it can returns the mean temperature for each hour as \emph{'Temp'}
@@ -24,12 +44,15 @@
 #' 
 #' # path <- "C:/Users/...../...."
 #' 
-#' # handle_greenhouse(path_data = path, time_step = "daily", vars = c("Tmin", "Tmax"))
+#' # handle_greenhouse(path_data = path, time_step = "daily", vars = c("Tmin", "Tmax"),
+#' #                   check_data = T, n_hours = 12, threshold = 5, fix_data = T)
 #' 
 #' @export handle_greenhouse
 #' @importFrom dplyr "%>%"
 
-handle_greenhouse <- function (path_data, time_step = "hourly", vars = c("Temp", "Humidity", "CO2")){
+handle_greenhouse <- function (path_data, time_step = "hourly", vars = c("Temp", "Humidity", "CO2"),
+                               check_data = T, n_hours = 24, threshold = 10, fix_data = T,
+                               na_strings = c("FAULT", "")){
   
   # Check if the file exist
   
@@ -60,11 +83,11 @@ handle_greenhouse <- function (path_data, time_step = "hourly", vars = c("Temp",
   
   if (tools::file_ext(path_data) %in% c("xlsx", "xls"))
     
-    weather <- suppressWarnings(suppressMessages(readxl::read_excel(path_data, sheet = 1, na = "FAULT")))
+    weather <- suppressWarnings(suppressMessages(readxl::read_excel(path_data, sheet = 1, na = na_strings)))
   
   if (tools::file_ext(path_data) == "csv")
     
-    weather <- utils::read.csv(path_data, na.strings = "FAULT")
+    weather <- utils::read.csv(path_data, na.strings = na_strings)
   
   
   # Identify the columns for temperature vars by matching the symbol for celsius degree. Change the name of the
@@ -113,6 +136,42 @@ handle_greenhouse <- function (path_data, time_step = "hourly", vars = c("Temp",
                                            Humidity = mean(Humidity, na.rm = T),
                                            CO2 = mean(CO2, na.rm = T)))
   
+  # Change NaN by NA
+  
+  weather[which(is.nan(weather$Temp)), "Temp"] <- NA
+  weather[which(is.nan(weather$Humidity)), "Humidity"] <- NA
+  weather[which(is.nan(weather$CO2)), "CO2"] <- NA
+  
+  # Check the data for inconsistencies. Unfortunately, the dataloggers in the greenhouses often add 0 as missing
+  # records. This makes exremely complicated to know if one record was actually 0 or missing. This step check for
+  # that inconsistency by comparing the temperature at hour 'x' with the mean for the previous 24 hours. If this
+  # difference is above a given threshold the record is corrected to NA.
+  
+  if (check_data){
+    
+    for (i in 1 : length(weather$Temp)){
+      
+      if (!is.na(weather[i, "Temp"])){
+        
+        if (i < n_hours + 1) j <- 1 else j <- i - n_hours
+        
+        difference <- weather[i, "Temp"] - mean(weather[j : i, "Temp"], na.rm = T)
+        
+        if (abs(difference) > threshold){
+          
+          weather[i, "Temp"] <- NA}}}
+    
+    warning(paste(length(which(is.na(weather$Temp))), "observations were corrected to NA's due to",
+                  "inconsistency with the mean temp for the previous", n_hours, "hours"))}
+  
+  # If the user wants to fix the missing records, this step helps to do it through linear interpolation
+  
+  if (fix_data){
+    
+    vector_temps_interpolated <- chillR::interpolate_gaps_hourly(weather)[["weather"]][["Temp"]]
+    
+    weather$Temp <- vector_temps_interpolated}
+  
   
   # Check if the latest row has information. If not, this will remove that row
   
@@ -135,13 +194,6 @@ handle_greenhouse <- function (path_data, time_step = "hourly", vars = c("Temp",
   # Add the YEARMODAHO column
   
   weather["YEARMODAHO"] <- weather$Year * 1e+06 + weather$Month * 10000 + weather$Day * 100 + weather$Hour
-  
-  
-  # Change NaN by NA
-  
-  weather[which(is.na(weather$Temp)), "Temp"] <- NA
-  weather[which(is.na(weather$Humidity)), "Humidity"] <- NA
-  weather[which(is.na(weather$CO2)), "CO2"] <- NA
   
   
   # Final part for returning a DF according to the time step and vars choosen

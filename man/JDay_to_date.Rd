@@ -4,12 +4,15 @@
 \alias{JDay_to_date}
 \title{Transform JDay to date}
 \usage{
-JDay_to_date(JDay, leap_year = FALSE)
+JDay_to_date(JDay, year, date_format = "\%Y-\%m-\%d")
 }
 \arguments{
 \item{JDay}{Numeric vector. It can be a vector of \code{length = 1} containing integers between 1 and 366}
 
-\item{leap_year}{Boolean parameter. This is to define if the date must be provided for a leap year}
+\item{year}{Numeric input. This is to define the year for which the JDay is transformed to date}
+
+\item{date_format}{Character vector representing the format in which the date should be retrieved. For
+more options see \code{\link[base:as.Date]{as.Date}}}
 }
 \description{
 In agricultural assessments, the begining and end for a period of interest (e.g. chill accumulation) 
@@ -18,6 +21,6 @@ interpretation of the results since most people are used to see dates. This func
 dates
 }
 \examples{
-JDay_to_date(JDay = 67:69, leap_year = FALSE)
+JDay_to_date(JDay = 67 : 69, year = 2019, date_format = "\%d.\%m.\%Y")
 
 }

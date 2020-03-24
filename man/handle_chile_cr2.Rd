@@ -8,11 +8,11 @@ handle_chile_cr2(
   action,
   begin = 19500101,
   end = 20171231,
-  latitude = latitude,
-  longitude = longitude,
+  latitude,
+  longitude,
   number_of_stations = 25,
-  path_zip_tmin = path_zip_tmin,
-  path_zip_tmax = path_zip_tmax,
+  path_zip_tmin,
+  path_zip_tmax,
   stations_df = NULL
 )
 }
