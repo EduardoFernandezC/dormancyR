@@ -1,6 +1,7 @@
+#' \figure{dormancyR.png}{options: align='right' width='25\%' alt='dormancyR logo'}
 #' dormancyR: a package to compute chill metrics from organized weather dataframes
 #' 
-#' @description \if{html}{\figure{dormancyR.png}{options: align = 'right' width = '25\%'}}
+#' @description  
 #' 
 #' The \code{dormancyR} package (inspired in \code{\link{chillR}}) aims to provide alternatives to common chill models
 #' used in horticulture to compute chill metrics in deciduous fruit tree orchards as well as functions to handle

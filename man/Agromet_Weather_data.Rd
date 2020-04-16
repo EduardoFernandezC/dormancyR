@@ -4,7 +4,9 @@
 \name{agromet_weather_data}
 \alias{agromet_weather_data}
 \title{Example of Chilean Agromet weather data}
-\format{A data frame with 2208 observations and 12 variables}
+\format{
+A data frame with 2208 observations and 12 variables
+}
 \source{
 \url{https://www.agromet.cl/datos-historicos}
 }
