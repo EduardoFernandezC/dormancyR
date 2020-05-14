@@ -61,9 +61,29 @@ handle_chile_cr2 <- function(action, begin = 19500101, end = 20171231,
                              latitude, longitude, number_of_stations = 25,
                              path_zip_tmin, path_zip_tmax, stations_df = NULL){
   
+  # Check input parameters
   
   if (!(action %in% c("my_data", "info_stations", "list_data")))
-    stop("Please provide a valid action for the function")
+    stop("Please provide a valid 'action' for the function")
+  
+  if (!is.numeric(begin) | !is.numeric(end))
+    stop("Please provide a numeric input in 'begin' or 'end' parameters in YEARMODA format")
+  
+  if (begin < 19500101 | end > 20171231)
+    stop("'begin' or 'end' parameters out of range. Please provide a valid input")
+  
+  if (begin >= end)
+    stop("'begin' parameter is greater than 'end' parameter. Please provide a valid input")
+  
+  if (!is.numeric(latitude) | !is.numeric(longitude) | !is.numeric(number_of_stations))
+    stop("Please provide a numeric input in 'latitude', 'longitude', and 'number_of_stations' parameters")
+  
+  if (!file.exists(path_zip_tmax) | !file.exists(path_zip_tmin))
+    stop("'path_zip_tmin' or 'path_zip_tmax' does not exist. Please provide a valid character string vector with the complete path to the zip files")
+  
+  if (!is.null(stations_df) & !is.data.frame(stations_df))
+    stop("Please provide a data frame in 'stations_df' parameter")
+  
   
   
   #Saving the actual work directory

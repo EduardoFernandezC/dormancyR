@@ -65,6 +65,7 @@ Once downloaded, the user must define the location (directory) in which the zip 
 
 ```{r path_temps, eval = T}
 path_zip_tmin <- "C:/Users/Admin/Desktop/New folder/cr2_tasminDaily_2018_ghcn.zip"
+
 path_zip_tmax <- "C:/Users/Admin/Desktop/New folder/cr2_tasmaxDaily_2018_ghcn.zip"
 ```
 
