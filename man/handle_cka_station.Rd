@@ -8,7 +8,7 @@ handle_cka_station(
   folder_path,
   vars = c("Temp"),
   time_step = "hourly",
-  check_data = T
+  check_data = TRUE
 )
 }
 \arguments{
@@ -49,6 +49,6 @@ only work for \emph{daily} time step whereas \emph{Temp} only does for \emph{hou
 # path <- "C:/Users/...../...."
 
 # handle_cka_station(folder_path = path, vars = c("Tmin", "Tmean", "Tmax"),
-# time_step = "daily", check_data = T)
+# time_step = "daily", check_data = TRUE)
 
 }

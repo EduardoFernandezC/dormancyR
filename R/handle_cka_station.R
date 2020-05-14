@@ -36,14 +36,16 @@
 #' # path <- "C:/Users/...../...."
 #' 
 #' # handle_cka_station(folder_path = path, vars = c("Tmin", "Tmean", "Tmax"),
-#' # time_step = "daily", check_data = T)
+#' # time_step = "daily", check_data = TRUE)
 #' 
 #' @export handle_cka_station
 #' @importFrom dplyr "%>%"
 
-handle_cka_station <- function(folder_path, vars = c("Temp"), time_step = "hourly", check_data = T){
+handle_cka_station <- function(folder_path, vars = c("Temp"), time_step = "hourly", check_data = TRUE){
   
   requireNamespace("dplyr")
+  
+  # Check for valid inputs in vars and time_step parameters
   
   if (vars == "Temp" & time_step == "daily" || time_step == "hourly" & vars %in% c("Tmean", "Tmin", "Tmax"))
     
@@ -60,6 +62,13 @@ handle_cka_station <- function(folder_path, vars = c("Temp"), time_step = "hourl
   if (!(time_step %in% c("hourly", "daily")))
     
     stop("Time step not supported by the function. Please specified any valid option")
+  
+  
+  # Check if the last character in folder_path is '/' if so, remove it for future computations
+  
+  if (substr(folder_path, nchar(folder_path) - 1, nchar(folder_path)) == '/')
+    
+    folder_path <- substr(folder_path, 1, nchar(folder_path) - 1)
   
   
   # As CKA has records for each day separately, this is to get the name of the files downloaded by hand
