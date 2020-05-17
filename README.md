@@ -8,8 +8,8 @@
 watchers](https://img.shields.io/github/watchers/EduardoFernandezC/dormancyR?label=Watch&style=social)
 ![GitHub repo
 size](https://img.shields.io/github/repo-size/EduardoFernandezC/dormancyR)
-![![R build
-status](https://github.com/EduardoFernandezC/dormancyR/workflows/R-CMD-check/badge.svg)](https://github.com/EduardoFernandezC/dormancyR)
+[![R build
+status](https://github.com/EduardoFernandezC/dormancyR/workflows/R-CMD-check/badge.svg)](https://github.com/EduardoFernandezC/dormancyR/actions?workflow=R-CMD-check)
 <!-- badges: end -->
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
