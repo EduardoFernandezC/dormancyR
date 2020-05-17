@@ -7,7 +7,7 @@
 handle_chile_cr2(
   action,
   begin = 19500101,
-  end = 20171231,
+  end = 20180309,
   latitude,
   longitude,
   number_of_stations = 25,
@@ -32,7 +32,7 @@ initial date of the period of interest. If it is not provided, the default is es
 
 \item{end}{Numeric parameter in YEARMODA format. This parameter represents the
 final date of the period of interest. If it is not provided, the default is established as
-20171231 which corresponds to the earliest possible date that can be used for the assessment}
+20180310 which corresponds to the earliest possible date that can be used for the assessment}
 
 \item{latitude}{Numerical input. Latitude of the site of interest in decimal format}
 

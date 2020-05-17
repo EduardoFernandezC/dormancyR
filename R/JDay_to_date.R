@@ -13,8 +13,9 @@
 #' more options see \code{\link[base:as.Date]{as.Date}}
 #' 
 #' @examples
-#' JDay_to_date(JDay = 67 : 69, year = 2019, date_format = "%d.%m.%Y")
-#' 
+#' \dontrun{
+#' JDay_to_date(JDay = 67 : 69, year = 2020, date_format = "%d.%m.%Y")
+#' }
 #' @export JDay_to_date
 
 JDay_to_date <- function(JDay, year, date_format = "%Y-%m-%d"){
