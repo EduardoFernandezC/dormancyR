@@ -6,6 +6,12 @@ bibliography: packages.bib
 <img src="vignettes/dormancyR.png" alt = "dormancyR logo" align = "right" width = "25%" height = "25%"/>
 
 
+<!-- badges: start -->
+![GitHub watchers](https://img.shields.io/github/watchers/EduardoFernandezC/dormancyR?label=Watch&style=social)
+![GitHub repo size](https://img.shields.io/github/repo-size/EduardoFernandezC/dormancyR)
+<!-- badges: end -->
+
+
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
   
@@ -29,19 +35,7 @@ knitr::opts_chunk$set(
 ```{r, warning=FALSE, include = FALSE}
 #Automatically write R package citation entries to a .bib file
 knitr::write_bib(c(.packages(), 
-                   'bayesplot', 
-                   'chillR',
-                   'decisionSupport',
-                   'dplyr',
-                   'ethnobotanyR',
-                   'ggplot2', 
-                   'ggridges', 
-                   'graphics',
-                   'plyr', 
-                   'reshape', 
-                   'tidyverse',
-                   'kableExtra',
-                   'MASS'), 'packages.bib')
+                   'chillR'), 'packages.bib')
 ```
 # dormancyR
 
