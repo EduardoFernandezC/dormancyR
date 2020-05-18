@@ -48,7 +48,7 @@ require(kableExtra)
 
 ## Introduction
 
-Winter chill directly affects tree dormancy and therefore the cultivation of deciduous fruit and nut trees [@Campoyetal2011; @Faustetal1997; @Lang1987]. To quantify chill, researchers have developed a number of mathematical models that only use temperatures as input [@Luedeling2012]. These models are normally used in orchard planing and management [@Luedeling2012]. For example, a common practice in orchard planing is to compare the historic availability of winter chill in a place with the Chill Requirement of the species and cultivar of interest to overcome winter dormancy. In this vignette, I show an example how to use functions in the `dormancyR` [@R-dormancyR] package to handle historic weather data for Quillota, Chile. Then, I use these data to perform an analysis by using chill models in both the `dormancyR` [@R-dormancyR] and the `chillR` [@R-chillR] package.
+Winter chill directly affects tree dormancy and therefore the cultivation of deciduous fruit and nut trees [@Campoyetal2011; @Faustetal1997; @Lang1987]. To quantify chill, researchers have developed a number of mathematical models that only use temperatures as input [@Luedeling2012]. These models are normally used in orchard planing and management [@Luedeling2012]. For example, a common practice in orchard planing is to compare the historic availability of winter chill in a place with the Chill Requirement of the species and cultivar of interest to overcome winter dormancy. In this vignette, I show an example on how to use functions in the `dormancyR` [@R-dormancyR] package to handle historic weather data for Quillota, Chile. Then, I use these data to perform an analysis by using chill models in both the `dormancyR` [@R-dormancyR] and the `chillR` [@R-chillR] package.
 
 ## Step-by-step process
 
@@ -59,22 +59,14 @@ First, install the package from the [github repository](<https://github.com/Edua
 library(dormancyR)
 ```
 
-For now, `dormancyR` can only handle but not directly download weather data from the chilean databases. Directly downloading is only possible from the [german database](<https://cdc.dwd.de/portal/>) through the function `handle_cdc_germany`. Historic records of temperature extremes can only be downloaded separately as zip files. For this example, download both the [tmin](http://www.cr2.cl/download/cr2_tasmindaily_2018_ghcn-zip/?wpdmdl=15125) and [tmax](http://www.cr2.cl/download/cr2_tasmaxdaily_2018_ghcn-zip/?wpdmdl=15126) zip files and store them into the same folder. These zip files contain information for about 900 weather stations across south america since 1900 to 2017.
+`dormancyR` allows to directly download historic weather data from some chilean and german databases. For [german databases](<https://cdc.dwd.de/portal/>) you can use the function `handle_cdc_germany`. For [chilean databases](http://www.cr2.cl/) you can use the function `handle_chile_cr2`. This function download historic records of temperature extremes as individual zip files (i.e. [tmin](http://www.cr2.cl/download/cr2_tasmindaily_2018_ghcn-zip/?wpdmdl=15125) and [tmax](http://www.cr2.cl/download/cr2_tasmaxdaily_2018_ghcn-zip/?wpdmdl=15126)). The function saves the files in a temporary folder. These zip files contain information for about 900 weather stations across south america since 1900 to 2017.
 
-Once downloaded, the user must define the location (directory) in which the zip files have been stored. In this case, I used the folder **New folder** in the **Desktop** to save both files. To get the data in an adequate format use the `handle_chile_cr2` function. In this function, the parameter `path_zip_tmin` must include the folder plus the file name (including its extension - see chunk below). The same must be done for the `path_zip_tmax` parameter: 
-
-```{r path_temps, eval = T}
-path_zip_tmin <- "C:/Users/Admin/Desktop/New folder/cr2_tasminDaily_2018_ghcn.zip"
-
-path_zip_tmax <- "C:/Users/Admin/Desktop/New folder/cr2_tasmaxDaily_2018_ghcn.zip"
-```
-
-`handle_chile_cr2` has three modes of use, retrieving 3 different outputs. At this point, it is important to use the first mode which is *info_stations*. This mode allows knowing the closest weather stations to the location of interest defined by the user in `latitude` and `longitude` parameters. The number of weather stations for which the function will give information is defined by `number_of_stations`. The period of interest is set by `begin` and `end` parameters in numeric YEARMODA format.
+The first step is to define the location of interest. In this case, I will use as reference Quillota. `handle_chile_cr2` has three modes of use, retrieving 3 different outputs. At this point, it is important to use the first mode which is *info_stations*. This mode will allows to download the zip files and knowing the closest weather stations to the location of interest defined by the user in `latitude` and `longitude` parameters. The number of weather stations for which the function will give information is defined by `number_of_stations`. The period of interest is set by `begin` and `end` parameters in numeric YEARMODA format. 
 
 ```{r first_option, eval = T, warning = F}
 stations <- handle_chile_cr2("info_stations", begin = 20000101, end = 20171231,
                           latitude = -32.88, longitude = -71.25, number_of_stations = 10,
-                          path_zip_tmin = path_zip_tmin, path_zip_tmax = path_zip_tmax)
+                          path_zip_tmin = NULL, path_zip_tmax = NULL)
 ```
 ```{r, warning = F, echo = F, eval = T}
 knitr::kable(stations[-c(1, 3)], "html", row.names = F) %>% kableExtra::kable_styling(bootstrap_options = "condensed")
@@ -82,12 +74,15 @@ knitr::kable(stations[-c(1, 3)], "html", row.names = F) %>% kableExtra::kable_st
 
 The weather stations listed above are the 10 closest ones to the location of interest. Worth to note that the function retrieves relevant information to check the quality of the data (*N_Obs* and *Perc_days_complete* columns). In the case of the example, if a farmer owns an orchard in **Quillota** he could select and get weather data from the first station of the list.
 
-To get the weather data in `chillR` format, `handle_chile_cr2` has to be set to the mode *my_data*.
+To get the weather data in `chillR` format, `handle_chile_cr2` has to be set to the mode *my_data*. Since the zip files were already downloaded, we can use these files to extract the weather data.
 
 ```{r data, eval = T, warning = F}
+path_tmin <- "temp_data/cr2_tasmindaily_2018_ghcn.zip"
+path_tmax <- "temp_data/cr2_tasmaxdaily_2018_ghcn.zip"
+
 data <- handle_chile_cr2("my_data", begin = 20000101, end = 20171231,
                           latitude = -32.88, longitude = -71.25, number_of_stations = 10,
-                          path_zip_tmin = path_zip_tmin, path_zip_tmax = path_zip_tmax)
+                          path_zip_tmin = path_tmin, path_zip_tmax = path_tmax)
 ```
 ```{r, warning = F, echo = F, eval = T}
 knitr::kable(head(data, 10), "html") %>% kableExtra::kable_styling(bootstrap_options = "condensed")
@@ -105,7 +100,7 @@ In this case, there is `r paste(round(100 - perc_complete[which(perc_complete$va
 ```{r list_data, eval = T}
 list <- handle_chile_cr2("list_data", begin = 20000101, end = 20171231,
                           latitude = -32.88, longitude = -71.25, number_of_stations = 25,
-                          path_zip_tmin = path_zip_tmin, path_zip_tmax = path_zip_tmax)
+                          path_zip_tmin = path_tmin, path_zip_tmax = path_tmax, keep_data = FALSE)
 ```
 
 ***Note that the `number_of_stations` parameter was set to 25 to list more dataframes***

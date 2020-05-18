@@ -5,22 +5,22 @@
 \alias{agromet_weather_data}
 \title{Example of Chilean Agromet weather data}
 \format{
-A data frame with 2208 observations and 12 variables
+A data frame with 2961 observations and 11 variables
 }
 \source{
-\url{https://www.agromet.cl/datos-historicos}
+\url{https://agrometeorologia.cl/}
 }
 \usage{
 data(agromet_weather_data)
 }
 \description{
 Data downloaded from the Chilean Agromet network to be used as example in the
-\code{\link{chile_agromet3chillR}} function. This data contain hourly records from 01-10-2018 to 31-12-2018.
-In order to avoid encoding issues, the names of the columns were modified.
+\code{\link{handle_agromet_chile}} function. This data contain hourly records from 01-05-2019 to 31-08-2019.
+The datafra has been slightly modified (removed the first 5 rows)
 }
 \examples{
 
-chile_agromet3chillR(agromet_weather_data)
+handle_agromet_chile(agromet_weather_data)
 
 }
 \keyword{datasets}

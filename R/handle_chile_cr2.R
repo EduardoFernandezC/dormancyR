@@ -3,20 +3,22 @@
 #' This function allows to obtain information about weather stations located in Chile as well as
 #' a data frame containing historical records of minimum and maximum temperatures from those weather
 #' stations. This function works with data downloaded from the website of the
-#' \href{http://www.cr2.cl/}{Center for Climate and Resilience Research (CR)2} sponsored by the University of Chile. The function works for previously
-#' downloaded data in ".zip" format. Data can be downloaded from the following links:
-#' \url{http://www.cr2.cl/download/cr2_tasmindaily_2018_ghcn-zip/?wpdmdl=15125} for minimum temperatures and
-#' \url{http://www.cr2.cl/download/cr2_tasmaxdaily_2018_ghcn-zip/?wpdmdl=15126} for maximum temperatures.
-#' Function requires both zip files being in the same folder.
-#'
+#' \href{http://www.cr2.cl/}{Center for Climate and Resilience Research (CR)2} sponsored by the University of Chile.
+#' The function allows to download the data (only recommended once) as well as to handle zip files previously
+#' downloaded. Data can be downloaded from the following links: \href{http://www.cr2.cl/download/cr2_tasmindaily_2018_ghcn-zip/?wpdmdl=15125}{minimum temperatures}
+#' and \href{http://www.cr2.cl/download/cr2_tasmaxdaily_2018_ghcn-zip/?wpdmdl=15126}{maximum temperatures}
+#' 
 #' @param action Character string input that defines the kind of data required. There are three options
-#' for this parameter. \emph{"info_stations"} provides a dataframe with information about a given number
-#' of weather stations (set in \code{number_of_stations}) located close to the location
-#' established with \code{latitude} and \code{longitude} parameters. \emph{"list_data"} provides a list of
-#' dataframes containing minimum and maximum temperature records from each weather station
-#' obtained with the \emph{"info_stations"} mode within the period established in the call of the function.
-#' Finally, \emph{"my_data"} provides the first dataframe of the previous list and represent the
-#' data of the closest weather station to the location established
+#' for this parameter:
+#'  \describe{
+#'   \item{\emph{"info_stations"}}{provides a dataframe with information about a given number
+#'   of weather stations (set in \code{number_of_stations}) located close to the location
+#'   established with \code{latitude} and \code{longitude} parameters}
+#'   \item{\emph{"list_data"}}{provides a list of dataframes containing minimum and maximum temperature
+#'    records from each weather station obtained with the \emph{"info_stations"} mode within the period
+#'    established in the call of the function}
+#'   \item{\emph{"my_data"}}{provides the first dataframe of the previous list and represent the
+#'   data of the closest weather station to the location established}}
 #' 
 #' @param begin Numeric parameter in YEARMODA format. This parameter represents the
 #' initial date of the period of interest. If it is not provided, the default is established as
@@ -34,32 +36,35 @@
 #' the site of interest. Default option is the value 25
 #' 
 #' @param path_zip_tmin Character string input. Location of the zip file containing minimum
-#' temperatures. This input must include the name and extension of the file
+#' temperatures. This input must include the name and extension of the file. Default is set to \code{NULL} so the
+#' function will download the data from the \href{http://www.cr2.cl/}{CR2} site and store the zip file in a
+#' temporary folder. If you have the data, please provide the path. This will save a bit of time.
 #' 
 #' @param path_zip_tmax Character string input. Location of the zip file containing maximum
-#' temperatures. This input must include the name and extension of the file
+#' temperatures. This input must include the name and extension of the file. Default is set to NULL so the
+#' function will download the data from the \href{http://www.cr2.cl/}{CR2} site and store the zip file in a
+#' temporary folder. If you have the data, please provide the path. This will save a bit of time.
 #' 
 #' @param stations_df A dataframe containing the list of stations for which this function will retrieve
 #' weather data. It is important that this dataframe be produced by this function under the action 
 #' \emph{"info_stations"}. The default is set to \code{NULL}
 #' 
+#' @param keep_data Boolean parameter indicating if the data downloaded should be deleted or not
+#' 
 #' @examples
-#' ##Getting the location of zip files
-#' #path_zip_tmin<-"[Your folder]\\cr2_tasminDaily_2018_ghcn.zip"
-#' #path_zip_tmax<-"[Your folder]\\cr2_tasmaxDaily_2018_ghcn.zip"
-#'
-#' ##Call of the function
+#' 
 #' #handle_chile_cr2(action = "my_data", begin = 20000101, end = 20101030,
 #' #                latitude = -32.8958, longitude = -71.2092, number_of_stations = 25,
-#' #                path_zip_tmin = path_zip_tmin, path_zip_tmax = path_zip_tmax,
-#' #                stations_df = NULL)
+#' #                path_zip_tmin = NULL, path_zip_tmax = NULL,
+#' #                stations_df = NULL, keep_data = TRUE)
 #' 
 #' 
 #' @export handle_chile_cr2
 
 handle_chile_cr2 <- function(action, begin = 19500101, end = 20180309,
                              latitude, longitude, number_of_stations = 25,
-                             path_zip_tmin, path_zip_tmax, stations_df = NULL){
+                             path_zip_tmin = NULL, path_zip_tmax = NULL,
+                             stations_df = NULL, keep_data = TRUE){
   
   # Check input parameters
   
@@ -78,36 +83,87 @@ handle_chile_cr2 <- function(action, begin = 19500101, end = 20180309,
   if (!is.numeric(latitude) | !is.numeric(longitude) | !is.numeric(number_of_stations))
     stop("Please provide a numeric input in 'latitude', 'longitude', and 'number_of_stations' parameters")
   
-  if (!file.exists(path_zip_tmax) | !file.exists(path_zip_tmin))
-    stop("'path_zip_tmin' or 'path_zip_tmax' does not exist. Please provide a valid character string vector with the complete path to the zip files")
-  
   if (!is.null(stations_df) & !is.data.frame(stations_df))
     stop("Please provide a data frame in 'stations_df' parameter")
   
   
+  # Check if the zip files have been already downloaded. If not, this will download the zip files from
+  # the cr2 site
   
-  #Saving the actual work directory
+  # Tmin
   
-  actual_WD <- getwd()
+  if (is.null(path_zip_tmin)){
+    
+    message("'path_zip_tmin' not provided. Data are going to be download from 'http://www.cr2.cl/' \ndatabase and stored in a temporary folder")
+    
+    if (!dir.exists("temp_data"))
+      
+      dir.create("temp_data")
+    
+    utils::download.file("http://www.cr2.cl/download/cr2_tasmindaily_2018_ghcn-zip/?wpdmdl=15125",
+                  "temp_data/cr2_tasmindaily_2018_ghcn.zip", mode = "wb")
+    
+    path_zip_tmin <- "temp_data/cr2_tasmindaily_2018_ghcn.zip"} else {
+      
+      if (!file.exists(path_zip_tmin)){
+        stop("'path_zip_tmin' file doesn't exists. Please provide a valid path to the zip file \nfor minimum records")}}
   
-  #Setting the work directory to the location of the zip files
   
-  setwd(paste(substr(path_zip_tmin, 1, nchar(path_zip_tmin) - 30)))
+  # Tmax
+  
+  if (is.null(path_zip_tmax)){
+    
+    message("'path_zip_tmax' not provided. Data are going to be download from 'http://www.cr2.cl/' \ndatabase and stored in a temporary folder")
+    
+    if (!dir.exists("temp_data"))
+      
+      dir.create("temp_data")
+    
+    utils::download.file("http://www.cr2.cl/download/cr2_tasmaxdaily_2018_ghcn-zip/?wpdmdl=15126",
+                  "temp_data/cr2_tasmaxdaily_2018_ghcn.zip", mode = "wb")
+    
+    path_zip_tmax <- "temp_data/cr2_tasmaxdaily_2018_ghcn.zip"} else {
+      
+      if (!file.exists(path_zip_tmax)){
+        stop("'path_zip_tmax' file doesn't exists. Please provide a valid path to the zip file \nfor maximum records")}}
+  
+  
   
   #Getting the names of the files inside the zip document using a dataframe
   
   path_tmin <- utils::unzip(path_zip_tmin, list = T)
   path_tmax <- utils::unzip(path_zip_tmax, list = T)
   
-  #"unziping" both Tmin and Tmax files
   
-  utils::unzip(path_zip_tmin, exdir = paste(substr(path_zip_tmin, 1, nchar(path_zip_tmin) - 30)))
-  utils::unzip(path_zip_tmax, exdir = paste(substr(path_zip_tmax, 1, nchar(path_zip_tmax) - 30)))
+  #Setting the to unzip the files
+  
+  pattern_positions <- unlist(stringr::str_locate_all(path_zip_tmin, pattern = '/'))
+  
+  pattern_end <- max(pattern_positions)
+  
+  folder_path <- substr(path_zip_tmin, 1, pattern_end - 1)
+  
+  
+  # Check if the zip files were already unzipped
+  
+  if (!dir.exists(substr(path_zip_tmin, 1, nchar(path_zip_tmin) - 4)))
+    
+    #"unziping" Tmin files
+    
+    utils::unzip(path_zip_tmin, exdir = folder_path)
+  
+  if (!dir.exists(substr(path_zip_tmax, 1, nchar(path_zip_tmax) - 4)))
+    
+    #"unziping" Tmin files
+    
+    utils::unzip(path_zip_tmax, exdir = folder_path)
+  
   
   #Loading the dataframe that contains the information about the weather stations available for 
   #Tmin records
   
-  Stations_Tmin <- utils::read.table(as.character(path_tmin[3, 1]), sep = ",", header = T, quote = "\"")
+  Stations_Tmin <- utils::read.table(as.character(paste0(folder_path, "/", path_tmin[3, 1])),
+                                     sep = ",", header = T, quote = "\"")
   
   #Selecting the columns of interest 
   
@@ -130,8 +186,10 @@ handle_chile_cr2 <- function(action, begin = 19500101, end = 20180309,
   
   #Loading the Tmin dataframe. This step uses as column names the cod labels mentioned above.
   
-  Tmin <- utils::read.table(as.character(path_tmin[2, 1]), sep = ",", quote = "", skip = 15, blank.lines.skip = F,
+  Tmin <- utils::read.table(as.character(paste0(folder_path, "/", path_tmin[2, 1])), sep = ",",
+                            quote = "", skip = 15, blank.lines.skip = F,
                             col.names = Cod_stations_Tmin, na.strings = c("-9999", "-9999.000"))
+  
   Tmin$Fecha <-as.Date(Tmin$Fecha)
   
   # Add the column YEARMODA for subsetting
@@ -145,7 +203,8 @@ handle_chile_cr2 <- function(action, begin = 19500101, end = 20180309,
   #Loading the dataframe that contains the information about the weather stations available for 
   #Tmax records 
   
-  Stations_Tmax <- utils::read.table(as.character(path_tmax[3, 1]), sep = ",", header = T, quote = "\"")
+  Stations_Tmax <- utils::read.table(as.character(paste0(folder_path, "/", path_tmax[3, 1])),
+                                     sep = ",", header = T, quote = "\"")
   
   #Selecting the columns of interest
   
@@ -168,8 +227,10 @@ handle_chile_cr2 <- function(action, begin = 19500101, end = 20180309,
   
   #Loading the Tmin dataframe. This step uses as column names the cod labels mentioned above.
   
-  Tmax <- utils::read.table(as.character(path_tmax[2, 1]), sep = ",", quote = "", skip = 15, blank.lines.skip = F,
+  Tmax <- utils::read.table(as.character(paste0(folder_path, "/", path_tmax[2, 1])),
+                            sep = ",", quote = "", skip = 15, blank.lines.skip = F,
                             col.names = Cod_stations_Tmax, na.strings = c("-9999", "-9999.000"))
+  
   Tmax$Fecha <- as.Date(Tmax$Fecha)
   
   # Add the column YEARMODA for subsetting
@@ -180,9 +241,14 @@ handle_chile_cr2 <- function(action, begin = 19500101, end = 20180309,
   
   Tmax <- Tmax[which(Tmax$YEARMODA >= begin & Tmax$YEARMODA <= end), ]
   
-  #Changing to the actual working directory
   
-  setwd(actual_WD)
+  # Remove the downloaded data in case you want to
+  
+  if (!keep_data)
+    
+    unlink(folder_path, recursive = T)
+  
+  
   
   #Setting the location to compute the distance of the weather stations
   
@@ -200,6 +266,7 @@ handle_chile_cr2 <- function(action, begin = 19500101, end = 20180309,
   #Selecting the relevant weather stations according to the number of stations
   
   Sumarized_stations <- Sorted_Stations[c(1 : number_of_stations), ]
+  
   colnames(Sumarized_stations) <- c("Cod_Station", "Institution", "Source", "Name", "Elevation", "Latitude",
                                     "Longitude", "Distance")
   
@@ -218,6 +285,7 @@ handle_chile_cr2 <- function(action, begin = 19500101, end = 20180309,
   
   
   daily_data <- chillR::make_all_day_table(primer_data, add.DATE = FALSE)
+  
   daily_data <- chillR::make_JDay(daily_data)
   
   #Merging Tmin y Tmax according to the code of the station for the total number of stations setted

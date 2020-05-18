@@ -3,7 +3,6 @@
 export(GDH_10)
 export(GDH_5)
 export(JDay_to_date)
-export(chile_agromet3chillR)
 export(chill_days)
 export(chilling_units)
 export(date_to_JDay)

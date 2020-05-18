@@ -4,3 +4,4 @@
 ^packages.bib
 ^doc$
 ^Meta$
+^\.github/workflows/R-CMD-check\.yaml$

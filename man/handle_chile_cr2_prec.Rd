@@ -2,7 +2,7 @@
 % Please edit documentation in R/handle_chile_cr2_prec.R
 \name{handle_chile_cr2_prec}
 \alias{handle_chile_cr2_prec}
-\title{Get historical records of daily precipitation for Chile}
+\title{Get historical records for daily precipitation for Chile}
 \usage{
 handle_chile_cr2_prec(
   action,
@@ -11,19 +11,23 @@ handle_chile_cr2_prec(
   latitude,
   longitude,
   number_of_stations = 25,
-  path_zip_prec,
-  stations_df = NULL
+  path_zip_prec = NULL,
+  stations_df = NULL,
+  keep_data = TRUE
 )
 }
 \arguments{
 \item{action}{Character string input that defines the kind of data required. There are three options
-for this parameter. \emph{"info_stations"} provides a dataframe with information about a given number
-of weather stations (set in \code{number_of_stations}) located close to the location
-established with \code{latitude} and \code{longitude} parameters. \emph{"list_data"} provides a list of
-dataframes containing daily precipitation records from each weather station
-obtained with the \emph{"info_stations"} mode within the period established in the call of the function.
-Finally, \emph{"my_data"} provides the first dataframe of the previous list and represent the
-data of the closest weather station to the location established}
+for this parameter:
+ \describe{
+  \item{\emph{"info_stations"}}{provides a dataframe with information about a given number
+  of weather stations (set in \code{number_of_stations}) located close to the location
+  established with \code{latitude} and \code{longitude} parameters}
+  \item{\emph{"list_data"}}{provides a list of dataframes containing minimum and maximum temperature
+   records from each weather station obtained with the \emph{"info_stations"} mode within the period
+   established in the call of the function}
+  \item{\emph{"my_data"}}{provides the first dataframe of the previous list and represent the
+  data of the closest weather station to the location established}}}
 
 \item{begin}{Numeric parameter in YEARMODA format. This parameter represents the
 initial date of the period of interest. If it is not provided, the default is set to
@@ -41,32 +45,33 @@ final date of the period of interest. If it is not provided, the default is set 
 the site of interest. Default option is 25}
 
 \item{path_zip_prec}{Character string input. Location and name of the zip file downloaded and
-containing the records for precipitation. This input must include the name and extension of the file}
+containing the records for precipitation. This input must include the name and extension of the file.
+Default is set to \code{NULL} so the function will download the data from the \href{http://www.cr2.cl/}{CR2}
+site and store the zip file in a temporary folder. If you have the data, please provide the full path.
+This will save a bit of time.}
 
 \item{stations_df}{A dataframe containing the list of stations for which this function will retrieve
 precipitation data. It is important that this dataframe be produced by this function under the action 
 \emph{"info_stations"}. The default is set to \code{NULL}}
+
+\item{keep_data}{Boolean parameter indicating if the data downloaded should be deleted or not}
 }
 \description{
 This function allows to obtain information about weather stations located in Chile as well as
 a data frame containing historical records of daily precipitation from those weather
-stations. This function works with data previously downloaded from the website of the
+stations. This function works with data from the website of the
 \href{http://www.cr2.cl/}{Center for Climate and Resilience Research (CR)2} sponsored by the University of Chile.
-The function works for
-downloaded data in ".zip" format. Data can be obtained from the following
-\href{http://www.cr2.cl/download/cr2_tasmindaily_2018_ghcn-zip/?wpdmdl=15125}{link}.
+The function allows to download the data (only recommended once) as well as to handle zip files previously
+downloaded. Data can be manually downloaded from the following 
+\href{http://www.cr2.cl/download/cr2_prdaily_2018_ghcn-zip/?wpdmdl=15129&ind=qKHo6puXeeZwZLyiKCJX4Sv0PBqleBqcGcwYp6UiJW0GyxofABcRWPHPGxMili33}{link}
 }
 \examples{
-##Getting the location of zip files
-
-#path_zip_prec <- "[Your folder]/cr2_prDaily_2018_ghcn.zip"
-
-##Call of the function
 
 #handle_chile_cr2_prec(action = "my_data", begin = 20000101, end = 20101030,
 #                latitude = -32.8958, longitude = -71.2092,
 #                number_of_stations = 25,
-#                path_zip_prec = path_zip_prec, stations_df = NULL)
+#                path_zip_prec = NULL, stations_df = NULL,
+#                keep_data = TRUE)
 
 
 }

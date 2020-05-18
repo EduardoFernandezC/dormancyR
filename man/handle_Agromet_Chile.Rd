@@ -4,32 +4,31 @@
 \alias{handle_agromet_chile}
 \title{Handle weather data downloaded from the Agromet Chilean database}
 \usage{
-handle_agromet_chile(pathfile, vars = c("Temp"))
+handle_agromet_chile(inputfile, vars = c("Temp", "Humidity"))
 }
 \arguments{
-\item{pathfile}{Character string. This is the complete path to the excel file containing the weather data. It must
-include the extension (".xls") of the file}
+\item{inputfile}{Character string or dataframe. This is the complete path to the weather file containing the data. It must
+include the extension (".xls") of the file. The function also supports a dataframe}
 
 \item{vars}{Character string. Vector of one or more variables that are requested from the original weather file.
-Default is set to \emph{"Temp"} since for now, the function only works for hourly records. Available options depend on
-the variables specified by the user while downloading from the website. Possible inputs are \emph{"Precip_Accum",
-"Humidity",
-"Wind_direction", "Solar_radiation", "Pressure_ATM", "Temp", "Tmax", "Tmin", "Soil_Tmean", "Soil_Tmax",
-"Wind_speed_max", "Surface_Tmean", "Surface_Tmax", "Soil_Tmin", "Surface_Tmin", "Wind_speed_mean"}}
+Default is set to \emph{"Temp"} and \emph{"Humidity"} since for now, the function only works for hourly records.
+Available options depend on
+the variables specified by the user while downloading from the website. Possible inputs are
+\emph{"Temp"}, \emph{"Humidity"}, \emph{"Prec_accum"}, \emph{"Solar_radiation"},
+\emph{"Wind_speed"}, \emph{"Pressure_ATM"}, \emph{"Surface_Temp"}, \emph{"Soil_Temp"},
+\emph{"Wind_direction"}}
 }
 \description{
-This function convert a previously downloaded weather file into a dataframe in the \code{\link{chillR}} format. For now,
-the downloading part must be done directly by the user through accessing the website
-\url{http://agromet.inia.cl/estaciones.php} Once there, the user needs to select the weather station,
+This function convert a previously downloaded weather file into a dataframe in the \code{\link{chillR}}
+format. For now,
+the function \strong{only} works with hourly records. The downloading part must be done directly by the
+user through accessing the
+\href{https://agrometeorologia.cl/}{agromet website} Once there, the user needs to select the weather station,
 the variables requested, the time-step and the period of interest. Finally, the data must be downloaded in
-excel format and stored. For now, this function only works for files downloaded in the hourly time-step option.
+Excel or CSV format.
 }
 \examples{
-# As each user has different path for the folder this example is not running until "#"
-# is removed
 
-# path <- "C:/Users/...../...."
-
-# handle_agromet_chile(pathfile = path, vars = c("Tmin", "Tmean", "Tmax"))
+handle_agromet_chile(inputfile = agromet_weather_data, vars = c("Temp", "Humidity"))
 
 }
