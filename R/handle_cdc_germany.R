@@ -46,17 +46,17 @@
 #' minus 1 if \code{complete_list = FALSE}.
 #' 
 #' @examples 
-#' \dontrun{   
+#' 
 #' handle_cdc_germany(action = "info_stations", variables = c("Tmin", "Tmax", "Tmean"),
 #'                    latitude = 53.5373, longitude = 9.6397, begin = 20000101,
 #'                    end = 20101231, number_of_stations = 25, complete_list = FALSE)
-#' }
+#' 
 #' @export handle_cdc_germany
 
 handle_cdc_germany <- function(action, variables,  latitude, longitude,
-                       begin = 19160101, end = chillR::Date2YEARMODA(Sys.Date()),
-                       number_of_stations = 25,
-                       complete_list = FALSE){
+                               begin = 19160101, end = chillR::Date2YEARMODA(Sys.Date()),
+                               number_of_stations = 25,
+                               complete_list = FALSE){
   
   # Checking if action, dates and variables are valid inputs
   
@@ -93,6 +93,12 @@ handle_cdc_germany <- function(action, variables,  latitude, longitude,
   # Remove the extra values due to these mistakes
   
   stations <- stations[-wrong_rows]
+  
+  # Remove german characters 
+  
+  stations <- stringi::stri_enc_toascii(stations)
+  
+  stations <- stringr::str_replace_all(stations, pattern = "\032", replacement = "ue")
   
   # Make a dataframe of the information about the stations in Germany
   
@@ -156,7 +162,7 @@ handle_cdc_germany <- function(action, variables,  latitude, longitude,
   if (action == "info_stations")
     return(station_in_period[c(1: number_of_stations),])
   
- 
+  
   # primer dataframe to include the complete period of interest
   
   primer <- data.frame(YEARMODA = c(begin, end),
