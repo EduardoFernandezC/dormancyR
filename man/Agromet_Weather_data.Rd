@@ -11,7 +11,7 @@ A data frame with 2961 observations and 11 variables
 \url{https://agrometeorologia.cl/}
 }
 \usage{
-data(agromet_weather_data)
+agromet_weather_data
 }
 \description{
 Data downloaded from the Chilean Agromet network to be used as example in the

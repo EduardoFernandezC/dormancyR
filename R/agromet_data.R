@@ -6,7 +6,7 @@
 #' 
 #' @docType data
 #' 
-#' @usage data(agromet_weather_data)
+#' @usage agromet_weather_data
 #' 
 #' @format A data frame with 2961 observations and 11 variables
 #' 
