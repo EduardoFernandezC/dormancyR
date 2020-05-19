@@ -66,7 +66,7 @@ handle_cka_station <- function(folder_path, vars = c("Temp"), time_step = "hourl
   
   # Check if the last character in folder_path is '/' if so, remove it for future computations
   
-  if (substr(folder_path, nchar(folder_path) - 1, nchar(folder_path)) == '/')
+  if (stringr::str_ends(folder_path, "/"))
     
     folder_path <- substr(folder_path, 1, nchar(folder_path) - 1)
   
