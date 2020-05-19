@@ -27,7 +27,7 @@ rsconnect/
 .Rproj.user
 dormancyR.Rproj
 # bib files
-*.bib
+#*.bib
 inst/doc
 doc
 Meta
