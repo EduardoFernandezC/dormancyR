@@ -3,7 +3,7 @@ output: github_document
 bibliography: packages.bib
 ---
 
-# dormancyR <a><img src='man/figures/dormancyR.png' align="right" height="139" /></a>
+# dormancyR <a><img src='man/figures/dormancyR.png' align="right" height="145" /></a>
 
 <!-- badges: start -->
 [![CRAN](https://www.r-pkg.org/badges/version/dormancyR)](https://CRAN.R-project.org/package=dormancyR)
@@ -15,11 +15,6 @@ bibliography: packages.bib
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-<style>
-body {
-text-align: justify}
-</style>
-  
 ```{r setup, include = FALSE}
 
 knitr::opts_chunk$set(
@@ -44,6 +39,10 @@ knitr::write_bib(c(.packages(),
 ```
 
 # Description
+<style>
+body {
+text-align: justify}
+</style>
 
 `dormancyR` aims to provide alternatives to common chill models used in horticulture to compute chill metrics in deciduous fruit tree orchards as well as functions to handle weather data. The package produces outputs compatible with the `chillR` package [@R-chillR]. It also contains functions to download and handle historic ([Center for Climate and Resilience Research](<https://www.cr2.cl>)) and up-to-date ([Agromet INIA](<https://www.agromet.cl/datos-historicos>)) weather data downloaded from Chilean databases. Similarly, `dormancyR` also contains a function to download and handle weather data from a German database ([Climate Data Center](<https://cdc.dwd.de/portal/>)).
 

@@ -1,5 +1,5 @@
 
-# dormancyR <a><img src='man/figures/dormancyR.png' align="right" height="139" /></a>
+# dormancyR <a><img src='man/figures/dormancyR.png' align="right" height="145" /></a>
 
 <!-- badges: start -->
 
@@ -14,12 +14,12 @@ status](https://github.com/EduardoFernandezC/dormancyR/workflows/R-CMD-check/bad
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
+# Description
+
 <style>
 body {
 text-align: justify}
 </style>
-
-# Description
 
 `dormancyR` aims to provide alternatives to common chill models used in
 horticulture to compute chill metrics in deciduous fruit tree orchards
