@@ -40,7 +40,7 @@ knitr::write_bib(c(.packages(),
 
 # Description
 
-`dormancyR` aims to provide alternatives to common chill models used in horticulture to compute chill metrics in deciduous fruit tree orchards as well as functions to handle weather data. The package produces outputs compatible with the `chillR` package [@R-chillR]. It also contains functions to download and handle historic ([Center for Climate and Resilience Research](<https://www.cr2.cl>)) and up-to-date ([Agrometeorologia - INIA](<https://agrometeorologia.cl/>)) weather data from Chilean databases. Similarly, `dormancyR` also contains a function to download and handle weather data from a German database ([Climate Data Center](<https://cdc.dwd.de/portal/>)).
+`dormancyR` aims to provide alternatives to common chill models used in horticulture to compute chill metrics in deciduous fruit tree orchards as well as functions to handle weather data. The package produces outputs compatible with the `chillR` package [@R-chillR]. It also contains functions to download and handle historic ([Center for Climate and Resilience Research](<https://www.cr2.cl>)) and up-to-date ([Agrometeorologia - INIA](<https://agrometeorologia.cl/>)) weather data from Chilean databases. Similarly, `dormancyR` contains a function to download and handle weather data from a German database ([Climate Data Center](<https://cdc.dwd.de/portal/>)).
 
 `dormancyR` was developed for a scientific manuscript: [The importance of chill model selection - a multi-site analysis](<https://doi.org/10.1016/j.eja.2020.126103>)
 
