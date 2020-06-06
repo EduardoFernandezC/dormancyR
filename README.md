@@ -27,9 +27,9 @@ from Chilean databases. Similarly, `dormancyR` contains a function to
 download and handle weather data from a German database ([Climate Data
 Center](https://cdc.dwd.de/portal/)).
 
-`dormancyR` was developed for a scientific manuscript: [The importance
-of chill model selection - a multi-site
-analysis](https://doi.org/10.1016/j.eja.2020.126103)
+`dormancyR` was developed for a scientific manuscript published in the
+European Journal of Agronomy: [The importance of chill model selection -
+a multi-site analysis](https://doi.org/10.1016/j.eja.2020.126103)
 
 # References
 
