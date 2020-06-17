@@ -248,7 +248,8 @@ plot_scenarios <- function(scenario_list, metric, add_historic = TRUE, ..., outl
   # Plot for future scenarios
   
   future <- ggplot2::ggplot() +
-    ggplot2::geom_boxplot(ggplot2::aes(Model, !!ggplot2::ensym(metric),
+    ggplot2::geom_boxplot(ggplot2::aes(factor(Model, levels = Models),
+                                       !!ggplot2::ensym(metric),
                                        fill = factor(Model, levels = Models)),
                           data = future_data,
                           outlier.shape = outlier_shape, size = 0.3, outlier.size = 1) +
