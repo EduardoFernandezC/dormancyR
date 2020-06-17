@@ -31,6 +31,15 @@ Center](https://cdc.dwd.de/portal/)).
 European Journal of Agronomy: [The importance of chill model selection -
 a multi-site analysis](https://doi.org/10.1016/j.eja.2020.126103)
 
+Since the package is not yet on CRAN, the developer version of
+`dormancyR` can be directly installed from github using functions in the
+`devtools` library
+
+``` r
+devtools::install_github("https://github.com/EduardoFernandezC/dormancyR")
+library(dormancyR)
+```
+
 # References
 
 <div id="refs" class="references hanging-indent">
