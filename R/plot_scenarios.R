@@ -226,13 +226,15 @@ plot_scenarios <- function(scenario_list, metric, add_historic = TRUE, ..., outl
     ggplot2::geom_boxplot(ggplot2::aes(Ref_year, !!ggplot2::ensym(metric)), data = past_simulated,
                           outlier.shape = outlier_shape, size = 0.3, outlier.size = 1,
                           fill = historic_color) +
-    ggplot2::scale_x_discrete(breaks = unique(past_simulated$Ref_year)) +
-    ggplot2::scale_y_continuous(limits = c(min_y, round(max_y + 10)), expand = c(0, 0),
+    ggplot2::scale_x_discrete(breaks = unique(past_simulated$Ref_year),
+                              expand = ggplot2::expansion(add = 1)) +
+    ggplot2::scale_y_continuous(limits = c(min_y, round(max_y + 10)),
+                                expand = ggplot2::expansion(add = 0),
                                 labels = scales::comma) +
     ggplot2::labs(x = "Year", y = paste(var_label, "accumulation in", label)) +
     ggplot2::facet_grid(~ Scenario) +
     ggplot2::theme_bw() +
-    ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45, hjust = 1, vjust = 1),
+    ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45, hjust = 1, vjust = 1, size = 8),
                    strip.background = ggplot2::element_blank(),
                    strip.text = ggplot2::element_text(face = "bold"))
   
@@ -253,8 +255,10 @@ plot_scenarios <- function(scenario_list, metric, add_historic = TRUE, ..., outl
                                        fill = factor(Model, levels = Models)),
                           data = future_data,
                           outlier.shape = outlier_shape, size = 0.3, outlier.size = 1) +
-    ggplot2::scale_x_discrete(labels = NULL) +
-    ggplot2::scale_y_continuous(limits = c(min_y, round(max_y + 10)), expand = c(0, 0),
+    ggplot2::scale_x_discrete(labels = NULL,
+                              expand = ggplot2::expansion(add = 1)) +
+    ggplot2::scale_y_continuous(limits = c(min_y, round(max_y + 10)),
+                                expand = ggplot2::expansion(add = 0),
                                 labels = NULL) +
     ggplot2::guides(fill = ggplot2::guide_legend(title.position = 'top', title.hjust = 0.5)) +
     ggplot2::labs(x = NULL, y = NULL, fill = "General Circulation Model (GCM)") +
