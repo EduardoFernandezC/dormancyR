@@ -84,7 +84,7 @@ data <- chillR::make_JDay(data)
 
 ```
 ```{r echo = FALSE}
-knitr::kable(head(data, 10), "html") %>% kableExtra::kable_styling(bootstrap_options = "condensed")
+knitr::kable(head(data, 10)) %>% kableExtra::kable_styling(bootstrap_options = "condensed")
 
 
 ```
@@ -93,7 +93,7 @@ The later step returns a dataframe of weather data in the `chillR` format. Howev
 
 ```{r perc_complete, echo = F, eval = T}
 perc_complete <- perc_complete(data)
-knitr::kable(perc_complete(data), "html") %>% kableExtra::kable_styling(bootstrap_options = "condensed")
+knitr::kable(perc_complete(data)) %>% kableExtra::kable_styling(bootstrap_options = "condensed")
 ```
 
 In this case, the variable selected presents `r paste(round(perc_complete[which(perc_complete$variable == "Temp"), 2], 1), "%", sep = "")` of data complete. Since no missing records were found in the example dataframe, the next step is to compute chill metrics according to different chill models in both the `chillR` and `dormancyR` libraries. As the example is designed to monitor daily chill accumulation, we can compute accumulated chill over the period of interest. 
@@ -111,7 +111,7 @@ for (m in 1 : length(models)) {
 
 ```
 ```{r, echo = F, eval = T}
-knitr::kable(head(data, 10), "html") %>% kableExtra::kable_styling(bootstrap_options = "condensed")
+knitr::kable(head(data, 10)) %>% kableExtra::kable_styling(bootstrap_options = "condensed")
 ```
 
 The output is a dataframe containing accumulated chill during the winter season. The names of the columns for the chill models are defined in the list `models`. Please note that **Chill_portions**, and **Chilling_hours** stand for Dynamic [@Fishmanetal1987a; @Fishmanetal1987b; @Erezetal1990] and Chilling Hours [@Weinberger1950] models programmed in `chillR`. On the other hand, **Positive_Utah_units**, and **North_Carolina_units** stand for Positive Utah [@Linsley-Noakesetal1994] and North Carolina [@ShaltoutandUnrath1983] models respectively, which are programmed in `dormancyR`. To use other chill models that use hourly temperature please see the documentation of the `dormancyR` package.
@@ -143,7 +143,7 @@ Other option may be to obtain the total accumulation for the winter 2019 in Quil
 ```{r total_Chill, echo = F, eval = T}
 total <- data_gather %>% group_by(`Chill Model`) %>% summarise(`Total chill` = round(max(Chill), 1))
 
-knitr::kable(total, "html") %>% kableExtra::kable_styling(bootstrap_options = "condensed")
+knitr::kable(total) %>% kableExtra::kable_styling(bootstrap_options = "condensed")
 
 
 ```
