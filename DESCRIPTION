@@ -20,7 +20,8 @@ Imports: assertthat,
          stringi,
          stringr,
          tidyr,
-         tidyverse
+         tidyverse,
+         XML
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
