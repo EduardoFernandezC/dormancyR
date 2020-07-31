@@ -28,6 +28,8 @@ JDay_to_date <- function(JDay, year, date_format = "%Y-%m-%d"){
   
   assertthat::assert_that(all(is.integer(JDay)), msg = "'JDay' parameter is not integer, please provide a valid input")
   assertthat::assert_that(all(JDay %in% 1 : 366), msg = "'JDay' parameter out of range, plase provide a value between 1 and 366")
+  assertthat::assert_that(year <= format(Sys.time(), "%Y"), msg = "'year' parameter out of range, plase provide a value equal or smaller than the current year")
+  
   
   # Make a primer DF to get the date
   
