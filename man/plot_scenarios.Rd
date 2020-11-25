@@ -10,7 +10,8 @@ plot_scenarios(
   add_historic = TRUE,
   ...,
   outlier_shape = 19,
-  historic_color = "white"
+  historic_color = "white",
+  group_by = c("Scenario", "Year")
 )
 }
 \arguments{
@@ -42,14 +43,18 @@ in the \code{data.frame} of the \code{scenario_list} (and, if applicable, in the
 of historic climated-related metrics.}
 
 \item{...}{accepts arguments that can be passed to \code{\link[ggplot2:layer]{layer}} and are 
-commonly used outside the aesthetic function for different geoms. Options can be \code{size}, 
-\code{color}, among others.}
+commonly used outside the aesthetic function for different geoms. In this case, `...` is passed to the 
+\code{\link[ggplot2:geom_point]{geom_point}} function in the case that actual observations of chill or heat
+are displayed. Options are \code{size}, \code{color}, among others.}
 
 \item{outlier_shape}{is the optional shape to replace the outliers in the boxplots. To show no oultiers
 use NA. See \code{\link[ggplot2:aes_linetype_size_shape]{shape}} for shape options.}
 
 \item{historic_color}{is a character string corresponding to the color used to fill the boxplots in simulated
 historic scenarios. Supported options are those provided by \code{\link[grDevices]{colors}}.}
+
+\item{group_by}{is a vector of character strings indicating how the plots should be grouped. It only
+accepts the values `Scenario` and `Year`}
 }
 \value{
 A plot of classes \code{'patchwork'}, \code{'gg'}, and \code{'ggplot'}. This allows 
@@ -109,20 +114,27 @@ climate_scenario_list <- list(list(data = scenario_results_past,
                                    labels = past_labels,
                                    historic_data = chill),
                               list(data = scenario_results_future,
-                                   caption = c("Scenario", "1"),
+                                   caption = c("Scenario 1", "2050"),
                                    labels = models_labels),
                               list(data = scenario_results_future,
-                                   caption = c("Scenario", "2"),
+                                   caption = c("Scenario 1", "2075"),
                                    labels = models_labels),
                               list(data = scenario_results_future,
-                                   caption=c("Scenario", "3"),
+                                   caption=c("Scenario 1", "2100"),
+                                   labels = models_labels),
+                              list(data = scenario_results_future,
+                                   caption=c("Scenario 2", "2040"),
+                                   labels = models_labels),
+                              list(data = scenario_results_future,
+                                   caption=c("Scenario 2", "2080"),
                                    labels = models_labels))
                                    
 # Plot the climate scenarios
 
 plot_scenarios(climate_scenario_list, metric = 'Chill_Portions',
                add_historic = TRUE, size = 2, shape = 3, color = 'blue',
-               outlier_shape = 12, historic_color = 'skyblue')
+               outlier_shape = 12, historic_color = 'skyblue',
+               group_by = c("Year", "Scenario"))
 
 # Since the output is a ggplot object, it is possible to continue
 # modifying some general aspects of the plot

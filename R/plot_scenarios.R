@@ -32,14 +32,18 @@
 #' of historic climated-related metrics.
 #' 
 #' @param ... accepts arguments that can be passed to \code{\link[ggplot2:layer]{layer}} and are 
-#' commonly used outside the aesthetic function for different geoms. Options can be \code{size}, 
-#' \code{color}, among others.
+#' commonly used outside the aesthetic function for different geoms. In this case, `...` is passed to the 
+#' \code{\link[ggplot2:geom_point]{geom_point}} function in the case that actual observations of chill or heat
+#' are displayed. Options are \code{size}, \code{color}, among others. 
 #' 
 #' @param outlier_shape is the optional shape to replace the outliers in the boxplots. To show no oultiers
 #'  use NA. See \code{\link[ggplot2:aes_linetype_size_shape]{shape}} for shape options.
 #' 
 #' @param historic_color is a character string corresponding to the color used to fill the boxplots in simulated
 #' historic scenarios. Supported options are those provided by \code{\link[grDevices]{colors}}.
+#' 
+#' @param group_by is a vector of character strings indicating how the plots should be grouped. It only
+#' accepts the values `Scenario` and `Year`
 #' 
 #' @details \code{Plot_scenarios} uses the \code{\link{ggplot2}} syntax for producing separated
 #' plots for historic and future scenarios. Later, the plots are merged into one by using the
@@ -92,20 +96,27 @@
 #'                                    labels = past_labels,
 #'                                    historic_data = chill),
 #'                               list(data = scenario_results_future,
-#'                                    caption = c("Scenario", "1"),
+#'                                    caption = c("Scenario 1", "2050"),
 #'                                    labels = models_labels),
 #'                               list(data = scenario_results_future,
-#'                                    caption = c("Scenario", "2"),
+#'                                    caption = c("Scenario 1", "2075"),
 #'                                    labels = models_labels),
 #'                               list(data = scenario_results_future,
-#'                                    caption=c("Scenario", "3"),
+#'                                    caption=c("Scenario 1", "2100"),
+#'                                    labels = models_labels),
+#'                               list(data = scenario_results_future,
+#'                                    caption=c("Scenario 2", "2040"),
+#'                                    labels = models_labels),
+#'                               list(data = scenario_results_future,
+#'                                    caption=c("Scenario 2", "2080"),
 #'                                    labels = models_labels))
 #'                                    
 #' # Plot the climate scenarios
 #' 
 #' plot_scenarios(climate_scenario_list, metric = 'Chill_Portions',
 #'                add_historic = TRUE, size = 2, shape = 3, color = 'blue',
-#'                outlier_shape = 12, historic_color = 'skyblue')
+#'                outlier_shape = 12, historic_color = 'skyblue',
+#'                group_by = c("Year", "Scenario"))
 #' 
 #' # Since the output is a ggplot object, it is possible to continue
 #' # modifying some general aspects of the plot
@@ -130,7 +141,28 @@
 #' @export plot_scenarios
 
 plot_scenarios <- function(scenario_list, metric, add_historic = TRUE, ..., outlier_shape = 19,
-                           historic_color = "white"){
+                           historic_color = "white", group_by = c("Scenario", "Year")){
+  
+  # Check that the structure of the scenario list is correct
+  
+  assertthat::assert_that(all(c("data", "caption", "labels") %in% unique(unlist(lapply(scenario_list, names)))),
+                          msg = "The input 'scenario_list' seems incorrect. Please check you include all the relevant information in a proper structure.")
+  
+  # Check that Scenario and Year are included in the group_by argument
+  
+  assertthat::assert_that(all(c("Scenario", "Year") %in% group_by),
+                          msg = "The input 'group_by' seems incorrect. Please check you only include 'Scenario' and 'Year'.")
+  
+  
+  # Check that the metric is in the data frame having the data
+  
+  assertthat::assert_that(metric %in% unique(unlist(lapply(scenario_list,
+                                                           function(x) names(x[["data"]][[1]])))),
+                          msg = "The 'metric' is not included in the data frames. Please use the tempResponse function to compute chill or heat accumulation.")
+  
+  ### Stop checks
+  
+  
   
   
   # Generate an internal function to extract the scenarios from the scenario_list
@@ -172,7 +204,9 @@ plot_scenarios <- function(scenario_list, metric, add_historic = TRUE, ..., outl
     
     data <- dplyr::bind_rows(list_one_level[["data"]], .id = "Model")
     
-    data["Scenario"] <- stringr::str_c(list_one_level[["caption"]], collapse = " - ")
+    data["Scenario"] <- list_one_level[["caption"]][1]
+    
+    data["Year"] <- list_one_level[["caption"]][2]
     
     data}
   
@@ -183,7 +217,7 @@ plot_scenarios <- function(scenario_list, metric, add_historic = TRUE, ..., outl
   
   # Generate one big dataframe for future projections
   
-  future_data <- dplyr::bind_rows(future_data, .id = "")
+  future_data <- dplyr::bind_rows(future_data, .id = "List")
   
   # Extract the model names
   
@@ -247,35 +281,77 @@ plot_scenarios <- function(scenario_list, metric, add_historic = TRUE, ..., outl
                                                  data = past_observed, ...)
   
   
-  # Plot for future scenarios
+  # Plots for future scenarios
   
-  future <- ggplot2::ggplot() +
-    ggplot2::geom_boxplot(ggplot2::aes(factor(Model, levels = Models),
-                                       !!ggplot2::ensym(metric),
-                                       fill = factor(Model, levels = Models)),
-                          data = future_data,
-                          outlier.shape = outlier_shape, size = 0.3, outlier.size = 1) +
-    ggplot2::scale_x_discrete(labels = NULL,
-                              expand = ggplot2::expansion(add = 1)) +
-    ggplot2::scale_y_continuous(limits = c(min_y, round(max_y + 10)),
-                                expand = ggplot2::expansion(add = 0),
-                                labels = NULL) +
-    ggplot2::guides(fill = ggplot2::guide_legend(title.position = 'top', title.hjust = 0.5)) +
-    ggplot2::labs(x = NULL, y = NULL, fill = "General Circulation Model (GCM)") +
-    ggplot2::facet_wrap(~ Scenario, nrow = 1) +
-    ggplot2::theme_bw() +
-    ggplot2::theme(axis.ticks = ggplot2::element_blank(),
-                   axis.title.x = ggplot2::element_text(margin = ggplot2::margin(0, 0, 0, 0, "cm")),
-                   legend.position = "bottom",
-                   legend.margin = ggplot2::margin(0, 0, 0, 0, "cm"),
-                   legend.background = ggplot2::element_rect(),
-                   strip.background = ggplot2::element_blank(),
-                   strip.text = ggplot2::element_text(face = "bold"),
-                   legend.box.spacing = ggplot2::unit(0, "cm"))
+  # Define the main and second factor for grouping the plots
+  
+  main <- group_by[1]
+  
+  second <- group_by[2]
+  
+  
+  # Define the vars to filter the future data and obtain different future plots 
+  
+  vars <- unique(future_data[[main]])
+  
+  # Define a primer for the list of plots
+  
+  plot_list <- list()
+  
+  for (var in vars){
+    
+    temp_data <- dplyr::filter(future_data, !!ggplot2::ensym(main) == var)
+    
+    plot_list[[var]] <- ggplot2::ggplot() +
+      ggplot2::geom_boxplot(ggplot2::aes(factor(Model, levels = Models),
+                                         !!ggplot2::ensym(metric),
+                                         fill = factor(Model, levels = Models)),
+                            data = temp_data,
+                            outlier.shape = outlier_shape, size = 0.3, outlier.size = 1) +
+      ggplot2::scale_x_discrete(labels = NULL,
+                                expand = ggplot2::expansion(add = 1)) +
+      ggplot2::scale_y_continuous(limits = c(min_y, round(max_y + 10)),
+                                  expand = ggplot2::expansion(add = 0),
+                                  labels = NULL) +
+      ggplot2::guides(fill = ggplot2::guide_legend(title.position = 'top', title.hjust = 0.5)) +
+      ggplot2::labs(x = NULL, y = NULL, fill = "General Circulation Model (GCM)",
+                    subtitle = var) +
+      ggplot2::facet_wrap(facets = ggplot2::ensym(second), nrow = 1) +
+      ggplot2::theme_bw() +
+      ggplot2::theme(axis.ticks = ggplot2::element_blank(),
+                     axis.title.x = ggplot2::element_text(margin = ggplot2::margin(0, 0, 0, 0, "cm")),
+                     legend.position = "bottom",
+                     legend.margin = ggplot2::margin(0, 0, 0, 0, "cm"),
+                     legend.background = ggplot2::element_rect(),
+                     strip.background = ggplot2::element_blank(),
+                     strip.text = ggplot2::element_text(face = "bold"),
+                     legend.box.spacing = ggplot2::unit(0, "cm"),
+                     plot.subtitle = ggplot2::element_text(hjust = 0.5, vjust = -1, size = 10,
+                                                           face = "bold"))
+    
+    
+    
+  }
   
   
   # Merge plots into one
   
-  plot <- (past_plot | future) + patchwork::plot_layout(widths = c(1, length(scenario_list) - 1))
+  # Define the relative width according to the number of scenarios used.
+  
+  widths <- NULL
+  
+  for (var in vars){
+    
+    width <-length(unique(future_data[future_data[[main]] == var, second]))
+    
+    widths <- c(widths, width)}
+  
+  
+  # Use the patchwork package to merge the plots
+  
+  plot <- (patchwork:::`|.ggplot`(past_plot, plot_list) +
+             patchwork::plot_layout(guides = "collect",
+                                    widths = c(1, widths)) &
+             ggplot2::theme(legend.position = "bottom"))
   
   return(plot)}
