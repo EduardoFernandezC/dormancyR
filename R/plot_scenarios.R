@@ -6,7 +6,7 @@
 #' 
 #' @param scenario_list is a list of lists containing information and data about the scenarios to be plotted. These
 #'  lists must have:\itemize{
-#'  
+#'    
 #'   \item{an element named \code{data}, which should be a list contain one or more named \code{data.frames} with a column
 #'    named the same as the \code{metric} argument. This row must contain (\code{numeric}) information to be plotted.
 #'    \code{data.frames} of climate-related metrics can be obtained with the 
@@ -14,13 +14,13 @@
 #'    past scenarios, the names of the dataframes can be the reference years used to generate the
 #'    scenarios. These names will be recicled and used in the x-axis of the historic panel. For future 
 #'    scenarios, the names of the dataframes can be the models used in the projections. These names
-#'    will appear in the legend for future panels.}
+#'    will appear in the legend for future panels.}    
 #'   \item{an element named \code{caption} containing information about the scenario which the list
-#'   is related to.}
+#'   is related to.}   
 #'   \item{an element named \code{historic_data} which represents a data frame for 
-#'   actual observations in past scenarios.}
+#'   actual observations in past scenarios.}   
 #'   \item{\code{time_series} is an optional argument that defines whether the scenario contains
-#'   a time series.}
+#'   a time series.}   
 #'   \item{\code{labels} is an optional vector that usually contains the names of the elements used for
 #'   \code{metric_summary} in \code{\link[chillR:make_climate_scenario]{make_climate_scenario}}.}}
 #' 
@@ -43,7 +43,37 @@
 #' historic scenarios. Supported options are those provided by \code{\link[grDevices]{colors}}.
 #' 
 #' @param group_by is a vector of character strings indicating how the plots should be grouped. It only
-#' accepts the values `Scenario` and `Year`
+#' accepts the values `Scenario` and `Year`.
+#' 
+#' @param y_axis_name is a character string representing the title of the y axis in the final plot. Default
+#' is set to `NULL` to let the function obtain the name based on the `metric` argument.
+#' 
+#' @param x_axis_name is a character string representing the title of the x axis in the 'Historic' panel.
+#' Default is set to `Year`.
+#' 
+#' @param legend_title is a character string representing the title of the legend showing the colors for the
+#' climate models used in the assessment.
+#' 
+#' @param legend_labels is a vector of character strings that allows the user to modify the names of the climate
+#' models used in the projections. The length of the vector must coincide with the number of climate models.
+#' Default is set to `NULL` to let the function use the labels generated with the
+#' \code{\link[chillR:make_climate_scenario]{make_climate_scenario}} function.
+#' 
+#' @param panel_labels is a list of 3 named objects that allows the user to customize the text in the upper part
+#' of the plot. Default is set to `NULL` to let the function use the labels generated with the
+#' \code{\link[chillR:make_climate_scenario]{make_climate_scenario}} function. If provided, the
+#' objects of the list must be:\itemize{
+#'  
+#'   \item{an element named \code{Historic} containing the name to be used in the `Historic` panel.}
+#'   \item{an element named \code{Scenario} containing the names of the scenarios used for the projections.
+#'   If `group_by = c("Year", "Scenario")` is used, `Scenario` must be a list of named objects 
+#'   according to the labels used in the `Year` object. See examples.}   
+#'   \item{an element named \code{Year} containing the labels to be used for the time horizons used in the
+#'   assessment. If `group_by = c("Scenario", "Year")` is used, `Year` must be a list of named objects 
+#'   according to the labels used in the `Scenario` object. See examples.}}
+#'   
+#' @param base_size is an integer to define the relative size of the text in the final plot. This argument
+#' is passed to \code{\link[ggplot2:theme_bw]{ggpplot2::theme_bw}}. Default is 11.
 #' 
 #' @details \code{Plot_scenarios} uses the \code{\link{ggplot2}} syntax for producing separated
 #' plots for historic and future scenarios. Later, the plots are merged into one by using the
@@ -117,17 +147,36 @@
 #'                add_historic = TRUE, size = 2, shape = 3, color = 'blue',
 #'                outlier_shape = 12, historic_color = 'skyblue',
 #'                group_by = c("Year", "Scenario"))
+#'                
+#' # Plot scenarios modifying the whole text in the plot
 #' 
+#' plot_scenarios(scenario_list = climate_scenario_list, metric = 'Chill_Portions',
+#'                 add_historic = TRUE, size = 2, shape = 3, color = 'blue',
+#'                 outlier_shape = 12, historic_color = 'skyblue',
+#'                 group_by = c("Scenario", "Year"),
+#'                 y_axis_name = "Acumulacion de frio en CP",
+#'                 x_axis_name = "Tiempo",
+#'                 legend_title = "Modelo climatico",
+#'                 legend_labels = c("Modelo 1", "Modelo 2", "Modelo 3"),
+#'                 panel_labels = list(Historic = "Historico",
+#'                                     Scenario = c("Escenario 1",
+#'                                                  "Escenario 2"),
+#'                                     Year = list(`Escenario 1` = c("Futuro cercano",
+#'                                                                   "Futuro medio",
+#'                                                                   "Future lejano"),
+#'                                                 `Escenario 2` = c("Futuro cercano",
+#'                                                                   "Futuro medio"))))
+#'
 #' # Since the output is a ggplot object, it is possible to continue
 #' # modifying some general aspects of the plot
 #' 
 #' plot <- plot_scenarios(climate_scenario_list, metric = 'Chill_Portions',
-#'                add_historic = TRUE, size = 2, shape = 3, color = 'blue',
-#'                outlier_shape = 12, historic_color = 'skyblue')
-#'                
-#'                
+#'                        add_historic = TRUE, size = 2, shape = 3, color = 'blue',
+#'                        outlier_shape = 12, historic_color = 'skyblue')
+#' 
+#' 
 #' # Example to change the color of the GCM scale
-#'  
+#' 
 #' plot & ggplot2::scale_fill_brewer(type = 'qual')
 #' 
 #' # Modify axis title and axis text
@@ -136,12 +185,17 @@
 #'                                                          family = 'serif'),
 #'                       axis.text = ggplot2::element_text(face = 'bold',
 #'                                                         color = 'blue'))
-#'   
 #' @import patchwork
 #' @export plot_scenarios
 
 plot_scenarios <- function(scenario_list, metric, add_historic = TRUE, ..., outlier_shape = 19,
-                           historic_color = "white", group_by = c("Scenario", "Year")){
+                           historic_color = "white", group_by = c("Scenario", "Year"),
+                           y_axis_name = NULL,
+                           x_axis_name = "Year",
+                           legend_title = "Climate model",
+                           legend_labels = NULL,
+                           panel_labels = NULL,
+                           base_size = 11){
   
   # Check that the structure of the scenario list is correct
   
@@ -159,6 +213,17 @@ plot_scenarios <- function(scenario_list, metric, add_historic = TRUE, ..., outl
   assertthat::assert_that(metric %in% unique(unlist(lapply(scenario_list,
                                                            function(x) names(x[["data"]][[1]])))),
                           msg = "The 'metric' is not included in the data frames. Please use the tempResponse function to compute chill or heat accumulation.")
+  
+  # Check that panel_labels is a list with the elements Historic, Scenario and Year in the case the
+  # user wants to provide customized names
+  
+  if (!is.null(panel_labels)){
+    assertthat::assert_that(is.list(panel_labels),
+                            msg = "The argument 'panel_labels' must be a list. Please provide a valid input (see documenation for more details).")
+  
+    assertthat::assert_that(all(c("Historic", "Scenario", "Year") %in% names(panel_labels)),
+                            msg = "The argument 'panel_labels' must be a list of named objects. These objects are 'Historic', 'Scenario', and 'Year', each containing the respective labels. See examples for more details.")
+  }  
   
   ### Stop checks
   
@@ -190,7 +255,10 @@ plot_scenarios <- function(scenario_list, metric, add_historic = TRUE, ..., outl
   past_simulated <- dplyr::bind_rows(scenario_list[[position_historic]][["data"]], .id = "Ref_year")
   
   
-  past_simulated["Scenario"] <- "Historic"
+  # Define the facet label for the Historic plot
+  
+  if (is.null(panel_labels)) past_simulated["Scenario"] <- "Historic" else
+    past_simulated["Scenario"] <- panel_labels[["Historic"]]
   
   
   # Extract the historic data from the list
@@ -253,6 +321,14 @@ plot_scenarios <- function(scenario_list, metric, add_historic = TRUE, ..., outl
   if (metric == "Utah_Chill_Units") label <- "CU"
   if (metric == "GDH") label <- "GDH"
   
+  # Define the final y axis name
+  
+  if (is.null(y_axis_name)) y_axis_name <- paste(var_label, "accumulation in", label)
+  
+  # Define the labels for the legends
+  
+  if (is.null(legend_labels)) legend_labels <- Models
+  
   
   # Generate the plot for the past scenarios, historic and simulated
   
@@ -265,10 +341,11 @@ plot_scenarios <- function(scenario_list, metric, add_historic = TRUE, ..., outl
     ggplot2::scale_y_continuous(limits = c(min_y, round(max_y + 10)),
                                 expand = ggplot2::expansion(add = 0),
                                 labels = scales::comma) +
-    ggplot2::labs(x = "Year", y = paste(var_label, "accumulation in", label)) +
+    ggplot2::labs(x = x_axis_name, y = y_axis_name) +
     ggplot2::facet_grid(~ Scenario) +
-    ggplot2::theme_bw() +
-    ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45, hjust = 1, vjust = 1, size = 8),
+    ggplot2::theme_bw(base_size = base_size) +
+    ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45, hjust = 1, vjust = 1,
+                                                       size = base_size * 0.8),
                    strip.background = ggplot2::element_blank(),
                    strip.text = ggplot2::element_text(face = "bold"))
   
@@ -294,18 +371,29 @@ plot_scenarios <- function(scenario_list, metric, add_historic = TRUE, ..., outl
   
   vars <- unique(future_data[[main]])
   
+  # Define the main grouping labels in the panels
+  
+  if (is.null(panel_labels)) main_labels <- vars else
+    main_labels <- panel_labels[[main]]
+  
   # Define a primer for the list of plots
   
   plot_list <- list()
   
-  for (var in vars){
+  for (i in 1 : length(vars)){
     
-    temp_data <- dplyr::filter(future_data, !!ggplot2::ensym(main) == var)
+    # Subset the temporary dara according to the  main grouping var i
+    temp_data <- dplyr::filter(future_data, !!ggplot2::ensym(main) == vars[i])
     
-    plot_list[[var]] <- ggplot2::ggplot() +
+    # Define the labels for the second level of panels
+    if (!is.null(panel_labels)) secondary_labels <- panel_labels[[second]][[i]] else
+      secondary_labels <- unique(temp_data[[second]])
+    
+    plot_list[[i]] <- ggplot2::ggplot() +
       ggplot2::geom_boxplot(ggplot2::aes(factor(Model, levels = Models),
                                          !!ggplot2::ensym(metric),
-                                         fill = factor(Model, levels = Models)),
+                                         fill = factor(Model, levels = Models,
+                                                       labels = legend_labels)),
                             data = temp_data,
                             outlier.shape = outlier_shape, size = 0.3, outlier.size = 1) +
       ggplot2::scale_x_discrete(labels = NULL,
@@ -314,10 +402,11 @@ plot_scenarios <- function(scenario_list, metric, add_historic = TRUE, ..., outl
                                   expand = ggplot2::expansion(add = 0),
                                   labels = NULL) +
       ggplot2::guides(fill = ggplot2::guide_legend(title.position = 'top', title.hjust = 0.5)) +
-      ggplot2::labs(x = NULL, y = NULL, fill = "General Circulation Model (GCM)",
-                    subtitle = var) +
-      ggplot2::facet_wrap(facets = ggplot2::ensym(second), nrow = 1) +
-      ggplot2::theme_bw() +
+      ggplot2::labs(x = NULL, y = NULL, fill = legend_title,
+                    subtitle = main_labels[i]) +
+      ggplot2::facet_wrap(facets = factor(temp_data[[second]],
+                                          labels = secondary_labels), nrow = 1) +
+      ggplot2::theme_bw(base_size = base_size) +
       ggplot2::theme(axis.ticks = ggplot2::element_blank(),
                      axis.title.x = ggplot2::element_text(margin = ggplot2::margin(0, 0, 0, 0, "cm")),
                      legend.position = "bottom",
@@ -326,7 +415,7 @@ plot_scenarios <- function(scenario_list, metric, add_historic = TRUE, ..., outl
                      strip.background = ggplot2::element_blank(),
                      strip.text = ggplot2::element_text(face = "bold"),
                      legend.box.spacing = ggplot2::unit(0, "cm"),
-                     plot.subtitle = ggplot2::element_text(hjust = 0.5, vjust = -1, size = 10,
+                     plot.subtitle = ggplot2::element_text(hjust = 0.5, vjust = -1, size = base_size * 1.05,
                                                            face = "bold"))
     
     
@@ -349,7 +438,7 @@ plot_scenarios <- function(scenario_list, metric, add_historic = TRUE, ..., outl
   
   # Use the patchwork package to merge the plots
   
-  plot <- (patchwork:::`|.ggplot`(past_plot, plot_list) +
+  plot <- ((past_plot + plot_list) +
              patchwork::plot_layout(guides = "collect",
                                     widths = c(1, widths)) &
              ggplot2::theme(legend.position = "bottom"))

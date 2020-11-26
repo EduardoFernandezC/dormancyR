@@ -11,13 +11,19 @@ plot_scenarios(
   ...,
   outlier_shape = 19,
   historic_color = "white",
-  group_by = c("Scenario", "Year")
+  group_by = c("Scenario", "Year"),
+  y_axis_name = NULL,
+  x_axis_name = "Year",
+  legend_title = "Climate model",
+  legend_labels = NULL,
+  panel_labels = NULL,
+  base_size = 11
 )
 }
 \arguments{
 \item{scenario_list}{is a list of lists containing information and data about the scenarios to be plotted. These
 lists must have:\itemize{
-
+  
  \item{an element named \code{data}, which should be a list contain one or more named \code{data.frames} with a column
   named the same as the \code{metric} argument. This row must contain (\code{numeric}) information to be plotted.
   \code{data.frames} of climate-related metrics can be obtained with the 
@@ -25,13 +31,13 @@ lists must have:\itemize{
   past scenarios, the names of the dataframes can be the reference years used to generate the
   scenarios. These names will be recicled and used in the x-axis of the historic panel. For future 
   scenarios, the names of the dataframes can be the models used in the projections. These names
-  will appear in the legend for future panels.}
+  will appear in the legend for future panels.}    
  \item{an element named \code{caption} containing information about the scenario which the list
- is related to.}
+ is related to.}   
  \item{an element named \code{historic_data} which represents a data frame for 
- actual observations in past scenarios.}
+ actual observations in past scenarios.}   
  \item{\code{time_series} is an optional argument that defines whether the scenario contains
- a time series.}
+ a time series.}   
  \item{\code{labels} is an optional vector that usually contains the names of the elements used for
  \code{metric_summary} in \code{\link[chillR:make_climate_scenario]{make_climate_scenario}}.}}}
 
@@ -54,7 +60,37 @@ use NA. See \code{\link[ggplot2:aes_linetype_size_shape]{shape}} for shape optio
 historic scenarios. Supported options are those provided by \code{\link[grDevices]{colors}}.}
 
 \item{group_by}{is a vector of character strings indicating how the plots should be grouped. It only
-accepts the values `Scenario` and `Year`}
+accepts the values `Scenario` and `Year`.}
+
+\item{y_axis_name}{is a character string representing the title of the y axis in the final plot. Default
+is set to `NULL` to let the function obtain the name based on the `metric` argument.}
+
+\item{x_axis_name}{is a character string representing the title of the x axis in the 'Historic' panel.
+Default is set to `Year`.}
+
+\item{legend_title}{is a character string representing the title of the legend showing the colors for the
+climate models used in the assessment.}
+
+\item{legend_labels}{is a vector of character strings that allows the user to modify the names of the climate
+models used in the projections. The length of the vector must coincide with the number of climate models.
+Default is set to `NULL` to let the function use the labels generated with the
+\code{\link[chillR:make_climate_scenario]{make_climate_scenario}} function.}
+
+\item{panel_labels}{is a list of 3 named objects that allows the user to customize the text in the upper part
+of the plot. Default is set to `NULL` to let the function use the labels generated with the
+\code{\link[chillR:make_climate_scenario]{make_climate_scenario}} function. If provided, the
+objects of the list must be:\itemize{
+ 
+  \item{an element named \code{Historic} containing the name to be used in the `Historic` panel.}
+  \item{an element named \code{Scenario} containing the names of the scenarios used for the projections.
+  If `group_by = c("Year", "Scenario")` is used, `Scenario` must be a list of named objects 
+  according to the labels used in the `Year` object. See examples.}   
+  \item{an element named \code{Year} containing the labels to be used for the time horizons used in the
+  assessment. If `group_by = c("Scenario", "Year")` is used, `Year` must be a list of named objects 
+  according to the labels used in the `Scenario` object. See examples.}}}
+
+\item{base_size}{is an integer to define the relative size of the text in the final plot. This argument
+is passed to \code{\link[ggplot2:theme_bw]{ggpplot2::theme_bw}}. Default is 11.}
 }
 \value{
 A plot of classes \code{'patchwork'}, \code{'gg'}, and \code{'ggplot'}. This allows 
@@ -135,17 +171,36 @@ plot_scenarios(climate_scenario_list, metric = 'Chill_Portions',
                add_historic = TRUE, size = 2, shape = 3, color = 'blue',
                outlier_shape = 12, historic_color = 'skyblue',
                group_by = c("Year", "Scenario"))
+               
+# Plot scenarios modifying the whole text in the plot
+
+plot_scenarios(scenario_list = climate_scenario_list, metric = 'Chill_Portions',
+                add_historic = TRUE, size = 2, shape = 3, color = 'blue',
+                outlier_shape = 12, historic_color = 'skyblue',
+                group_by = c("Scenario", "Year"),
+                y_axis_name = "Acumulacion de frio en CP",
+                x_axis_name = "Tiempo",
+                legend_title = "Modelo climatico",
+                legend_labels = c("Modelo 1", "Modelo 2", "Modelo 3"),
+                panel_labels = list(Historic = "Historico",
+                                    Scenario = c("Escenario 1",
+                                                 "Escenario 2"),
+                                    Year = list(`Escenario 1` = c("Futuro cercano",
+                                                                  "Futuro medio",
+                                                                  "Future lejano"),
+                                                `Escenario 2` = c("Futuro cercano",
+                                                                  "Futuro medio"))))
 
 # Since the output is a ggplot object, it is possible to continue
 # modifying some general aspects of the plot
 
 plot <- plot_scenarios(climate_scenario_list, metric = 'Chill_Portions',
-               add_historic = TRUE, size = 2, shape = 3, color = 'blue',
-               outlier_shape = 12, historic_color = 'skyblue')
-               
-               
+                       add_historic = TRUE, size = 2, shape = 3, color = 'blue',
+                       outlier_shape = 12, historic_color = 'skyblue')
+
+
 # Example to change the color of the GCM scale
- 
+
 plot & ggplot2::scale_fill_brewer(type = 'qual')
 
 # Modify axis title and axis text
@@ -154,5 +209,4 @@ plot & ggplot2::theme(axis.title = ggplot2::element_text(size = 14,
                                                          family = 'serif'),
                       axis.text = ggplot2::element_text(face = 'bold',
                                                         color = 'blue'))
-  
 }
