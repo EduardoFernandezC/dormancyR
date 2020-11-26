@@ -7,32 +7,37 @@
 #' @param scenario_list is a list of lists containing information and data about the scenarios to be plotted. These
 #'  lists must have:\itemize{
 #'    
-#'   \item{an element named \code{data}, which should be a list contain one or more named \code{data.frames} with a column
+#'   \item{an element named \code{data}, which should be a list contain one or more named dataframes with a column
 #'    named the same as the \code{metric} argument. This row must contain (\code{numeric}) information to be plotted.
-#'    \code{data.frames} of climate-related metrics can be obtained with the 
+#'    Dataframes of climate-related metrics can be obtained with the 
 #'    \code{\link[chillR:tempResponse_daily_list]{tempResponse_daily_list}} function. For
 #'    past scenarios, the names of the dataframes can be the reference years used to generate the
-#'    scenarios. These names will be recicled and used in the x-axis of the historic panel. For future 
+#'    scenarios. These names will be recycled and used in the x-axis of the historic panel. For future 
 #'    scenarios, the names of the dataframes can be the models used in the projections. These names
-#'    will appear in the legend for future panels.}    
+#'    will appear in the legend for future panels.}
+#'       
 #'   \item{an element named \code{caption} containing information about the scenario which the list
-#'   is related to.}   
+#'   is related to.}
+#'      
 #'   \item{an element named \code{historic_data} which represents a data frame for 
-#'   actual observations in past scenarios.}   
+#'   actual observations in past scenarios. This element can be optional but is mandatory if
+#'   \code{add_historic = TRUE}}
+#'     
 #'   \item{\code{time_series} is an optional argument that defines whether the scenario contains
-#'   a time series.}   
+#'   a time series.}
+#'   
 #'   \item{\code{labels} is an optional vector that usually contains the names of the elements used for
 #'   \code{metric_summary} in \code{\link[chillR:make_climate_scenario]{make_climate_scenario}}.}}
 #' 
 #' @param metric is a character string corresponding to the name of the column that contains the data of interest
-#' in the \code{data.frame} of the \code{scenario_list} (and, if applicable, in the
+#' in the dataframe of the \code{scenario_list} (and, if applicable, in the
 #' \code{historic_data}).
 #' 
 #' @param add_historic is a boolean parameter to define whether the plot should include the actual observations
-#' of historic climated-related metrics.
+#' of historic climate-related metrics.
 #' 
 #' @param ... accepts arguments that can be passed to \code{\link[ggplot2:layer]{layer}} and are 
-#' commonly used outside the aesthetic function for different geoms. In this case, `...` is passed to the 
+#' commonly used outside the aesthetic function for different geoms. In this case, \code{...} is passed to the 
 #' \code{\link[ggplot2:geom_point]{geom_point}} function in the case that actual observations of chill or heat
 #' are displayed. Options are \code{size}, \code{color}, among others. 
 #' 
@@ -42,44 +47,46 @@
 #' @param historic_color is a character string corresponding to the color used to fill the boxplots in simulated
 #' historic scenarios. Supported options are those provided by \code{\link[grDevices]{colors}}.
 #' 
-#' @param group_by is a vector of character strings indicating how the plots should be grouped. It only
-#' accepts the values `Scenario` and `Year`.
+#' @param group_by is a vector of character strings indicating how the plots should be grouped.
+#' I.e. by \code{Scenario} and then \code{Year} or viceversa.
 #' 
 #' @param y_axis_name is a character string representing the title of the y axis in the final plot. Default
-#' is set to `NULL` to let the function obtain the name based on the `metric` argument.
+#' is set to \code{NULL} to let the function obtain the name based on the \code{metric} argument.
 #' 
 #' @param x_axis_name is a character string representing the title of the x axis in the 'Historic' panel.
-#' Default is set to `Year`.
+#' Default is set to \code{Year}.
 #' 
-#' @param legend_title is a character string representing the title of the legend showing the colors for the
+#' @param legend_title is a character string representing the title of the legend showing the
 #' climate models used in the assessment.
 #' 
 #' @param legend_labels is a vector of character strings that allows the user to modify the names of the climate
 #' models used in the projections. The length of the vector must coincide with the number of climate models.
-#' Default is set to `NULL` to let the function use the labels generated with the
+#' Default is set to \code{NULL} to let the function use the labels generated with the
 #' \code{\link[chillR:make_climate_scenario]{make_climate_scenario}} function.
 #' 
 #' @param panel_labels is a list of 3 named objects that allows the user to customize the text in the upper part
-#' of the plot. Default is set to `NULL` to let the function use the labels generated with the
+#' of the plot. Default is set to \code{NULL} to let the function use the labels generated with the
 #' \code{\link[chillR:make_climate_scenario]{make_climate_scenario}} function. If provided, the
 #' objects of the list must be:\itemize{
 #'  
-#'   \item{an element named \code{Historic} containing the name to be used in the `Historic` panel.}
-#'   \item{an element named \code{Scenario} containing the names of the scenarios used for the projections.
-#'   If `group_by = c("Year", "Scenario")` is used, `Scenario` must be a list of named objects 
-#'   according to the labels used in the `Year` object. See examples.}   
-#'   \item{an element named \code{Year} containing the labels to be used for the time horizons used in the
-#'   assessment. If `group_by = c("Scenario", "Year")` is used, `Year` must be a list of named objects 
-#'   according to the labels used in the `Scenario` object. See examples.}}
+#'   \item{an element named \strong{Historic} containing the name to be used in the 'Historic' panel.}
+#'   
+#'   \item{an element named \strong{Scenario} containing the names of the scenarios used for the projections.
+#'   If \code{group_by = c("Year", "Scenario")} is used, \code{Scenario} must be a list of named objects 
+#'   according to the labels used in the \code{Year} object. See examples.}
+#'      
+#'   \item{an element named \strong{Year} containing the labels to be used for the time horizons used in the
+#'   assessment. If \code{group_by = c("Scenario", "Year")} is used, \code{Year} must be a list of named objects 
+#'   according to the labels used in the \code{Scenario} object. See examples.}}
 #'   
 #' @param base_size is an integer to define the relative size of the text in the final plot. This argument
-#' is passed to \code{\link[ggplot2:theme_bw]{ggpplot2::theme_bw}}. Default is 11.
+#' is passed to \code{\link[ggplot2:ggtheme]{ggpplot2::theme_bw}}. Default is set to 11.
 #' 
-#' @details \code{Plot_scenarios} uses the \code{\link{ggplot2}} syntax for producing separated
-#' plots for historic and future scenarios. Later, the plots are merged into one by using the
+#' @details \code{plot_scenarios} uses the \code{\link{ggplot2}} syntax for producing separated
+#' plots for historic and future scenarios. Later, the plots are merged into one final figure by using the
 #' \code{\link{patchwork}} library.
 #' 
-#' @return A plot of classes \code{'patchwork'}, \code{'gg'}, and \code{'ggplot'}. This allows 
+#' @return A plot of classes \code{'patchwork'}, \code{'gg'}, and \code{'ggplot'}. This allows the user to
 #' continue editing some features of the plots through the syntax (i.e. \code{'&'},
 #' and \code{'+'}) from both libraries (see examples).
 #' 
@@ -170,16 +177,17 @@
 #' # Since the output is a ggplot object, it is possible to continue
 #' # modifying some general aspects of the plot
 #' 
+#' # Define the basic plot 
 #' plot <- plot_scenarios(climate_scenario_list, metric = 'Chill_Portions',
 #'                        add_historic = TRUE, size = 2, shape = 3, color = 'blue',
 #'                        outlier_shape = 12, historic_color = 'skyblue')
 #' 
 #' 
-#' # Example to change the color of the GCM scale
+#' # Example to change the color of the climate model scale
 #' 
 #' plot & ggplot2::scale_fill_brewer(type = 'qual')
 #' 
-#' # Modify axis title and axis text
+#' # Modify the format of axis title and axis text
 #' 
 #' plot & ggplot2::theme(axis.title = ggplot2::element_text(size = 14,
 #'                                                          family = 'serif'),
@@ -197,10 +205,21 @@ plot_scenarios <- function(scenario_list, metric, add_historic = TRUE, ..., outl
                            panel_labels = NULL,
                            base_size = 11){
   
+  
+  ### Some preliminary safety checks ###
+  
   # Check that the structure of the scenario list is correct
   
-  assertthat::assert_that(all(c("data", "caption", "labels") %in% unique(unlist(lapply(scenario_list, names)))),
-                          msg = "The input 'scenario_list' seems incorrect. Please check you include all the relevant information in a proper structure.")
+  assertthat::assert_that(is.list(scenario_list) &
+    all(c("data", "caption") %in% unique(unlist(lapply(scenario_list, names)))),
+    msg = "The input 'scenario_list' seems incorrect. Please check you include all the relevant information in a proper structure.")
+  
+  
+  # Check the add_historic argument
+  
+  assertthat::assert_that(add_historic %in% c(TRUE, FALSE),
+                          msg = "'add_historic' argument must be a boolean parameter, i.e. 'TRUE' or 'FALSE'")
+  
   
   # Check that Scenario and Year are included in the group_by argument
   
@@ -223,9 +242,22 @@ plot_scenarios <- function(scenario_list, metric, add_historic = TRUE, ..., outl
   
     assertthat::assert_that(all(c("Historic", "Scenario", "Year") %in% names(panel_labels)),
                             msg = "The argument 'panel_labels' must be a list of named objects. These objects are 'Historic', 'Scenario', and 'Year', each containing the respective labels. See examples for more details.")
-  }  
   
-  ### Stop checks
+    # Check that the panel labels list is well formatted in case the order of the plots is 
+    # Scenario - Year
+    
+    if (group_by[1] == "Year")
+      assertthat::assert_that(is.list(panel_labels[["Scenario"]]),
+                              msg = "'Scenario' object in the 'panel_labels' input must be a list of named objects according to the 'Year' factor since this is your grouping variable.")
+      
+    if (group_by[1] == "Scenario")
+      assertthat::assert_that(is.list(panel_labels[["Year"]]),
+                              msg = "'Year' object in the 'panel_labels' input must be a list of named objects according to the 'Scenario' factor since this is your grouping variable.")
+    
+    }
+  
+  
+  ### Stop safety checks ###
   
   
   
@@ -250,6 +282,14 @@ plot_scenarios <- function(scenario_list, metric, add_historic = TRUE, ..., outl
   position_historic <- stringr::str_which(scenarios, "Historic")
   
   
+  
+  # Extra check for test whether the historic data is provided in the case of add_historic == TRUE
+  
+  if (add_historic)
+    assertthat::assert_that("historic_data" %in% names(scenario_list[[position_historic]]),
+                            msg = "The observed data in the 'Historic' scenario is missing. Please provide a valid named input to the 'Historic' list. Otherwise, set the argument 'add_historic' to FALSE")
+
+  
   # Extract the data for past simulated scenarios from the list generated by tempResponse function
   
   past_simulated <- dplyr::bind_rows(scenario_list[[position_historic]][["data"]], .id = "Ref_year")
@@ -263,7 +303,7 @@ plot_scenarios <- function(scenario_list, metric, add_historic = TRUE, ..., outl
   
   # Extract the historic data from the list
   
-  past_observed <- scenario_list[[position_historic]][["historic_data"]]
+  if (add_historic) past_observed <- scenario_list[[position_historic]][["historic_data"]]
   
   
   # Small function to extract the data generated for future scenarios
@@ -294,13 +334,23 @@ plot_scenarios <- function(scenario_list, metric, add_historic = TRUE, ..., outl
   
   # Define the max and min values for the y-scale
   
-  max_y <- max(c(past_observed[[metric]],
-                 past_simulated[[metric]],
-                 future_data[[metric]]))
-  
-  min_y <- min(c(past_observed[[metric]],
-                 past_simulated[[metric]],
-                 future_data[[metric]]))
+  if (add_historic){
+    max_y <- max(c(past_observed[[metric]],
+                   past_simulated[[metric]],
+                   future_data[[metric]]))
+    
+    min_y <- min(c(past_observed[[metric]],
+                   past_simulated[[metric]],
+                   future_data[[metric]]))} else {
+                     
+                     max_y <- max(c(past_simulated[[metric]],
+                                    future_data[[metric]]))
+                     
+                     min_y <- min(c(past_simulated[[metric]],
+                                    future_data[[metric]]))
+                     
+      
+                   }
   
   
   # In case the models do not return negative values, we set min_y to 0
@@ -355,7 +405,7 @@ plot_scenarios <- function(scenario_list, metric, add_historic = TRUE, ..., outl
     
     past_plot <- past_plot + ggplot2::geom_point(ggplot2::aes(as.character(End_year),
                                                               !!ggplot2::ensym(metric)),
-                                                 data = past_observed, ...)
+                                                 data = past_observed)
   
   
   # Plots for future scenarios

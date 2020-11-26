@@ -16,55 +16,55 @@ handle_cdc_germany(
 )
 }
 \arguments{
-\item{action}{Character parameter to decide on 3 options. Options are: \emph{"info_stations"},
-\emph{"my_data"} and
-\emph{"list_data"}. \emph{"info_stations"} returns a dataframe with the information on close weather stations
-to the location defined by \code{longitude} and \code{latitude} parameters. \emph{"my_data"} downloads the records for the
-closest weather station. \emph{"list_data"} downloads the records for several weather stations which are close
-to the location of interest}
+\item{action}{is a character string to decide on 3 modes of action for the function.
+\emph{"list_stations"} returns a dataframe with the information on close weather stations
+to the location defined by \code{number_of_stations} and \code{longitude} and \code{latitude} parameters.
+\emph{"download_weather"} retrieve the records for the closest weather station to the defined location.
+\emph{"download_weather_list"} downloads the records for several weather stations (according to
+\code{number_of_stations}) which are close to the location of interest.}
 
-\item{variables}{Character vector of the variables required. For now, the function can returns the
+\item{variables}{is a character vector representing the variables required. For now, the function can return the
 wind speed (mean - \emph{"Wind_speed"} and maximum - \emph{"Wind_speed_max"}); the atmospheric pressure
 (\emph{"ATM_pressure"}); the rainfall (\emph{"Rainfall"}); the precipitation as snow (\emph{"Snow"}), the minimum 
 temperature 5 cm above the ground (\emph{"Tmin_5cm"}); the air temperature 2 m above ground (minimum - \emph{"Tmin"},
 mean - \emph{"Tmean"}, and maximum - \emph{"Tmax"}); the relative humidity (\emph{"RH"}); and the vapour pressure deficit
-(\emph{"VPD"})}
+(\emph{"VPD"}).}
 
-\item{latitude}{Numeric parameter. The latitude (in decimal degrees) of the location of interest}
+\item{latitude}{is a numeric parameter defining the latitude (in decimal degrees) of the location of interest.}
 
-\item{longitude}{Numeric parameter. The longitude (in decimal degrees) of the location of interest}
+\item{longitude}{is a numeric parameter defining the longitude (in decimal degrees) of the location of interest.}
 
-\item{begin}{Numeric parameter. The start date of the period by which the record is required. It has
-to be specified in YEARMODA format}
+\item{begin}{is a numeric parameter representing the start date for the period required. This must be
+specified in YEARMODA format.}
 
-\item{end}{Numeric parameter. The end date of the period by which the record is required. It has
-to be specified in YEARMODA format}
+\item{end}{is a numeric parameter representing the end date for the period required. This must be
+specified in YEARMODA format.}
 
-\item{number_of_stations}{Numeric parameter. The numbers of stations to select from the point of 
-interest}
+\item{number_of_stations}{is a numeric parameter defininf the numbers of stations to select from.}
 
-\item{complete_list}{Boolean parameter. If \emph{"my_data"} option has been used this allows to skip the first
-weather station when using the \emph{"list_data"} option. It avoids include a repeated dataframe for the
+\item{complete_list}{is a boolean parameter. If \emph{"download_weather"} option has been used, this allows to skip the first
+weather station when using the \emph{"download_weather_list"} option. It avoids include a repeated dataframe for the
 first weather station}
 }
 \description{
-This function allows to: 1) obtain information of the weather stations from Germany; 2) get weather data for a
-place of interest given the coordinates; and 3) get weather data from several weather stations
-close to a specific location given its coordinates. The function takes data from the 
-\href{https://www.dwd.de/EN/climate_environment/cdc/cdc_node.html}{Climate Data Center - CDC}
+This function access the \href{https://www.dwd.de/EN/climate_environment/cdc/cdc_node.html}{Climate Data Center - CDC} 
+and allows to:\itemize{\item{1) obtain information of the weather stations from Germany.}
+\item{2) get weather data for a specific place of interest given the coordinates.}
+\item{3) get weather data from several weather stations located close to a specific location
+ given its coordinates.}}
 }
 \details{
-If \emph{"info_stations"} is used, the function returns a dataframe (9 columns x \code{number_of_stations} rows) containing
+If \emph{"list_stations"} is used, the function returns a dataframe (9 columns x \code{number_of_stations} rows) containing
 information such as the name, latitude, longitude, begin, end and distance of the weather stations.
-If \emph{"my_data"} is chosen, it downloads the weather data from the CDC website. The output is
+If \emph{"download_weather"} is chosen, it downloads the weather data from the CDC website. The output is
 a dataframe (in \code{\link{chillR}} format) containing daily records from the closest
-weather station. If \emph{"list_data"} option is used, the function returns a list of dataframes as that one
+weather station. If \emph{"download_weather_list"} option is used, the function returns a list of dataframes as the one
 described above. The length of the list is equal to the \code{number_of_stations} or to the \code{number_of_stations}
 minus 1 if \code{complete_list = FALSE}.
 }
 \examples{
 
-handle_cdc_germany(action = "info_stations", variables = c("Tmin", "Tmax", "Tmean"),
+handle_cdc_germany(action = "list_stations", variables = c("Tmin", "Tmax", "Tmean"),
                    latitude = 53.5373, longitude = 9.6397, begin = 20000101,
                    end = 20101231, number_of_stations = 25, complete_list = FALSE)
 

@@ -1,53 +1,52 @@
 #' Handle historic weather records from stations across Germany
 #' 
-#' This function allows to: 1) obtain information of the weather stations from Germany; 2) get weather data for a
-#' place of interest given the coordinates; and 3) get weather data from several weather stations
-#' close to a specific location given its coordinates. The function takes data from the 
-#' \href{https://www.dwd.de/EN/climate_environment/cdc/cdc_node.html}{Climate Data Center - CDC}
+#' This function access the \href{https://www.dwd.de/EN/climate_environment/cdc/cdc_node.html}{Climate Data Center - CDC} 
+#' and allows to:\itemize{\item{1) obtain information of the weather stations from Germany.}
+#' \item{2) get weather data for a specific place of interest given the coordinates.}
+#' \item{3) get weather data from several weather stations located close to a specific location
+#'  given its coordinates.}}
+#'    
+#' @param action is a character string to decide on 3 modes of action for the function.
+#' \emph{"list_stations"} returns a dataframe with the information on close weather stations
+#' to the location defined by \code{number_of_stations} and \code{longitude} and \code{latitude} parameters.
+#' \emph{"download_weather"} retrieve the records for the closest weather station to the defined location.
+#' \emph{"download_weather_list"} downloads the records for several weather stations (according to
+#' \code{number_of_stations}) which are close to the location of interest.
 #' 
-#' @param action Character parameter to decide on 3 options. Options are: \emph{"info_stations"},
-#' \emph{"my_data"} and
-#' \emph{"list_data"}. \emph{"info_stations"} returns a dataframe with the information on close weather stations
-#' to the location defined by \code{longitude} and \code{latitude} parameters. \emph{"my_data"} downloads the records for the
-#' closest weather station. \emph{"list_data"} downloads the records for several weather stations which are close
-#' to the location of interest
-#' 
-#' @param variables Character vector of the variables required. For now, the function can returns the
+#' @param variables is a character vector representing the variables required. For now, the function can return the
 #' wind speed (mean - \emph{"Wind_speed"} and maximum - \emph{"Wind_speed_max"}); the atmospheric pressure
 #' (\emph{"ATM_pressure"}); the rainfall (\emph{"Rainfall"}); the precipitation as snow (\emph{"Snow"}), the minimum 
 #' temperature 5 cm above the ground (\emph{"Tmin_5cm"}); the air temperature 2 m above ground (minimum - \emph{"Tmin"},
 #' mean - \emph{"Tmean"}, and maximum - \emph{"Tmax"}); the relative humidity (\emph{"RH"}); and the vapour pressure deficit
-#' (\emph{"VPD"})
+#' (\emph{"VPD"}).
 #' 
-#' @param latitude Numeric parameter. The latitude (in decimal degrees) of the location of interest
+#' @param latitude is a numeric parameter defining the latitude (in decimal degrees) of the location of interest.
 #' 
-#' @param longitude Numeric parameter. The longitude (in decimal degrees) of the location of interest
+#' @param longitude is a numeric parameter defining the longitude (in decimal degrees) of the location of interest.
 #' 
-#' @param begin Numeric parameter. The start date of the period by which the record is required. It has
-#' to be specified in YEARMODA format
+#' @param begin is a numeric parameter representing the start date for the period required. This must be
+#' specified in YEARMODA format.
 #' 
-#' @param end Numeric parameter. The end date of the period by which the record is required. It has
-#' to be specified in YEARMODA format
+#' @param end is a numeric parameter representing the end date for the period required. This must be
+#' specified in YEARMODA format.
 #' 
-#' @param number_of_stations Numeric parameter. The numbers of stations to select from the point of 
-#' interest
+#' @param number_of_stations is a numeric parameter defininf the numbers of stations to select from.
 #' 
-#' @param complete_list Boolean parameter. If \emph{"my_data"} option has been used this allows to skip the first
-#' weather station when using the \emph{"list_data"} option. It avoids include a repeated dataframe for the
+#' @param complete_list is a boolean parameter. If \emph{"download_weather"} option has been used, this allows to skip the first
+#' weather station when using the \emph{"download_weather_list"} option. It avoids include a repeated dataframe for the
 #' first weather station
 #'  
-#' @details 
-#' If \emph{"info_stations"} is used, the function returns a dataframe (9 columns x \code{number_of_stations} rows) containing
+#' @details If \emph{"list_stations"} is used, the function returns a dataframe (9 columns x \code{number_of_stations} rows) containing
 #' information such as the name, latitude, longitude, begin, end and distance of the weather stations.
-#' If \emph{"my_data"} is chosen, it downloads the weather data from the CDC website. The output is
+#' If \emph{"download_weather"} is chosen, it downloads the weather data from the CDC website. The output is
 #' a dataframe (in \code{\link{chillR}} format) containing daily records from the closest
-#' weather station. If \emph{"list_data"} option is used, the function returns a list of dataframes as that one
+#' weather station. If \emph{"download_weather_list"} option is used, the function returns a list of dataframes as the one
 #' described above. The length of the list is equal to the \code{number_of_stations} or to the \code{number_of_stations}
 #' minus 1 if \code{complete_list = FALSE}.
 #' 
 #' @examples 
 #' 
-#' handle_cdc_germany(action = "info_stations", variables = c("Tmin", "Tmax", "Tmean"),
+#' handle_cdc_germany(action = "list_stations", variables = c("Tmin", "Tmax", "Tmean"),
 #'                    latitude = 53.5373, longitude = 9.6397, begin = 20000101,
 #'                    end = 20101231, number_of_stations = 25, complete_list = FALSE)
 #' 
@@ -60,7 +59,7 @@ handle_cdc_germany <- function(action, variables,  latitude, longitude,
   
   # Checking if action, dates and variables are valid inputs
   
-  if (!action %in% c("info_stations", "my_data", "list_data")) 
+  if (!action %in% c("list_stations", "download_weather", "download_weather_list")) 
     stop("Please provide a valid action")
   
   if (nchar(begin) != 8 | nchar(end) != 8)
@@ -159,7 +158,7 @@ handle_cdc_germany <- function(action, variables,  latitude, longitude,
   if (length(station_in_period$Station_name) == 0) station_in_period <- stations_sorted
   
   
-  if (action == "info_stations")
+  if (action == "list_stations")
     return(station_in_period[c(1: number_of_stations),])
   
   
@@ -197,11 +196,11 @@ handle_cdc_germany <- function(action, variables,  latitude, longitude,
   if(!dir.exists("tempdir")) dir.create("tempdir")
   
   # Depending on the action selected when calling the function this allows to get the data for just 1
-  # (my_data) or the total number of stations selected (list_data). It saves a bit of time when the 
-  # my_data option is used
+  # (download_weather) or the total number of stations selected (download_weather_list). It saves a bit of time when the 
+  # download_weather option is used
   
-  if (action == "my_data") number_of_stations <- 1 
-  if (action == "list_data") number_of_stations <- number_of_stations
+  if (action == "download_weather") number_of_stations <- 1 
+  if (action == "download_weather_list") number_of_stations <- number_of_stations
   
   # Variable names in the original dataframe
   
@@ -209,7 +208,7 @@ handle_cdc_germany <- function(action, variables,  latitude, longitude,
   
   # Get the data for the number of stations used by calling the function
   
-  list_data <- list()
+  download_weather_list <- list()
   for (i in 1 : number_of_stations) {
     
     # URL of the individual station
@@ -268,14 +267,14 @@ handle_cdc_germany <- function(action, variables,  latitude, longitude,
     
     data <- list(data)
     
-    list_data <- c(list_data, data)}
+    download_weather_list <- c(download_weather_list, data)}
   
   # Remove the temporary directory
   
   unlink("tempdir", recursive = TRUE, force = TRUE)
   
-  if(action == "my_data")
-    return(list_data[[1]])
+  if(action == "download_weather")
+    return(download_weather_list[[1]])
   
-  if(action == "list_data" & complete_list == TRUE)
-    return(list_data) else return(list_data[-1])}
+  if(action == "download_weather_list" & complete_list == TRUE)
+    return(download_weather_list) else return(download_weather_list[-1])}
