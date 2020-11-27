@@ -10,18 +10,27 @@ rainbow_plot(
   split_month = 6,
   chilling_phase,
   forcing_phase,
-  Krig_warn = TRUE
+  Krig_warn = TRUE,
+  x_axis_name = NULL,
+  y_axis_name = NULL,
+  legend_name = NULL,
+  contour_line_color = "black",
+  point_color = "black",
+  point_shape = 19,
+  legend_colors = NULL,
+  base_size = 11,
+  ...
 )
 }
 \arguments{
 \item{pheno_data}{is a data frame that contains information on the timing of phenological events by year.
-It should consist of two columns called `Year` and `pheno`. Data in the `pheno` column should be in
-Julian date (day of the year)}
+It should consist of two columns called \code{Year} and \code{pheno}. Data in the \code{pheno} column should be in
+Julian date (day of the year).}
 
 \item{weather_data}{is a dataframe containing daily minimum and maximum temperature data (in columns
-called `Tmin` and `Tmax`, respectively). There also has to be a column for `Year` and one for `JDay`
-(the Julian date, or day of the year). Alternatively, the date can also be given in three columns
-(`Year`, `Month` and `Day`)}
+called \code{Tmin} and \code{Tmax}, respectively). There also has to be a column for \code{Year}, one for
+\code{Month} and one for \code{Day}. It can also contain a column for \code{JDay}
+(the Julian date, or day of the year).}
 
 \item{split_month}{is an integer representing the last month of the growing season. This procedure analyzes
 data by phenological year, which can start and end in any month during the calendar year (currently only
@@ -36,18 +45,46 @@ in temperate trees. Numbers must be provided in Julian date (day of the year).}
 in temperate trees. Numbers must be provided in Julian date (day of the year).}
 
 \item{Krig_warn}{is a boolean parameter passed to the \code{\link[fields:Krig]{Krig}} function. Default is
-set `TRUE` following the recomendation of the authors. For detailed information, please see the documentation
+set to \code{TRUE} following the recommendation of the authors. For detailed information, please see the documentation
 of the function.}
+
+\item{x_axis_name}{is a character string that allows the user modifying the default label used in the x axis.}
+
+\item{y_axis_name}{is a character string that allows the user modifying the default label used in the y axis.}
+
+\item{legend_name}{is a character string that allows the user modifying the default label used in the legend.}
+
+\item{contour_line_color}{is a character string representing the color used to draw the contour lines.
+Default is set to black. If \code{NA} is used, the function will remove the contour lines with a warning.}
+
+\item{point_color}{is a character string representing the color used to draw the points for actual
+observations. Default is set to black. If \code{NA} is used, the function will remove the points with
+a warning.}
+
+\item{point_shape}{is a numeric input representing the point shape used to draw the points for actual
+observations. Default is set to 19 (filled point). If \code{NA} is used, the function will remove the points with
+a warning.}
+
+\item{legend_colors}{is a character string representing the color scale used in the surface plot.
+Default is set to \code{NULL} to let the function use the rainbow colors.}
+
+\item{base_size}{is a numeric input representing the relative size of the elements in plot. \code{base_size}
+is passed to \code{\link[ggplot2:ggtheme]{ggplot2::theme_bw}} as well as used to determine the size of the
+points and contour lines.}
+
+\item{...}{accepts arguments passed to \code{\link[ggplot2:theme]{ggplot2::theme}}}
 }
 \value{
-`rainbow_plot()` is expected to return a plot as the following
+\code{rainbow_plot()} is expected to return an object of class \code{gg} and \code{ggplot}. This
+means that the plot can be later modified by using the syntax \code{'+'} from the
+\code{\link{ggplot2}} package (see examples). The plot returned in the function should look as the following:
 
 \figure{rainbow_plot_example.png}{options: align='bottom' width='100\%' alt='rainbow_plot example'}
 }
 \description{
 The timing of many developmental stages of temperate trees may depend on temperatures during two
 phases (e.g. bloom dates depend on the temperature during both the chilling and forcing phase of dormancy).
-`rainbow_plot()` illustrates this dependency as a colored surface with contour lines by applying an
+\code{rainbow_plot()} illustrates this dependency as a colored surface with contour lines by applying an
 interpolating procedure with functions in the \code{\link{fields}} package. The plot is implemented
 through functions in the \code{\link{ggplot2}} package.
 }
@@ -56,10 +93,37 @@ The generation of the color surface is based on the Kriging technique, which is 
 interpolation of spatial data. The use for this particular purpose is a bit experimental.
 }
 \examples{
- 
+
+# Run a simple plot
+
 rainbow_plot(pheno_data = chillR::KA_bloom,
              weather_data = chillR::KA_weather,
              chilling_phase = c(306, 350),
              forcing_phase = c(355, 60))
+             
+# Customize the aspects of the plot and save it as 'plot'
+
+plot <- rainbow_plot(pheno_data = chillR::KA_bloom,
+                     weather_data = chillR::KA_weather,
+                     chilling_phase = c(306, 350),
+                     forcing_phase = c(355, 60),
+                     x_axis_name = "Temperatura en el periodo de frio (Celsius)",
+                     y_axis_name = "Temperatura en el periodo de forzado (Celsius)",
+                     legend_name = "Fecha de floracion\n(dia juliano)",
+                     contour_line_color = "white",
+                     point_color = "blue4",
+                     point_shape = 4,
+                     legend_colors = NULL,
+                     base_size = 14,
+                     legend.position = "bottom",
+                     axis.title = ggplot2::element_text(family = "serif"))
+
+plot
+
+# Modify the plot object with the syntax from ggplot2.
+# Be aware that the following code overrides the modifications
+# done by the argument '...' in the main function
+
+plot + ggplot2::theme_classic(base_size = 14)
 
 }
