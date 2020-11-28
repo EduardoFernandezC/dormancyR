@@ -24,14 +24,18 @@
 
 perc_complete <- function (x) {
   
-  data <- data.frame(variable = colnames(x), percentage = NA)
+  data <- data.frame(Variable = colnames(x), Percentage = NA,
+                     Total_missing = NA)
   
-  data$variable <- as.character(data$variable)
+  data$Variable <- as.character(data$Variable)
   
-  for (i in 1 : length(data$variable)) {
+  for (i in 1 : length(data$Variable)) {
     
-    data[i, "percentage"] <- length(which(!is.na(x[, i])))/length(x[[i]]) * 100
+    data[i, "Percentage"] <- length(which(!is.na(x[, i])))/length(x[[i]]) * 100
+    
+    data[i, "Total_missing"] <- length(which(is.na(x[, i])))
   }
   
   return(data)
 }
+
