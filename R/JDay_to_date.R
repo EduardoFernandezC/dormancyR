@@ -28,12 +28,20 @@ JDay_to_date <- function(JDay, year, date_format = "%Y-%m-%d"){
   
   assertthat::assert_that(all(is.integer(JDay)), msg = "'JDay' parameter is not integer, please provide a valid input")
   assertthat::assert_that(all(JDay %in% 1 : 366), msg = "'JDay' parameter out of range, plase provide a value between 1 and 366")
-  assertthat::assert_that(year <= format(Sys.time(), "%Y"), msg = "'year' parameter out of range, plase provide a value equal or smaller than the current year")
+  
+  # Add the check to the year
+  
+  if (year > as.numeric(substr(Sys.Date(), 1, 4)))
+    
+    year_vector <- c(as.numeric(substr(Sys.Date(), 1, 4)), year) else
+      
+      year_vector <- c(year, as.numeric(substr(Sys.Date(), 1, 4)))
+      
   
   
   # Make a primer DF to get the date
   
-  primer <- chillR::make_all_day_table(data.frame(Year = c(year, as.numeric(substr(Sys.Date(), 1, 4))),
+  primer <- chillR::make_all_day_table(data.frame(Year = year_vector,
                                                   Month = c(1, 12),
                                                   Day = c(1, 31),
                                                   Tmin = as.numeric(NA),
