@@ -5,20 +5,25 @@
 #' interpretation of the results since most people are used to see dates. This function transform JDays into 
 #' dates
 #' 
-#' @param JDay Numeric vector. It can be a vector of \code{length = 1} containing integers between 1 and 366
+#' @param JDay is a numeric vector of \code{length = 1} or longer containing integers between 1 and 366
 #' 
-#' @param year Numeric input. This is to define the year for which the JDay is transformed to date
+#' @param year is a numeric input to define the year for which the JDay is transformed to date
 #' 
-#' @param date_format Character vector representing the format in which the date should be retrieved. For
+#' @param date_format is a character vector representing the format in which the date should be retrieved. For
 #' more options see \code{\link[base:as.Date]{as.Date}}
 #' 
+#' @param na.rm is a boolean parameter used to skip the missing values. Default is set to \code{NULL} to
+#' produce an error in case the \code{JDay} vector contains some
+#' 
 #' @examples
-#' \dontrun{
+#' 
 #' JDay_to_date(JDay = 67 : 69, year = 2020, date_format = "%d.%m.%Y")
-#' }
+#' 
+#' JDay_to_date(JDay = c(67, NA, 69), year = 2025, date_format = "%d.%m.%Y")
+#' 
 #' @export JDay_to_date
 
-JDay_to_date <- function(JDay, year, date_format = "%Y-%m-%d"){
+JDay_to_date <- function(JDay, year, date_format = "%Y-%m-%d", na.rm = FALSE){
   
   # Define the JDay parameter as.integer
   
@@ -26,8 +31,16 @@ JDay_to_date <- function(JDay, year, date_format = "%Y-%m-%d"){
   
   # Check for adequate inputs
   
-  assertthat::assert_that(all(is.integer(JDay)), msg = "'JDay' parameter is not integer, please provide a valid input")
-  assertthat::assert_that(all(JDay %in% 1 : 366), msg = "'JDay' parameter out of range, plase provide a value between 1 and 366")
+  assertthat::assert_that(all(is.integer(JDay)),
+                          msg = "'JDay' parameter is not integer, please provide a valid input")
+  
+  
+  # Check the JDay input in te case the user uses na.rm = TRUE
+  
+  if (!na.rm)
+    assertthat::assert_that(all(JDay %in% 1 : 366),
+                            msg = "'JDay' parameter out of range. Please provide a valid output between 1 and 366, or set the 'na.rm' argument to TRUE to skip NAs in case your vector contains some.")
+  
   
   # Add the check to the year
   
@@ -58,12 +71,19 @@ JDay_to_date <- function(JDay, year, date_format = "%Y-%m-%d"){
   
   for (day in JDay){
     
-    date <- as.character(primer[primer$JDay == day & primer$Year == year, "DATE"])
+    if (is.na(day)){
+      
+      date <- NA} else {
+        
+        date <- as.character(primer[primer$JDay == day & primer$Year == year, "DATE"])
+        
+        date <- as.Date(substr(date, 1, 10), format = "%Y-%m-%d")
+        
+        date <- format(date, date_format)}
     
     dates <- c(dates, date)}
   
-  dates <- as.Date(substr(dates, 1, 10), format = "%Y-%m-%d")
   
-  return(format(dates, date_format))
+  return(dates)
   
 }
