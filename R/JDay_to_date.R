@@ -19,7 +19,8 @@
 #' 
 #' JDay_to_date(JDay = 67 : 69, year = 2020, date_format = "%d.%m.%Y")
 #' 
-#' JDay_to_date(JDay = c(67, NA, 69), year = 2025, date_format = "%d.%m.%Y")
+#' JDay_to_date(JDay = c(67, NA, 69), year = 2025, date_format = "%d.%m.%Y",
+#'              na.rm = TRUE)
 #' 
 #' @export JDay_to_date
 
@@ -84,6 +85,6 @@ JDay_to_date <- function(JDay, year, date_format = "%Y-%m-%d", na.rm = FALSE){
     dates <- c(dates, date)}
   
   
-  return(dates)
+  return(as.Date(dates, format = date_format))
   
 }
