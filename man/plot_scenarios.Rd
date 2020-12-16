@@ -12,7 +12,7 @@ plot_scenarios(
   outlier_shape = 19,
   historic_color = "white",
   group_by = c("Scenario", "Year"),
-  y_axis_name = NULL,
+  y_axis_name = paste("Accumulated response in ", metric),
   x_axis_name = "Year",
   legend_title = "Climate model",
   legend_labels = NULL,
@@ -68,7 +68,8 @@ historic scenarios. Supported options are those provided by \code{\link[grDevice
 I.e. by \code{Scenario} and then \code{Year} or viceversa.}
 
 \item{y_axis_name}{is a character string representing the title of the y axis in the final plot. Default
-is set to \code{NULL} to let the function obtain the name based on the \code{metric} argument.}
+is set to \code{paste('Accumulated response in', metric)} to let the function obtain the name based on 
+the \code{metric} argument.}
 
 \item{x_axis_name}{is a character string representing the title of the x axis in the 'Historic' panel.
 Default is set to \code{Year}.}

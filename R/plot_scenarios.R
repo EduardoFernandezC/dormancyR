@@ -51,7 +51,8 @@
 #' I.e. by \code{Scenario} and then \code{Year} or viceversa.
 #' 
 #' @param y_axis_name is a character string representing the title of the y axis in the final plot. Default
-#' is set to \code{NULL} to let the function obtain the name based on the \code{metric} argument.
+#' is set to \code{paste('Accumulated response in', metric)} to let the function obtain the name based on 
+#' the \code{metric} argument.
 #' 
 #' @param x_axis_name is a character string representing the title of the x axis in the 'Historic' panel.
 #' Default is set to \code{Year}.
@@ -198,7 +199,7 @@
 
 plot_scenarios <- function(scenario_list, metric, add_historic = TRUE, ..., outlier_shape = 19,
                            historic_color = "white", group_by = c("Scenario", "Year"),
-                           y_axis_name = NULL,
+                           y_axis_name = paste("Accumulated response in ", metric),
                            x_axis_name = "Year",
                            legend_title = "Climate model",
                            legend_labels = NULL,
@@ -357,23 +358,6 @@ plot_scenarios <- function(scenario_list, metric, add_historic = TRUE, ..., outl
   
   if (min_y >= 0) min_y <- 0 else min_y <- min_y - 10
   
-  
-  # We define the y-axes title according to chill and heat models
-  
-  if (metric == "GDH") var_label <- "Heat"
-  if (metric %in% c("Chill_Portions", "Chilling_Hours", "Utah_Chill_Units")) var_label <- "Chill"
-  
-  
-  # Define the name of the metric according to the model we used 
-  
-  if (metric == "Chill_Portions") label <- "CP"
-  if (metric == "Chilling_Hours") label <- "CH"
-  if (metric == "Utah_Chill_Units") label <- "CU"
-  if (metric == "GDH") label <- "GDH"
-  
-  # Define the final y axis name
-  
-  if (is.null(y_axis_name)) y_axis_name <- paste(var_label, "accumulation in", label)
   
   # Define the labels for the legends
   
