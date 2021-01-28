@@ -10,21 +10,28 @@ tempResponse_daily(
   End_JDay = 366,
   models = list(Rate_of_Chill = rate_of_chill, Chill_Days = chill_days,
     Exponential_Chill = exponential_chill, Triangula_Chill_Haninnen = triangular_chill_1,
-    Triangular_Chill_Legave = triangular_chill_2)
+    Triangular_Chill_Legave = triangular_chill_2),
+  misstolerance = 20
 )
 }
 \arguments{
-\item{data}{May be a list of two or more elements. This list should contain a dataframe that might be
+\item{data}{can be a list of two or more elements. This list should contain a dataframe that might be
 called \emph{"weather"} if this is obtained from the \code{\link[chillR:fix_weather]{chillR::fix_weather}} function.
 A second option is just a dataframe. In any case, the dataframe either contained in the list or introduced
-directly as dataframe, must contain the columns \emph{"Year", "Month", "Day", "JDay", "Tmin"} and \emph{"Tmax"}}
+directly as dataframe, must contain the columns \emph{"Year"}, \emph{"Month"}, \emph{"Day"}, \emph{"JDay"},
+\emph{"Tmin"} and \emph{"Tmax"}}
 
-\item{Start_JDay}{The start date for computing the outputs. This is the number of the day within the year}
+\item{Start_JDay}{is the start date for computing the outputs. This is the number of the day within the year (DOY)
+or Julian day}
 
-\item{End_JDay}{The end date for computing the outputs. This is the number of the day within the year}
+\item{End_JDay}{is the end date for computing the outputs. This is the number of the day within the year (DOY) or
+Julian day}
 
-\item{models}{A list of chill functions to compute the metric for the period of interest. Each model
+\item{models}{is list of chill functions to compute the metric for the period of interest. Each model
 should be named. Default provides five models (see details)}
+
+\item{misstolerance}{is the threshold defined by the user to include seasons having days with missing data.
+Default is set to 20}
 }
 \description{
 This function produces a summarized dataframe of chill responses computed by several chill models which
