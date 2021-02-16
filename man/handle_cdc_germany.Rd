@@ -7,9 +7,7 @@
 handle_cdc_germany(
   action,
   variables,
-  latitude = NULL,
-  longitude = NULL,
-  station_ID = NULL,
+  location = NA,
   begin = 19160101,
   end = chillR::Date2YEARMODA(Sys.Date()),
   number_of_stations = 25,
@@ -18,24 +16,27 @@ handle_cdc_germany(
 )
 }
 \arguments{
-\item{action}{is a character string to decide on 2 modes of action for the function.
+\item{action}{is a character string to decide on 2 modes of action for the function.\itemize{\item{
 \emph{"list_stations"} returns a dataframe with the information on close weather stations
-to the location defined by \code{number_of_stations} and \code{longitude} and \code{latitude} parameters.
-\emph{"download_weather"} retrieve the records for one or more weather stations defined in the
-\code{station_ID} parameter.}
+to the location defined by \code{number_of_stations} and \code{location} parameters.}
+\item{\emph{"download_weather"} retrieves the records for one or more weather stations defined in the
+\code{location} parameter.}}}
 
-\item{variables}{is a character vector representing the variables required. For now, the function can return the
+\item{variables}{is a character vector representing the variables requested For now, the function can return the
 wind speed (mean - \emph{"Wind_speed"} and maximum - \emph{"Wind_speed_max"}); the atmospheric pressure
 (\emph{"ATM_pressure"}); the rainfall (\emph{"Rainfall"}); the precipitation as snow (\emph{"Snow"}), the minimum 
 temperature 5 cm above the ground (\emph{"Tmin_5cm"}); the air temperature 2 m above ground (minimum - \emph{"Tmin"},
-mean - \emph{"Tmean"}, and maximum - \emph{"Tmax"}); the relative humidity (\emph{"RH"}); and the vapour pressure deficit
+mean - \emph{"Tmean"}, and maximum - \emph{"Tmax"}); the relative humidity (\emph{"RH"}); and the vapor pressure deficit
 (\emph{"VPD"}).}
 
-\item{latitude}{is a numeric parameter defining the latitude (in decimal degrees) of the location of interest.}
-
-\item{longitude}{is a numeric parameter defining the longitude (in decimal degrees) of the location of interest.}
-
-\item{station_ID}{is a character vector representing the stations to be used for downloading the data}
+\item{location}{accepts a numeric vector with two elements representing the longitude and latitude of a
+given place or a vector of character strings representing the ID of the weather stations of interest.
+If \code{action = "list_stations"}, \code{location} requires the coordinates of the place. This vector
+can be named or not. Accepted names are: \code{"y"}, \code{"Y"}, \code{"latitude"}, \code{"lat"},
+\code{"Latitude"}, \code{"Lat"}, \code{"LATITUDE"}, \code{"LAT"} for latitude and \code{"x"},
+\code{"X"}, \code{"longitude"}, \code{"long"}, \code{"Longitude"}, \code{"Long"}, \code{"LONGITUDE"},
+\code{"LONG"}. If \code{action = "download_weather"}, \code{location} accepts the ID of the station as
+character string.}
 
 \item{begin}{is a numeric parameter representing the start date for the period required. This must be
 specified in YEARMODA format.}
@@ -52,21 +53,18 @@ specified in YEARMODA format.}
 \description{
 This function access the \href{https://www.dwd.de/EN/climate_environment/cdc/cdc_node.html}{Climate Data Center - CDC} 
 and allows to:\itemize{\item{1) obtain information of the weather stations from Germany.}
-\item{2) get weather data for one or more specific places of interest given the station ID.}}
+\item{2) get weather data for one or more specific places of interest given the ID of the weather station.}}
 }
 \details{
 If \emph{"list_stations"} is used, the function returns a dataframe (9 columns x \code{number_of_stations} rows) containing
 information such as the name, latitude, longitude, begin, end and distance of the weather stations.
-\code{latitude} and \code{longitude} must be provided.
 If \emph{"download_weather"} is chosen, it downloads the weather data from the CDC website. The output is
-a dataframe (in \code{\link{chillR}} format) containing daily records from the closest
-weather station. \code{station_ID} must be provided. If \code{station_ID} is longer than one, the function returns a list of dataframes as the one
-described above.
+a dataframe (in \code{\link{chillR}} format) for all stations selected in the location parameter.
 }
 \examples{
 
 handle_cdc_germany(action = "list_stations", variables = c("Tmin", "Tmax", "Tmean"),
-                   latitude = 53.5373, longitude = 9.6397, begin = 20000101,
+                   location = c(latitude = 53.5373, longitude = 9.6397), begin = 20000101,
                    end = 20101231, number_of_stations = 25)
 
 }

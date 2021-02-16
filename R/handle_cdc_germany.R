@@ -2,26 +2,29 @@
 #' 
 #' This function access the \href{https://www.dwd.de/EN/climate_environment/cdc/cdc_node.html}{Climate Data Center - CDC} 
 #' and allows to:\itemize{\item{1) obtain information of the weather stations from Germany.}
-#' \item{2) get weather data for one or more specific places of interest given the station ID.}}
+#' \item{2) get weather data for one or more specific places of interest given the ID of the weather station.}}
 #'    
-#' @param action is a character string to decide on 2 modes of action for the function.
+#' @param action is a character string to decide on 2 modes of action for the function.\itemize{\item{
 #' \emph{"list_stations"} returns a dataframe with the information on close weather stations
-#' to the location defined by \code{number_of_stations} and \code{longitude} and \code{latitude} parameters.
-#' \emph{"download_weather"} retrieve the records for one or more weather stations defined in the
-#' \code{station_ID} parameter.
+#' to the location defined by \code{number_of_stations} and \code{location} parameters.}
+#' \item{\emph{"download_weather"} retrieves the records for one or more weather stations defined in the
+#' \code{location} parameter.}}
 #' 
-#' @param variables is a character vector representing the variables required. For now, the function can return the
+#' @param variables is a character vector representing the variables requested For now, the function can return the
 #' wind speed (mean - \emph{"Wind_speed"} and maximum - \emph{"Wind_speed_max"}); the atmospheric pressure
 #' (\emph{"ATM_pressure"}); the rainfall (\emph{"Rainfall"}); the precipitation as snow (\emph{"Snow"}), the minimum 
 #' temperature 5 cm above the ground (\emph{"Tmin_5cm"}); the air temperature 2 m above ground (minimum - \emph{"Tmin"},
-#' mean - \emph{"Tmean"}, and maximum - \emph{"Tmax"}); the relative humidity (\emph{"RH"}); and the vapour pressure deficit
+#' mean - \emph{"Tmean"}, and maximum - \emph{"Tmax"}); the relative humidity (\emph{"RH"}); and the vapor pressure deficit
 #' (\emph{"VPD"}).
 #' 
-#' @param latitude is a numeric parameter defining the latitude (in decimal degrees) of the location of interest.
-#' 
-#' @param longitude is a numeric parameter defining the longitude (in decimal degrees) of the location of interest.
-#' 
-#' @param station_ID is a character vector representing the stations to be used for downloading the data
+#' @param location accepts a numeric vector with two elements representing the longitude and latitude of a
+#' given place or a vector of character strings representing the ID of the weather stations of interest.
+#' If \code{action = "list_stations"}, \code{location} requires the coordinates of the place. This vector
+#' can be named or not. Accepted names are: \code{"y"}, \code{"Y"}, \code{"latitude"}, \code{"lat"},
+#' \code{"Latitude"}, \code{"Lat"}, \code{"LATITUDE"}, \code{"LAT"} for latitude and \code{"x"},
+#' \code{"X"}, \code{"longitude"}, \code{"long"}, \code{"Longitude"}, \code{"Long"}, \code{"LONGITUDE"},
+#' \code{"LONG"}. If \code{action = "download_weather"}, \code{location} accepts the ID of the station as
+#' character string.
 #' 
 #' @param begin is a numeric parameter representing the start date for the period required. This must be
 #' specified in YEARMODA format.
@@ -37,25 +40,20 @@
 #'  
 #' @details If \emph{"list_stations"} is used, the function returns a dataframe (9 columns x \code{number_of_stations} rows) containing
 #' information such as the name, latitude, longitude, begin, end and distance of the weather stations.
-#' \code{latitude} and \code{longitude} must be provided.
 #' If \emph{"download_weather"} is chosen, it downloads the weather data from the CDC website. The output is
-#' a dataframe (in \code{\link{chillR}} format) containing daily records from the closest
-#' weather station. \code{station_ID} must be provided. If \code{station_ID} is longer than one, the function returns a list of dataframes as the one
-#' described above.
+#' a dataframe (in \code{\link{chillR}} format) for all stations selected in the location parameter.
 #' 
 #' @examples 
 #' 
 #' handle_cdc_germany(action = "list_stations", variables = c("Tmin", "Tmax", "Tmean"),
-#'                    latitude = 53.5373, longitude = 9.6397, begin = 20000101,
+#'                    location = c(latitude = 53.5373, longitude = 9.6397), begin = 20000101,
 #'                    end = 20101231, number_of_stations = 25)
 #' 
 #' @export handle_cdc_germany
 
 handle_cdc_germany <- function(action,
                                variables,
-                               latitude = NULL,
-                               longitude = NULL,
-                               station_ID = NULL,
+                               location = NA,
                                begin = 19160101,
                                end = chillR::Date2YEARMODA(Sys.Date()),
                                number_of_stations = 25,
@@ -67,19 +65,19 @@ handle_cdc_germany <- function(action,
   if (!action %in% c("list_stations", "download_weather")) 
     stop("Please provide a valid action")
   
+  assertthat::assert_that(all(!is.na(location)),
+                          msg = "Please provide a valid input for the location of interest. Valid options are: 1) a numeric vector of length 2 (longitude and latitude) if action is 'list_stations', or 2) a vector of character strings representing the ID of the weather station if action is 'download_weather'")
+  
   if (action == "list_stations"){
-    assertthat::assert_that(!is.null(latitude) & !is.null(longitude),
-                            msg = "Please provide a valid input for latitude and longitude of the place of interest")
+    assertthat::assert_that(length(location) == 2,
+                            msg = "Please provide a valid input for the location of interest. Location should be a vector of two elements: longitude and latitude")
     
-    assertthat::assert_that(is.null(station_ID),
-                            msg = "Please set 'station_ID' to NULL or set the 'action' to download_weather")}
+    assertthat::assert_that(all(is.numeric(location)),
+                            msg = "Please provide a valid input for the location of interest. Location should be a vector of numeric elements")}
   
   if (action == "download_weather"){
-    assertthat::assert_that(!is.null(station_ID),
-                            msg = "Plase provide at least one station_ID to download data from")
-    
-    assertthat::assert_that(is.null(latitude) & is.null(longitude),
-                            msg = "Please set 'latitude' and 'longitude' to NULL or set the 'action' to list_stations")}
+    assertthat::assert_that(all(is.character(location)),
+                            msg = "Plase provide at least one valid station_ID to download data from. Station_ID should be a vector of character strings")}
   
   if (nchar(begin) != 8 | nchar(end) != 8)
     stop("Invalid date for begin or end parameters. Please introduce a date in format YEARMODA")
@@ -89,6 +87,41 @@ handle_cdc_germany <- function(action,
     stop("One or more invalid variable(s) selected. Please provide variables such as:
     Wind_speed, Wind_speed_max, ATM_pressure, Rainfall, Snow, Tmin_5cm, Tmean, Tmin, Tmax,
     RH, VPD.")
+  
+  # Check the names of the location argument
+  
+  if (!is.null(names(location)))
+    assertthat::assert_that(all(names(location) %in% c("x", "y", "X", "Y", "longitude", "latitude", "long", "lat",
+                                                       "Longitude", "Latitude", "Long", "Lat", "LONGITUDE",
+                                                       "LATITUDE", "LONG", "LAT")),
+                            msg = "Please provide a valid name for the elements in the location argument. Valid names are: 'x', 'y', 'X', 'Y', 'longitude', 'latitude', 'long', 'lat', 'Longitude', 'Latitude', 'Long', 'Lat', 'LONGITUDE', 'LATITUDE', 'LONG', 'LAT'")
+  
+  
+  
+  # Extract the information from the location parameter depending on the action of the function
+  
+  if (action == "list_stations"){
+    
+    if (!is.null(names(location))){
+      
+      latitude <- location[which(names(location) %in% c("y", "Y", "latitude", "lat", "Latitude", "Lat",
+                                                        "LATITUDE", "LAT"))]
+      
+      
+      longitude <- location[which(names(location) %in% c("x", "X", "longitude", "long", "Longitude",
+                                                         "Long", "LONGITUDE", "LONG"))]}
+    else {
+      
+      latitude <- location[2]
+      
+      longitude <- location[1]
+    }
+  }
+  
+  # Define the station_ID to download the weather data
+  
+  if (action == "download_weather") station_ID <- location
+  
   
   # Get the information of the weather stations.
   
@@ -123,7 +156,7 @@ handle_cdc_germany <- function(action,
   stations <- data.frame(Station_name = as.character(trimws(substr(stations, 62, 100))),
                          Region = as.character(trimws(substr(stations, 101, nchar(stations)))),
                          Station_ID = as.character(trimws(substr(stations, 1, 5))),
-                         Altitude = as.numeric(trimws(substr(stations, 24, 39))),
+                         Elevation = as.numeric(trimws(substr(stations, 24, 39))),
                          Latitude = as.numeric(trimws(substr(stations, 40, 51))),
                          Longitude = as.numeric(trimws(substr(stations, 51, 61))))
   
@@ -209,9 +242,7 @@ handle_cdc_germany <- function(action,
   
   # Add YEARMODA value for future use in merging dataframes
   
-  primer["YEARMODA"] <- paste(substr(primer$DATE, 1, 4), substr(primer$DATE, 6, 7),
-                              substr(primer$DATE, 9, 10), sep = "")
-  primer["YEARMODA"] <- as.numeric(primer$YEARMODA)
+  primer["YEARMODA"] <- primer$Year * 10000 + primer$Month * 100 + primer$Day
   
   # Remove Tmin, Tmax and Tmean from the primer dataframe for make it clearer
   
@@ -233,7 +264,7 @@ handle_cdc_germany <- function(action,
   # Depending on the number of elements in the station_ID parameter, this will download the data as a list 
   # or a data frame
   
-  if (action == "download_weather") stations_to_download <- as.character(station_ID)
+  stations_to_download <- as.character(station_ID)
   
   # Variable names in the original dataframe
   
