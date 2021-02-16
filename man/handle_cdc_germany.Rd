@@ -7,21 +7,22 @@
 handle_cdc_germany(
   action,
   variables,
-  latitude,
-  longitude,
+  latitude = NULL,
+  longitude = NULL,
+  station_ID = NULL,
   begin = 19160101,
   end = chillR::Date2YEARMODA(Sys.Date()),
   number_of_stations = 25,
-  complete_list = FALSE
+  add.DATE = FALSE,
+  quiet = FALSE
 )
 }
 \arguments{
-\item{action}{is a character string to decide on 3 modes of action for the function.
+\item{action}{is a character string to decide on 2 modes of action for the function.
 \emph{"list_stations"} returns a dataframe with the information on close weather stations
 to the location defined by \code{number_of_stations} and \code{longitude} and \code{latitude} parameters.
-\emph{"download_weather"} retrieve the records for the closest weather station to the defined location.
-\emph{"download_weather_list"} downloads the records for several weather stations (according to
-\code{number_of_stations}) which are close to the location of interest.}
+\emph{"download_weather"} retrieve the records for one or more weather stations defined in the
+\code{station_ID} parameter.}
 
 \item{variables}{is a character vector representing the variables required. For now, the function can return the
 wind speed (mean - \emph{"Wind_speed"} and maximum - \emph{"Wind_speed_max"}); the atmospheric pressure
@@ -34,6 +35,8 @@ mean - \emph{"Tmean"}, and maximum - \emph{"Tmax"}); the relative humidity (\emp
 
 \item{longitude}{is a numeric parameter defining the longitude (in decimal degrees) of the location of interest.}
 
+\item{station_ID}{is a character vector representing the stations to be used for downloading the data}
+
 \item{begin}{is a numeric parameter representing the start date for the period required. This must be
 specified in YEARMODA format.}
 
@@ -42,30 +45,28 @@ specified in YEARMODA format.}
 
 \item{number_of_stations}{is a numeric parameter defininf the numbers of stations to select from.}
 
-\item{complete_list}{is a boolean parameter. If \emph{"download_weather"} option has been used, this allows to skip the first
-weather station when using the \emph{"download_weather_list"} option. It avoids include a repeated dataframe for the
-first weather station}
+\item{add.DATE}{is a boolean parameter to be passed to \code{\link{make_all_day_table}}}
+
+\item{quiet}{is a boolean parameter to be passed to \code{\link[utils:download.file]{download.file}}}
 }
 \description{
 This function access the \href{https://www.dwd.de/EN/climate_environment/cdc/cdc_node.html}{Climate Data Center - CDC} 
 and allows to:\itemize{\item{1) obtain information of the weather stations from Germany.}
-\item{2) get weather data for a specific place of interest given the coordinates.}
-\item{3) get weather data from several weather stations located close to a specific location
- given its coordinates.}}
+\item{2) get weather data for one or more specific places of interest given the station ID.}}
 }
 \details{
 If \emph{"list_stations"} is used, the function returns a dataframe (9 columns x \code{number_of_stations} rows) containing
 information such as the name, latitude, longitude, begin, end and distance of the weather stations.
+\code{latitude} and \code{longitude} must be provided.
 If \emph{"download_weather"} is chosen, it downloads the weather data from the CDC website. The output is
 a dataframe (in \code{\link{chillR}} format) containing daily records from the closest
-weather station. If \emph{"download_weather_list"} option is used, the function returns a list of dataframes as the one
-described above. The length of the list is equal to the \code{number_of_stations} or to the \code{number_of_stations}
-minus 1 if \code{complete_list = FALSE}.
+weather station. \code{station_ID} must be provided. If \code{station_ID} is longer than one, the function returns a list of dataframes as the one
+described above.
 }
 \examples{
 
 handle_cdc_germany(action = "list_stations", variables = c("Tmin", "Tmax", "Tmean"),
                    latitude = 53.5373, longitude = 9.6397, begin = 20000101,
-                   end = 20101231, number_of_stations = 25, complete_list = FALSE)
+                   end = 20101231, number_of_stations = 25)
 
 }
