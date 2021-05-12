@@ -123,7 +123,7 @@ handle_cka_station <- function(folder_path, vars = c("Temp"), time_step = "hourl
     
     # read the data keeping only the rows and columns of interest
     data <- utils::read.csv(paste(folder_path, "/", file, sep = ""),
-                            skip = skip, stringsAsFactors = F)[variables_german]
+                            skip = skip, stringsAsFactors = F, fileEncoding = "latin1")[variables_german]
     
     # save the data in one table
     if (is.null(weather_data)) weather_data <- data else

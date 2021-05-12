@@ -95,7 +95,7 @@ handle_tinytag <- function(path_data, vars = c("Temp", "Humidity"), time_step = 
   
   if (tools::file_ext(path_data) %in% c("csv")){
     
-    weather <- utils::read.csv(path_data, skip = 4, ...)
+    weather <- utils::read.csv(path_data, skip = 4, fileEncoding = "latin1", ...)
     
     if (ncol(weather) == 1){
       
