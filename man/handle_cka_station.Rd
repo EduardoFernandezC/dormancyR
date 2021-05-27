@@ -6,6 +6,7 @@
 \usage{
 handle_cka_station(
   folder_path,
+  sep = ",",
   vars = c("Temp"),
   time_step = "hourly",
   check_data = TRUE
@@ -13,6 +14,8 @@ handle_cka_station(
 }
 \arguments{
 \item{folder_path}{Character string. This is the complete directory name where the files are stored}
+
+\item{sep}{Separator to be passed to \code{\link[utils:read.csv]{utils::read.csv}}}
 
 \item{vars}{Character string. Variables of interest returned by the function. These are:
 \emph{"Wind_speed"} (m/s), \emph{"Wind_direction"} (degrees), \emph{"Temp"} (Celsius), \emph{"Tmean"} (Celsius), \emph{"Tmax"} (Celsius),
