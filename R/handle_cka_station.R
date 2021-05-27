@@ -10,6 +10,8 @@
 #' 
 #' @param folder_path Character string. This is the complete directory name where the files are stored
 #' 
+#' @param sep Separator to be passed to \code{\link[utils:read.csv]{utils::read.csv}}
+#' 
 #' @param vars Character string. Variables of interest returned by the function. These are:
 #' \emph{"Wind_speed"} (m/s), \emph{"Wind_direction"} (degrees), \emph{"Temp"} (Celsius), \emph{"Tmean"} (Celsius), \emph{"Tmax"} (Celsius),
 #' \emph{"Tmin"} (Celsius), \emph{"Humidity"} (\%), \emph{"Above_Ground_Temp"} (Celsius), \emph{"Soil_Temp"} (Celsius), \emph{"Precipitation"} (mm),
@@ -41,7 +43,10 @@
 #' @export handle_cka_station
 #' @importFrom dplyr "%>%"
 
-handle_cka_station <- function(folder_path, vars = c("Temp"), time_step = "hourly", check_data = TRUE){
+handle_cka_station <- function(folder_path, sep = ",",
+                               vars = c("Temp"),
+                               time_step = "hourly",
+                               check_data = TRUE){
   
   requireNamespace("dplyr")
   
@@ -122,7 +127,7 @@ handle_cka_station <- function(folder_path, vars = c("Temp"), time_step = "hourl
     skip <- which(substr(temp_data[, col_name], 1, 4) == "date")
     
     # read the data keeping only the rows and columns of interest
-    data <- utils::read.csv(paste(folder_path, "/", file, sep = ""),
+    data <- utils::read.csv(paste(folder_path, "/", file, sep = ""), sep = sep,
                             skip = skip, stringsAsFactors = F, fileEncoding = "latin1")[variables_german]
     
     # save the data in one table
