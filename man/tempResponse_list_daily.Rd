@@ -10,7 +10,8 @@ tempResponse_list_daily(
   End_JDay = 366,
   models = list(Rate_of_Chill = rate_of_chill, Chill_Days = chill_days,
     Exponential_Chill = exponential_chill, Triangula_Chill_Haninnen = triangular_chill_1,
-    Triangular_Chill_Legave = triangular_chill_1)
+    Triangular_Chill_Legave = triangular_chill_1),
+  misstolerance = 20
 )
 }
 \arguments{
@@ -24,6 +25,9 @@ This is the number of the day within the year}
 
 \item{models}{List of functions to compute the metrics. Default is settled to those models used in
 \code{\link{tempResponse_daily}} function. This parameter also allows the use of a model specified by the user}
+
+\item{misstolerance}{is the threshold defined by the user to include seasons having days with missing data.
+Default is set to 20}
 }
 \description{
 This function allows to compute metrics from models which use daily temperature as inputs, rather than hourly data.

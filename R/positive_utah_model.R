@@ -1,9 +1,8 @@
 #' Positive Utah model
 #'
 #' Function to calculate winter chill for deciduos trees according to the Positive Utah model proposed by
-#' Linsley-Noakes and Allan (1994). This function is compatible with some \code{\link{chillR}} functions
-#' (i.e \code{\link[chillR:tempResponse]{tempResponse}})
-#' to estimate metrics from hourly temperature records.
+#' Linsley-Noakes and Allan (1994). This function is compatible with some \code{\link[chillR:chillR-package]{chillR}}
+#' functions (i.e \code{\link[chillR:tempResponse]{tempResponse}}) to estimate metrics from hourly temperature records.
 #'
 #' @param HourTemp Vector of hourly temperatures
 #' 

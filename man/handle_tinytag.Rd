@@ -2,7 +2,7 @@
 % Please edit documentation in R/handle_tinytag.R
 \name{handle_tinytag}
 \alias{handle_tinytag}
-\title{Get weather data from Tinytag sensors in \code{\link{chillR}} format}
+\title{Get weather data from Tinytag sensors in \code{\link[chillR:chillR-package]{chillR}} format}
 \usage{
 handle_tinytag(
   path_data,

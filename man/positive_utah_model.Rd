@@ -14,9 +14,8 @@ over the period or as the actual accumulation for each hour}
 }
 \description{
 Function to calculate winter chill for deciduos trees according to the Positive Utah model proposed by
-Linsley-Noakes and Allan (1994). This function is compatible with some \code{\link{chillR}} functions
-(i.e \code{\link[chillR:tempResponse]{tempResponse}})
-to estimate metrics from hourly temperature records.
+Linsley-Noakes and Allan (1994). This function is compatible with some \code{\link[chillR:chillR-package]{chillR}}
+functions (i.e \code{\link[chillR:tempResponse]{tempResponse}}) to estimate metrics from hourly temperature records.
 }
 \examples{
 #Example 1

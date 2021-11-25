@@ -40,9 +40,10 @@ also allows to include models predefined by the user. The only request is that s
 uses daily mean, max or min temperatures as input.
 }
 \details{
-\code{tempResponse_daily} is an extension of \code{\link{chillR}} that returns temperature responses by
-using daily chill models. These models are \code{\link{rate_of_chill}}, \code{\link{chill_days}},
-\code{\link{exponential_chill}}, \code{\link{triangular_chill_1}}, \code{\link{triangular_chill_2}}.
+\code{tempResponse_daily} is an extension of \code{\link[chillR:chillR-package]{chillR}}
+that returns temperature responses by using daily chill models. These models are \code{\link{rate_of_chill}},
+\code{\link{chill_days}}, \code{\link{exponential_chill}}, \code{\link{triangular_chill_1}},
+\code{\link{triangular_chill_2}}.
 }
 \examples{
 library(chillR)

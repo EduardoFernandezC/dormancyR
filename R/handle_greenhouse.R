@@ -1,4 +1,4 @@
-#' Get weather data from the greenhouses at CKA in \code{\link{chillR}} format
+#' Get weather data from the greenhouses at CKA in \code{\link[chillR:chillR-package]{chillR}} format
 #' 
 #' This function is to handle weather data obtained from the greenhouses located in Campus Klein Altendorf.
 #' For now, this works for input files stored as \strong{'.xls'} or \strong{'.xlsx'} format
@@ -29,7 +29,7 @@
 #' 
 #' @param fix_data Boolean parameter. If \code{fix_data = TRUE}, fill in the missing hours
 #' by the function \code{\link[chillR:interpolate_gaps_hourly]{interpolate_gaps_hourly}} from 
-#' \code{\link{chillR}}
+#' \code{\link[chillR:chillR-package]{chillR}}
 #' 
 #' @param na_strings Character vector of strings to interpret as missing values. By default,
 #' \code{handle_greenhouse} treats the word \emph{'FAULT'} and blank cells as missing data.

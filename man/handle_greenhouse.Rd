@@ -2,7 +2,7 @@
 % Please edit documentation in R/handle_greenhouse.R
 \name{handle_greenhouse}
 \alias{handle_greenhouse}
-\title{Get weather data from the greenhouses at CKA in \code{\link{chillR}} format}
+\title{Get weather data from the greenhouses at CKA in \code{\link[chillR:chillR-package]{chillR}} format}
 \usage{
 handle_greenhouse(
   path_data,
@@ -42,7 +42,7 @@ Default is set to 10 celsius degree since greenhouse temperatures are controlled
 
 \item{fix_data}{Boolean parameter. If \code{fix_data = TRUE}, fill in the missing hours
 by the function \code{\link[chillR:interpolate_gaps_hourly]{interpolate_gaps_hourly}} from 
-\code{\link{chillR}}}
+\code{\link[chillR:chillR-package]{chillR}}}
 
 \item{na_strings}{Character vector of strings to interpret as missing values. By default,
 \code{handle_greenhouse} treats the word \emph{'FAULT'} and blank cells as missing data.}

@@ -1,6 +1,6 @@
 #' Add a column for YEARMODA (or YEARMODAHO) to a data frame
 #' 
-#' This function allows users to add a column called YEARMODA or YEARMODAHO to any \code{\link{chillR}}-formated 
+#' This function allows users to add a column called YEARMODA or YEARMODAHO to any \code{\link[chillR:chillR-package]{chillR}}-formatted 
 #' data frame
 #' 
 #' @param data is a data frame at least containing the columns \code{Year}, \code{Month}, and \code{Day} 
@@ -8,7 +8,7 @@
 #' of hourly records. For now, column names must be spelled as shown in lines above
 #' 
 #' @param add_hour is a boolean parameter defining whether the output should add the \code{YEARMODAHO} column.
-#' Default is set to \code{FALSE} so, even in case of hourly records, the ouput data frame will only show the 
+#' Default is set to \code{FALSE} so, even in case of hourly records, the output data frame will only show the 
 #' \code{YEARMODA} column
 #' 
 #' @return 

@@ -2,7 +2,7 @@
 % Please edit documentation in R/handle_cka_station.R
 \name{handle_cka_station}
 \alias{handle_cka_station}
-\title{Get weather data from Campus Klein Altendorf in \code{\link{chillR}} format}
+\title{Get weather data from Campus Klein Altendorf in \code{\link[chillR:chillR-package]{chillR}} format}
 \usage{
 handle_cka_station(
   folder_path,
@@ -41,7 +41,8 @@ agricultural production. Among these, temperature, rainfall, wind speed, PAR, am
 }
 \details{
 It is important to note that the data has to be downloaded by hand from the website or requested to the staff
-at CKA. The output is a data frame useful for further analysis with \code{\link{chillR}} or this package. \emph{Tmin}, \emph{Tmean} and \emph{Tmax}
+at CKA. The output is a data frame useful for further analysis with \code{\link[chillR:chillR-package]{chillR}}
+or this package. \emph{Tmin}, \emph{Tmean} and \emph{Tmax}
 only work for \emph{daily} time step whereas \emph{Temp} only does for \emph{hourly} time step.
 }
 \examples{

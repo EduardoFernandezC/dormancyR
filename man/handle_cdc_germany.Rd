@@ -59,7 +59,7 @@ and allows to:\itemize{\item{1) obtain information of the weather stations from 
 If \emph{"list_stations"} is used, the function returns a dataframe (9 columns x \code{number_of_stations} rows) containing
 information such as the name, latitude, longitude, begin, end and distance of the weather stations.
 If \emph{"download_weather"} is chosen, it downloads the weather data from the CDC website. The output is
-a dataframe (in \code{\link{chillR}} format) for all stations selected in the location parameter.
+a dataframe (in \code{\link[chillR:chillR-package]{chillR}} format) for all stations selected in the location parameter.
 }
 \examples{
 

@@ -1,7 +1,7 @@
 #' Low-chill model
 #'
 #' Function to compute winter chill for deciduous trees according to the Low-chill model proposed by
-#' Gilreath and Buchanan (1981). This function is compatible with some \code{\link{chillR}} functions
+#' Gilreath and Buchanan (1981). This function is compatible with some \code{\link[chillR:chillR-package]{chillR}} functions
 #' (i.e \code{\link[chillR:tempResponse]{tempResponse}}) to
 #' estimate metrics from hourly temperature records.
 #'

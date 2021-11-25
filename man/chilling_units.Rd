@@ -14,7 +14,7 @@ over the period or as the actual accumulation for each hour}
 }
 \description{
 Function to calculate winter chill for deciduous trees according to the Chilling Units model proposed by
-Harrington \emph{et al.} (2010). This function is compatible with some \code{\link{chillR}} functions
+Harrington \emph{et al.} (2010). This function is compatible with some \code{\link[chillR:chillR-package]{chillR}} functions
 (i.e \code{\link[chillR:tempResponse]{tempResponse}}) to estimate metrics from hourly temperature records.
 }
 \examples{

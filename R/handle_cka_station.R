@@ -1,4 +1,4 @@
-#' Get weather data from Campus Klein Altendorf in \code{\link{chillR}} format
+#' Get weather data from Campus Klein Altendorf in \code{\link[chillR:chillR-package]{chillR}} format
 #' 
 #' This function allows to handle weather data recorded by the weather station located in Campus Klein Altendorf
 #' in Rhineland, Germany. Normally, the access to the data is restricted to CKA staff but, any person could ask
@@ -27,7 +27,8 @@
 #' 
 #' @details 
 #' It is important to note that the data has to be downloaded by hand from the website or requested to the staff
-#' at CKA. The output is a data frame useful for further analysis with \code{\link{chillR}} or this package. \emph{Tmin}, \emph{Tmean} and \emph{Tmax}
+#' at CKA. The output is a data frame useful for further analysis with \code{\link[chillR:chillR-package]{chillR}}
+#' or this package. \emph{Tmin}, \emph{Tmean} and \emph{Tmax}
 #' only work for \emph{daily} time step whereas \emph{Temp} only does for \emph{hourly} time step.
 #' 
 #' @examples

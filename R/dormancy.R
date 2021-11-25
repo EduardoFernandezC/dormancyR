@@ -3,7 +3,8 @@
 #' 
 #' @description  
 #' 
-#' The \code{dormancyR} package (inspired in \code{\link{chillR}}) aims to provide alternatives to common chill models
+#' The \code{dormancyR} package (inspired in \code{\link[chillR:chillR-package]{chillR}})
+#' aims to provide alternatives to common chill models
 #' used in horticulture to compute chill metrics in deciduous fruit tree orchards as well as functions to handle
 #' weather data.
 #' 

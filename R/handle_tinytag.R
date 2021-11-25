@@ -1,4 +1,4 @@
-#' Get weather data from Tinytag sensors in \code{\link{chillR}} format
+#' Get weather data from Tinytag sensors in \code{\link[chillR:chillR-package]{chillR}} format
 #' 
 #' This function returns weather data (temperature and humidity) from tinytag sensors (model TGP-4500). It also
 #' contains options to check for missing observations and fill them through linear interpolation.

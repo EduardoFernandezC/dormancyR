@@ -1,7 +1,7 @@
 #' Handle weather data downloaded from the Agromet Chilean database
 #' 
-#' This function convert a previously downloaded weather file into a dataframe in the \code{\link{chillR}}
-#' format. For now,
+#' This function convert a previously downloaded weather file into a dataframe in the 
+#' \code{\link[chillR:chillR-package]{chillR}} format. For now,
 #' the function \strong{only} works with hourly records. The downloading part must be done directly by the
 #' user through accessing the
 #' \href{https://agrometeorologia.cl/}{agromet website} Once there, the user needs to select the weather station,
