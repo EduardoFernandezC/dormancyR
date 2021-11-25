@@ -39,9 +39,11 @@ jobs:
           http-user-agent: ${{ matrix.config.http-user-agent }}
           use-public-rspm: true
       
-      - name: Install spatial dependencies
+      - name: Install spatial dependencies Linux
         if: runner.os == 'Linux'
         run: sudo apt-get install libgdal-dev libproj-dev libgeos-dev libudunits2-dev netcdf-bin
+      
+      - name: Install spatial dependencies macOS  
         if: runner.os == 'macOS'
         run: brew install gdal
 
