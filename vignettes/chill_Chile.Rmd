@@ -44,7 +44,6 @@ knitr::write_bib(c(.packages(),
                    'dormancyR'), 'packages.bib')
 require(tidyverse)
 require(kableExtra)
-require(terra)
 ```
 
 ## Introduction
