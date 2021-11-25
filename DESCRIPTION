@@ -21,6 +21,7 @@ Imports: assertthat,
          sp,
          stringi,
          stringr,
+         terra,
          tidyr,
          tidyverse
 License: GPL-3
