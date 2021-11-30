@@ -57,15 +57,16 @@ date_to_JDay <- function(date, format){
   
   for (i in 1 : length(date)){
     
-    # Define the year in case of leap years
-    
-    if (chillR::leap_year(years[i])) year <- 2020 else year <- 2019
-    
-    JDay <- primer[primer$Month %in% months[i] & primer$Day %in% days[i] & primer$Year == year, "JDay"]
+    if (is.na(date[i])) JDay <- NA else {
+      
+      # Define the year in case of leap years
+      
+      if (chillR::leap_year(years[i])) year <- 2020 else year <- 2019
+      
+      JDay <- primer[primer$Month %in% months[i] & primer$Day %in% days[i] & primer$Year == year, "JDay"]}
     
     JDays <- c(JDays, JDay)}
   
   return(JDays)
   
 }
-
