@@ -91,7 +91,8 @@
 #' continue editing some features of the plots through the syntax (i.e. \code{'&'},
 #' and \code{'+'}) from both libraries (see examples).
 #' 
-#' \figure{plot_scenarios_example.png}{options: align='bottom' width='100\%' alt='plot_scenarios example'}
+#' \if{html}{\figure{plotscenariosexample.png}{options: align='bottom' width='100\%' alt='plot_scenarios example'}}
+#' \if{latex}{\figure{plotscenariosexample.png}{options: width=5in}}
 #' 
 #' @examples
 #' 
