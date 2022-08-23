@@ -8,8 +8,8 @@ tempResponse_daily(
   data,
   Start_JDay = 1,
   End_JDay = 366,
-  models = list(Rate_of_Chill = rate_of_chill, Chill_Days = chill_days,
-    Exponential_Chill = exponential_chill, Triangula_Chill_Haninnen = triangular_chill_1,
+  models = list(Rate_of_Chill = rate_of_chill, Chill_Days = chill_days, Exponential_Chill
+    = exponential_chill, Triangula_Chill_Haninnen = triangular_chill_1,
     Triangular_Chill_Legave = triangular_chill_2),
   misstolerance = 20
 )
