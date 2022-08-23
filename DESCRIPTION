@@ -18,7 +18,6 @@ Imports: assertthat,
          readxl,
          scales,
          sp,
-         stringi,
          stringr,
          tidyr
 License: GPL-3

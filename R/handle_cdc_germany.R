@@ -126,7 +126,7 @@ handle_cdc_germany <- function(action,
   # Get the information of the weather stations.
   
   stations <- utils::read.csv("https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/daily/kl/historical/KL_Tageswerte_Beschreibung_Stationen.txt",
-                              skip = 2, header = F, colClasses = "character")[,1]
+                              skip = 2, header = F, colClasses = "character", encoding = "latin1")[,1]
   
   # Delete the extra white spaces at the end of the characters
   
@@ -147,9 +147,9 @@ handle_cdc_germany <- function(action,
   
   # Remove german characters 
   
-  stations <- stringi::stri_enc_toascii(stations)
+  #stations <- stringi::stri_enc_toascii(stations)
   
-  stations <- stringr::str_replace_all(stations, pattern = "\032", replacement = "ue")
+  #stations <- stringr::str_replace_all(stations, pattern = "\032", replacement = "ue")
   
   # Make a dataframe of the information about the stations in Germany
   
